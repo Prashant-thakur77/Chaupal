@@ -34,6 +34,7 @@ import {
 } from "@/lib/chat-paths";
 import { TAB_ID } from "@/lib/tab-id";
 
+import { WEBMCP_EXCLUDE } from "./chaupal/webmcp-exclude";
 import { i18nCatalog } from "./i18n";
 
 import stylesheet from "./global.css?url";
@@ -227,6 +228,7 @@ export default function Root() {
         clientOnlyFallback={isChaupalPath(pathname) ? <div className="ch-boot" /> : undefined}
         defaultTheme="dark"
         disableWebMcp={pathname === "/family" || pathname.startsWith("/embed/")}
+        webMcpExcludeActionNames={WEBMCP_EXCLUDE}
         skeletonLayout={isChaupalPath(pathname) ? undefined : skeletonLayoutForPath(pathname)}
         i18n={{ catalog: i18nCatalog }}
       >

@@ -36,6 +36,7 @@ function chatProps(t: { typeInstead: string }, lang: string) {
     showTabBar: false,
     showModelSelector: false,
     showPageHeader: false,
+    dynamicSuggestions: false as const,
     composerPlaceholder: t.typeInstead,
     emptyStateText: en
       ? "Namaste. Say or type what you would like: calligraphy, a rangoli, a kolam, or a game of shatranj."
