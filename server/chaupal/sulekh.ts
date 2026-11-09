@@ -7,6 +7,7 @@ import {
   type SulekhReference,
 } from "../../app/engines/sulekh/core.js";
 import { ensureShaper } from "./sulekh-runtime.js";
+import { config } from "./config.js";
 
 export type ScriptId = "devanagari" | "gurmukhi" | "tamil" | "bengali" | "urdu";
 export type StyleId = "kalam" | "brush" | "modern";
@@ -20,7 +21,7 @@ async function loadFont(fontId: string): Promise<Uint8Array> {
   const { loadFontBytesNodeIfAvailable } = await import("./sulekh-runtime.js");
   let bytes = await loadFontBytesNodeIfAvailable(fontId);
   if (!bytes) {
-    const origin = process.env.CHAUPAL_PUBLIC_URL || process.env.BETTER_AUTH_URL;
+    const origin = config.publicUrl();
     if (!origin) throw new Error("FONT_ORIGIN_UNKNOWN");
     bytes = await loadFontBytesFetch(fontId as never, origin);
   }

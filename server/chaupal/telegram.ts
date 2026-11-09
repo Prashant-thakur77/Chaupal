@@ -1,7 +1,9 @@
+import { config } from "./config.js";
 import { svgToPng } from "./raster.js";
 
 export function telegramConfigured() {
-  return Boolean(process.env.CHAUPAL_TELEGRAM_BOT_TOKEN && process.env.CHAUPAL_TELEGRAM_CHAT_ID);
+  const t = config.telegram();
+  return Boolean(t.token && t.chatId);
 }
 
 /**
@@ -10,8 +12,7 @@ export function telegramConfigured() {
  * deployment; nothing is sent without the elder's approval upstream.
  */
 export async function sendTelegramPhoto(svg: string, caption: string) {
-  const token = process.env.CHAUPAL_TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.CHAUPAL_TELEGRAM_CHAT_ID;
+  const { token, chatId } = config.telegram();
   if (!token || !chatId) return { ok: false as const, reason: "telegram_not_configured" };
   const png = await svgToPng(svg);
   const form = new FormData();

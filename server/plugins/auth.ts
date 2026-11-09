@@ -1,4 +1,5 @@
 import { createToolkitAuthPlugin } from "@agent-native/toolkit/app/auth/server";
+import { config } from "../chaupal/config.js";
 
 import { clearGuestCookie, guestSession } from "../lib/guest.js";
 
@@ -12,7 +13,7 @@ const publicPaths = ["/api/household/start", "/api/family/join", "/welcome", "/p
  * Elsewhere they sit alongside the framework's normal sign-in.
  */
 export default createToolkitAuthPlugin(
-  process.env.CHAUPAL_GUEST_AUTH_ONLY === "1"
+  config.guestAuthOnly()
     ? {
         workspaceAppPublicPaths: ["/"],
         rootAuth: false,

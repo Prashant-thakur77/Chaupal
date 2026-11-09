@@ -1,8 +1,10 @@
 /**
  * SVG → PNG for family updates (Telegram needs a raster image). On Node this
- * uses the native resvg build; on Cloudflare Workers the wasm build, whose
- * module the Worker entry provides pre-compiled.
+ * uses the native resvg build when present, otherwise the wasm build loaded
+ * from the site's own assets.
  */
+import { config } from "./config.js";
+
 let wasmReady: Promise<void> | null = null;
 const fontCache: Uint8Array[] = [];
 
@@ -15,7 +17,7 @@ async function fonts(): Promise<Uint8Array[]> {
       const path = await import("node:path");
       fontCache.push(new Uint8Array(await fs.readFile(path.join(process.cwd(), "public", "fonts", f))));
     } catch {
-      const origin = process.env.CHAUPAL_PUBLIC_URL || process.env.BETTER_AUTH_URL;
+      const origin = config.publicUrl();
       if (origin) {
         const res = await fetch(`${origin.replace(/\/$/, "")}/fonts/${f}`);
         if (res.ok) fontCache.push(new Uint8Array(await res.arrayBuffer()));

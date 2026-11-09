@@ -1,6 +1,7 @@
 import { fail, type ActionRunContext } from "@agent-native/core/action";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
+import { config } from "./config.js";
 
 import { getDb, schema } from "../db/index.js";
 import { familyLinkIdOf, isFamilyGuest } from "../lib/guest.js";
@@ -60,6 +61,7 @@ export async function sessionOf(
     if (!link || link.revokedAt) {
       fail("This family link is no longer active.", { errorCode: "FAMILY_LINK_REVOKED", statusCode: 403 });
     }
+    // guard:allow-unscoped — the family guest reaches only the session its own, non-revoked link names
     const session = (
       await getDb().select().from(schema.sessions).where(eq(schema.sessions.id, link!.sessionId)).limit(1)
     )[0]!;
@@ -110,7 +112,7 @@ export async function respond<T extends Record<string, unknown>>(
  * caller then simply asks again.
  */
 export function maxWaitMs(wanted: number) {
-  const cap = Number(process.env.CHAUPAL_MAX_WAIT_MS || 0);
+  const cap = config.maxWaitMs();
   return cap > 0 ? Math.min(wanted, cap) : wanted;
 }
 

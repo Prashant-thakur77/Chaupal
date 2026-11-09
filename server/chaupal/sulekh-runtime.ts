@@ -1,4 +1,5 @@
 import { initShaper, isShaperReady } from "../../app/engines/sulekh/core.js";
+import { config } from "./config.js";
 
 /**
  * Starts HarfBuzz once per process. Locally the wasm and fonts are read from
@@ -8,7 +9,7 @@ import { initShaper, isShaperReady } from "../../app/engines/sulekh/core.js";
 let starting: Promise<void> | null = null;
 
 export function publicOrigin() {
-  return (process.env.CHAUPAL_PUBLIC_URL || process.env.BETTER_AUTH_URL || process.env.URL || "").replace(/\/$/, "");
+  return config.publicUrl();
 }
 
 export async function fetchPublicBytes(path: string): Promise<Uint8Array> {

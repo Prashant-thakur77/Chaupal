@@ -1,6 +1,7 @@
 import { defineAction, fail } from "@agent-native/core/action";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
+import { config } from "../server/chaupal/config.js";
 
 import { sessionOf } from "../server/chaupal/kit.js";
 import { getDb, schema } from "../server/db/index.js";
@@ -15,7 +16,7 @@ export default defineAction({
   agentTool: false,
   mcpTool: false,
   run: async ({ sulekh, reset }, ctx) => {
-    if (process.env.CHAUPAL_EVAL !== "1") fail("Not available.", { errorCode: "NOT_AVAILABLE", statusCode: 404 });
+    if (!config.evalMode()) fail("Not available.", { errorCode: "NOT_AVAILABLE", statusCode: 404 });
     const who = await sessionOf(ctx);
     if (reset) {
       await getDb()

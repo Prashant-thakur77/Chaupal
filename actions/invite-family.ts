@@ -1,6 +1,7 @@
 import { defineAction } from "@agent-native/core/action";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
+import { config } from "../server/chaupal/config.js";
 
 import { ChaupalResult, mutationOptions, respond, sessionChange, sessionOf } from "../server/chaupal/kit.js";
 import { mutate, newId, nowIso } from "../server/chaupal/state.js";
@@ -51,7 +52,7 @@ export default defineAction({
       }
       return { result: null, payload: { name, playsOtherSide } };
     });
-    const base = process.env.CHAUPAL_PUBLIC_URL || process.env.BETTER_AUTH_URL || "";
+    const base = config.publicUrl();
     const joinPath = `/api/family/join?t=${token}`;
     return respond(state, {
       invited: { name, relation: relation ?? null, playsOtherSide },
