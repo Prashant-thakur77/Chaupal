@@ -1,14 +1,14 @@
 /**
- * Reference validation, ported from the base repo's reference-asset gate.
+ * Reference validation: the reference-asset gate.
  *
  * - `validateReference(ref, requestedText)` checks a Sulekh vector render
  *   (REFERENCE_* codes).
  * - `validateAgentImage(input)` checks an agent-supplied raster with the
- *   base repo's pixel gate (REFERENCE_IMAGE_* codes, same thresholds and
+ *   pixel gate (REFERENCE_IMAGE_* codes, fixed thresholds and
  *   order) plus an exact NFC match of the OCR text.
  *
  * Every issue carries a repair hint so the agent can regenerate with the
- * named defect, as in the base repo's repair loop.
+ * named defect, in a repair loop.
  */
 
 import { decodePng, isPng, pngSize } from "./png";
@@ -54,7 +54,7 @@ export interface ValidationIssue<C extends string = string> {
 
 export interface ValidationResult<C extends string = string> {
   ok: boolean;
-  /** First failing code (the base repo reports one code per rejection). */
+  /** First failing code (one code per rejection). */
   code?: C;
   issues: ValidationIssue<C>[];
 }
@@ -223,7 +223,7 @@ export function validateReference(
 // Agent-supplied raster images
 // ---------------------------------------------------------------------------
 
-/** Pixel statistics of the base repo's gate (ratios rounded to 4 decimals). */
+/** Pixel statistics of the gate (ratios rounded to 4 decimals). */
 export interface AlphaStats {
   transparentRatio: number;
   edgeTransparentRatio: number;
@@ -309,7 +309,7 @@ export function rasterStats(rgba: Uint8Array, width: number, height: number): Al
   };
 }
 
-/** Minimum ink width by akshara count (base repo: by character count, 1–4). */
+/** Minimum ink width by akshara count, 1–4. */
 const MIN_WIDTH_BY_COUNT: Record<number, number> = { 1: 0.24, 2: 0.42, 3: 0.58, 4: 0.68 };
 
 /** Visible units for the ink-width rule: grapheme clusters without spaces. */
@@ -360,7 +360,7 @@ export interface AgentImageInput {
   height?: number;
   alphaStats?: AlphaStats;
   mimeType?: string;
-  /** Apply the base repo grader's stricter asset thresholds. */
+  /** Apply the grader's stricter asset thresholds. */
   strict?: boolean;
 }
 
@@ -477,7 +477,7 @@ export async function validateAgentImage(input: AgentImageInput): Promise<AgentI
       repair: { ink: "#000" },
     });
   }
-  // Phrase adaptation of the base repo's size rule: a phrase is either
+  // Phrase version of the size rule: a phrase is either
   // width-bound (long) or height-bound (short), so it passes when either the
   // width meets the akshara-count minimum or the height reaches 46%.
   const n = Math.max(1, Math.min(4, aksharaCount(input.requestedText)));

@@ -1,7 +1,7 @@
 /**
  * Sulekh reference renderer: exact, HarfBuzz-shaped text → transparent 3:2 SVG.
  *
- * Reference contract (ported from the base repo's reference-asset rules):
+ * Reference contract:
  * - viewBox 1500×1000 (3:2), no background element, real transparency;
  * - ink is solid black (#000) glyph outlines only: no seal, paper or extra text;
  * - the ink box sits inside an 8% safe margin on every edge, nothing clipped;
@@ -40,7 +40,7 @@ export const WRAP_ASPECT = 6;
 
 /**
  * Fraction of the safe area the ink box may fill, per size. Even `small`
- * keeps a long phrase at ≥ 68% of the canvas width, the base repo's minimum
+ * keeps a long phrase at ≥ 68% of the canvas width, the pixel gate's minimum
  * ink width for four or more characters, so every size passes the pixel gate.
  */
 export const SIZE_FILL: Record<SizeId, number> = {

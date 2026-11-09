@@ -1,10 +1,10 @@
 # Evaluation
 
-The question is the base repo's question, asked in India: does Chaupal's action set turn an elder's spoken request into the right, visible, continuing activity more often than the same model working the same page without those actions?
+The question: does Chaupal's action set turn an elder's spoken request into the right, visible, continuing activity more often than the same model working the same page without those actions?
 
 ## Method
 
-The suite has 21 cases, frozen in [`evals/evals.json`](evals/evals.json) before the first official run; its SHA-256 is recorded in every iteration's manifest. Fifteen cases port the base repo's suite one to one (its calligraphy cases become Sulekh, its Janggi cases become shatranj, its two interface cases stay). Four are new for rangoli and kolam, and two for family play. Each prompt is written the way an elder would say it, in Hindi (Devanagari and Latin letters), Hinglish, Punjabi (Gurmukhi), Tamil and Marathi. Prompts carry only her intent; action names, schemas and mechanics never appear in them.
+The suite has 21 cases, frozen in [`evals/evals.json`](evals/evals.json) before the first official run; its SHA-256 is recorded in every iteration's manifest. Fifteen cases cover the core activities: eight for Sulekh, five for shatranj and two for the interface. Four are for rangoli and kolam, and two for family play. Each prompt is written the way an elder would say it, in Hindi (Devanagari and Latin letters), Hinglish, Punjabi (Gurmukhi), Tamil and Marathi. Prompts carry only her intent; action names, schemas and mechanics never appear in them.
 
 Every case runs twice under each condition, in a fresh household on a production build of the app, in headless Chromium with the camera stubbed to "denied":
 
@@ -13,9 +13,9 @@ Every case runs twice under each condition, in a fresh household on a production
 
 Scripted person actions play the elder's own part when a case needs it: drawing a stroke, dragging a piece, the grandson's move on a second browser context, tapping "मत भेजो" on the approval card.
 
-Grading is route-neutral and reads the complete visible outcome: snapshots of her screen after every tool call, the family screen where there is one, and the live session state. A result counts only if it is on screen. Each case also carries the base repo's two standard checks: CONVERSATION-QUALITY-001 (an LLM judge, same model, scoring adult respect, clarity, warmth, agency and fit; it fails on tool narration, pity, false intimacy or a missing reply) and AGENT-TRUTH-001 (no claimed outcome without matching evidence on screen). A case passes only when every assertion passes.
+Grading is route-neutral and reads the complete visible outcome: snapshots of her screen after every tool call, the family screen where there is one, and the live session state. A result counts only if it is on screen. Each case also carries two standard checks: CONVERSATION-QUALITY-001 (an LLM judge, same model, scoring adult respect, clarity, warmth, agency and fit; it fails on tool narration, pity, false intimacy or a missing reply) and AGENT-TRUTH-001 (no claimed outcome without matching evidence on screen). A case passes only when every assertion passes.
 
-Changes between candidate iterations are limited to one bounded part of the agent-facing surface at a time (a description, a schema, a result field or a guard). Acceptance is computed, not chosen, with the base repo's gate: beat the control; after the first accepted candidate, do not lose task success and improve tokens or time without getting more than 10% worse on either. Every iteration's artifacts are kept, including rejected ones.
+Changes between candidate iterations are limited to one bounded part of the agent-facing surface at a time (a description, a schema, a result field or a guard). Acceptance is computed, not chosen: beat the control; after the first accepted candidate, do not lose task success and improve tokens or time without getting more than 10% worse on either. Every iteration's artifacts are kept, including rejected ones.
 
 ## Results
 

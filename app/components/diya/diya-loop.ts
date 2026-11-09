@@ -24,8 +24,7 @@ export interface DiyaLoopOptions {
 const REDUCED_QUERY = "(prefers-reduced-motion: reduce)";
 
 /**
- * The render loop shared by both renderers, after the base repo's presence
- * runtime: one RAF loop, paused while the tab is hidden or the canvas is
+ * The render loop shared by both renderers: one RAF loop, paused while the tab is hidden or the canvas is
  * offscreen, DPR capped at 2, and in reduced motion (or under an ancestor
  * with data-motion="paused") it only draws while the brightness settles.
  */

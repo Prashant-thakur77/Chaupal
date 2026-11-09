@@ -1,7 +1,7 @@
 /**
  * Live WebGPU ink for the stroke she is drawing right now.
  *
- * Reuses the calligraphy brush from the base repo: paint.wgsl stamps tapered,
+ * Uses the calligraphy brush: paint.wgsl stamps tapered,
  * fibrous capsules into a persistent coverage mask. Only the compositor is
  * ours (ink-composite.wgsl), because the evening stage is dark: it writes
  * premultiplied ink on a transparent canvas instead of ink on paper.

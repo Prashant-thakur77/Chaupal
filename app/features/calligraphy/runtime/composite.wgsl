@@ -233,7 +233,7 @@ fn composite_brush(base: vec3f, point: vec2f, brush: BrushState) -> vec3f {
   color = mix(color, color * 0.55, brush_shadow * shadow_strength * opacity);
 
   // Matte lacquered wood belongs to the paper-and-ink material world. The
-  // previous translucent jade treatment inherited too much from Janggi and
+  // previous translucent jade treatment read as a game piece and
   // disappeared against the warm paper when the brush lifted.
   let handle_local = local_coordinate(display_point, ferrule_end, axis);
   let handle_t = clamp(

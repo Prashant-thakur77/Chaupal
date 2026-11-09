@@ -43,7 +43,7 @@ export const DIYA_NAME: Record<DiyaLanguage, string> = {
   en: "Diya",
 };
 
-/** Same vitality contract as the base repo's presence Orb. */
+/** The vitality contract every presence renderer follows. */
 export const PRESENCE_VITALITY: Record<DiyaPhase, number> = {
   ready: 0.92,
   listening: 0.98,

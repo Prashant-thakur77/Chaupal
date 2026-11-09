@@ -10,6 +10,10 @@ const ORIGIN = "https://chaupal-app.netlify.app";
 export default {
   async fetch(request) {
     const url = new URL(request.url);
+    // Retired page: gone from the app, closed here too until the next app deploy.
+    if (url.pathname === "/base" || url.pathname.startsWith("/base/")) {
+      return new Response("Not found", { status: 404, headers: { "content-type": "text/plain; charset=utf-8" } });
+    }
     const target = new URL(url.pathname + url.search, ORIGIN);
     const headers = new Headers(request.headers);
     headers.set("x-forwarded-host", url.host);

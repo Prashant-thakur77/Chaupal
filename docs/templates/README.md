@@ -24,14 +24,14 @@ The app runs as Node functions on Netlify behind a Cloudflare edge proxy at chau
 
 ## Proof
 
-We rebuilt the base repo's evaluation for India: 21 cases frozen before any run (its 15 cases ported one to one, plus 4 rangoli and kolam cases and 2 family cases), written in an elder's voice in Hindi, Hinglish, Punjabi, Tamil and Marathi, two repetitions each. The same model, `claude-sonnet-5-5`, ran both conditions on the same page, and grading reads only what ends up on screen.
+We built an evaluation for India: 21 cases frozen before any run (15 for Sulekh, shatranj and the interface, 4 for rangoli and kolam, 2 for family play), written in an elder's voice in Hindi, Hinglish, Punjabi, Tamil and Marathi, two repetitions each. The same model, `claude-sonnet-5-5`, ran both conditions on the same page, and grading reads only what ends up on screen.
 
 | Condition | Task success | Tokens per try | Seconds per try |
 |---|---:|---:|---:|
 | A. Browser control only (no actions) | {{A_PASS}}/{{A_RUNS}} ({{A_RATE}}) | {{A_TOKENS}} | {{A_SECS}} |
 | B. Chaupal actions (best accepted iteration) | {{B_PASS}}/{{B_RUNS}} ({{B_RATE}}) | {{B_TOKENS}} | {{B_SECS}} |
 
-B uses more tokens than A; each of its tool results carries the live state and the next valid actions. Five candidate iterations followed the base repo's rule of one bounded change at a time with a computed acceptance gate; one was rejected, and every artifact is kept in [`evals/iterations`](evals/iterations). The remaining failure is one case, twice: before its Hindi reply the agent wrote an English aside, which the conversation judge counts against it.
+B uses more tokens than A; each of its tool results carries the live state and the next valid actions. Five candidate iterations made one bounded change at a time, with a computed acceptance gate; one was rejected, and every artifact is kept in [`evals/iterations`](evals/iterations). The remaining failure is one case, twice: before its Hindi reply the agent wrote an English aside, which the conversation judge counts against it.
 
 Family sync on the live deployment, from a move request until the other device shows it: p50 {{SYNC_P50}} s, p95 {{SYNC_P95}} s over {{SYNC_N}} moves. The deployment polls for changes from serverless functions; on a long-lived local server the same measure is about 1 s.
 

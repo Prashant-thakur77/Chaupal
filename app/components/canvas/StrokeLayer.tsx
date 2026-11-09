@@ -193,7 +193,7 @@ export function StrokeLayer({
     return () => observer.disconnect();
   }, []);
 
-  // Live WebGPU ink, with the base repo's brush.
+  // Live WebGPU ink with the calligraphy brush.
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas || !gpuInk) return;

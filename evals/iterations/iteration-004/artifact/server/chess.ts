@@ -191,7 +191,7 @@ export async function playMove(opts: {
 }
 
 /**
- * The base repo held a move until the board finished animating. Here the
+ * A move used to be held until the board finished animating. Here the
  * elder's board confirms the ply it has finished drawing; we wait briefly for
  * that, and report honestly if no board confirmed it (no screen open).
  */

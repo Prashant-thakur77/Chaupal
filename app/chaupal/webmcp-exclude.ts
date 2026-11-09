@@ -1,6 +1,6 @@
 /**
  * Framework actions that browser agents do not need on Chaupal's pages.
- * WebMCP then offers only Chaupal's own actions, as the base repo did.
+ * WebMCP then offers only Chaupal's own actions.
  */
 export const WEBMCP_EXCLUDE: readonly string[] = [
   "provider-api-request",

@@ -1,16 +1,16 @@
 /**
  * Air-writing: camera → hand landmarks → a pen on her layer.
  *
- * Reuses the base repo's hand-tracking runtime unchanged: the camera source
+ * Uses the hand-tracking runtime unchanged: the camera source
  * (getUserMedia only inside the click that asked for it), the WebGPU crop
  * stages of the visual pipeline, the ONNX palm detector and landmark model on
  * ORT WebGPU, the SSD decoding, the slot tracker and the coalescing inference
- * scheduler. The difference is the output: the base repo kept everything on the
- * GPU and painted a mask; Chaupal needs the path itself, so the 63 landmark
+ * scheduler. The difference is the output: the runtime keeps everything on the
+ * GPU and paints a mask; Chaupal needs the path itself, so the 63 landmark
  * floats are read back (one tiny tensor per frame) and the hand pose becomes
  * PenSamples that the stroke layer turns into committed strokes.
  *
- * The gesture is the base repo's: close the hand into a fist to put the pen
+ * The gesture: close the hand into a fist to put the pen
  * down, open it to lift. The working tip sits one palm-length above the
  * knuckles, so the pen appears held rather than hidden under the hand.
  *
@@ -87,7 +87,7 @@ interface Options {
   onFailure?(error: unknown): void;
 }
 
-// Port of the base repo's hand.wgsl gesture and filter constants.
+// The hand.wgsl gesture and filter constants, on the CPU.
 const HAND_ENGAGE_THRESHOLD = 0.2;
 const HAND_RELEASE_THRESHOLD = 0.34;
 const BRUSH_TIP_OFFSET_SCALE = 1.15;
