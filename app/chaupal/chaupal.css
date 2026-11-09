@@ -888,3 +888,63 @@
   gap: var(--ch-space-4);
   font-size: var(--ch-text-lead);
 }
+
+/* ---------- Proof ---------- */
+.ch-proof-body {
+  display: grid;
+  gap: var(--ch-space-5);
+  max-width: 980px;
+  margin: 0 auto;
+  padding: var(--ch-space-4) var(--ch-gutter) var(--ch-space-8);
+}
+.ch-proof-lead {
+  font-size: var(--ch-text-lead);
+  color: var(--ch-text-soft);
+}
+.ch-proof-bars {
+  display: grid;
+  gap: var(--ch-space-5);
+}
+.ch-proof-row {
+  display: grid;
+  gap: var(--ch-space-2);
+}
+.ch-proof-label {
+  font-weight: 600;
+  font-size: var(--ch-text-lead);
+}
+.ch-proof-track {
+  height: 28px;
+  border-radius: var(--ch-radius-chip);
+  background: var(--ch-surface);
+  border: 1.5px solid var(--ch-hairline);
+  overflow: hidden;
+}
+.ch-proof-fill {
+  height: 100%;
+  background: var(--ch-indigo-400);
+}
+.ch-proof-row[data-arm="candidate"] .ch-proof-fill {
+  background: repeating-linear-gradient(135deg, var(--ch-accent) 0 14px, var(--ch-marigold-400) 14px 28px);
+}
+.ch-proof-value {
+  font-family: var(--ch-font-display);
+  font-size: var(--ch-text-title);
+}
+.ch-proof-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--ch-text-body);
+}
+.ch-proof-table th,
+.ch-proof-table td {
+  text-align: left;
+  padding: var(--ch-space-2) var(--ch-space-3);
+  border-bottom: 1px solid var(--ch-hairline);
+}
+.ch-proof-failures {
+  display: grid;
+  gap: var(--ch-space-2);
+  font-size: var(--ch-text-body);
+  color: var(--ch-text-soft);
+}
