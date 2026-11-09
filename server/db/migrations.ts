@@ -160,4 +160,29 @@ CREATE TABLE IF NOT EXISTS chaupal_events (
 CREATE INDEX IF NOT EXISTS chaupal_events_session_idx ON chaupal_events(session_id, created_at);
 `,
   },
+  {
+    version: 2,
+    name: "chaupal-session-sharing",
+    sql: `
+ALTER TABLE chaupal_sessions ADD COLUMN IF NOT EXISTS org_id TEXT;
+ALTER TABLE chaupal_sessions ADD COLUMN IF NOT EXISTS visibility TEXT NOT NULL DEFAULT 'private';
+CREATE TABLE IF NOT EXISTS chaupal_session_shares (
+  id TEXT PRIMARY KEY,
+  resource_id TEXT NOT NULL,
+  principal_type TEXT NOT NULL,
+  principal_id TEXT NOT NULL,
+  role TEXT NOT NULL,
+  created_by TEXT NOT NULL,
+  created_at TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS chaupal_session_shares_resource_idx ON chaupal_session_shares(resource_id);
+CREATE INDEX IF NOT EXISTS chaupal_session_shares_principal_idx ON chaupal_session_shares(principal_type, principal_id);
+ALTER TABLE chaupal_activity_state ADD COLUMN IF NOT EXISTS fixture TEXT;
+`,
+  },
+  {
+    version: 3,
+    name: "chaupal-session-shares-notified",
+    sql: `ALTER TABLE chaupal_session_shares ADD COLUMN IF NOT EXISTS notified_at TEXT;`,
+  },
 ];

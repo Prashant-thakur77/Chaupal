@@ -1,7 +1,7 @@
 import { defineAction } from "@agent-native/core/action";
 import { z } from "zod";
 
-import { ChaupalResult, mutationOptions, respond, sessionOf } from "../server/chaupal/kit.js";
+import { ChaupalResult, sessionChange, mutationOptions, respond, sessionOf } from "../server/chaupal/kit.js";
 import { getDb, schema } from "../server/db/index.js";
 import { mutate, nowIso } from "../server/chaupal/state.js";
 import { eq } from "drizzle-orm";
@@ -15,15 +15,17 @@ export default defineAction({
     language: z.enum(LANGUAGES).describe("hi | en | pa | ta | mr | bn"),
   }),
   outputSchema: ChaupalResult,
+  changeResource: sessionChange,
   mcpTool: true,
   run: async ({ language }, ctx) => {
-    const { session } = await sessionOf(ctx);
+    const who = await sessionOf(ctx);
+    const { session } = who;
     await getDb()
       .update(schema.sessions)
       .set({ language, updatedAt: nowIso() })
       .where(eq(schema.sessions.id, session.id));
     const { state } = await mutate(
-      mutationOptions(ctx, session.id, "set-language"),
+      mutationOptions(ctx, who, "set-language"),
       async () => ({ result: null, payload: { language } }),
     );
     return respond(state, { language, boardUnchanged: true });

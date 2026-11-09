@@ -1,5 +1,5 @@
 import { fail } from "@agent-native/core/action";
-import { saveIfCurrent } from "@agent-native/core/save-conflict/server";
+import { saveConflict, saveIfCurrent } from "@agent-native/core/save-conflict/server";
 import { and, desc, eq, isNull, sql } from "drizzle-orm";
 
 import { getDb, schema } from "../db/index.js";
@@ -142,6 +142,10 @@ export async function mutate<T>(
     return await db.transaction(async (tx) => {
       const before = await readActivity(tx, opts.sessionId);
       if (!before) fail("Session not found", { errorCode: "SESSION_NOT_FOUND" });
+      // A caller acting on an old read is refused before anything else runs.
+      if (opts.expectedRevision !== undefined && opts.expectedRevision !== before!.revision) {
+        throw saveConflict("chaupal_activity_state", publicState(before!), String(before!.revision));
+      }
       const { result, patch, payload } = await fn(tx, before!);
       const nextRevision = opts.quiet ? before!.revision : before!.revision + 1;
       const { current } = await saveIfCurrent({
@@ -190,6 +194,18 @@ export async function mutate<T>(
     await logFailure(opts, error);
     throw error;
   }
+}
+
+function publicState(row: ActivityRow) {
+  return {
+    revision: row.revision,
+    scene: row.scene,
+    inputMode: row.inputMode,
+    historyOpen: row.historyOpen === 1,
+    hasCalligraphyReference: Boolean(row.calligraphyRefId),
+    hasDesign: Boolean(row.kolamRefId),
+    chessGameId: row.chessGameId,
+  };
 }
 
 /** Failed attempts are evidence too (rejections, conflicts, illegal moves). */

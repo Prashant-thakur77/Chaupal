@@ -1,7 +1,7 @@
 import { defineAction, fail } from "@agent-native/core/action";
 import { z } from "zod";
 
-import { ChaupalResult, mutationOptions, respond, sessionOf } from "../server/chaupal/kit.js";
+import { ChaupalResult, sessionChange, mutationOptions, respond, sessionOf } from "../server/chaupal/kit.js";
 import { mutate, newId } from "../server/chaupal/state.js";
 import { schema } from "../server/db/index.js";
 
@@ -13,11 +13,13 @@ export default defineAction({
     input: z.enum(["touch", "air"]).default("touch"),
   }),
   outputSchema: ChaupalResult,
+  changeResource: sessionChange,
   agentTool: false,
   run: async ({ layer, points, input }, ctx) => {
-    const { session } = await sessionOf(ctx);
+    const who = await sessionOf(ctx);
+    const { session } = who;
     const { state } = await mutate(
-      { ...mutationOptions(ctx, session.id, "add-stroke"), actor: "elder" },
+      { ...mutationOptions(ctx, who, "add-stroke"), actor: "elder" },
       async (tx, st) => {
         const refId = layer === "sulekh" ? st.calligraphyRefId : st.kolamRefId;
         if (!refId) fail("Nothing to trace yet.", { errorCode: "REFERENCE_NOT_READY" });

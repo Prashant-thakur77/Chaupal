@@ -2,7 +2,7 @@ import { defineAction, fail } from "@agent-native/core/action";
 import { and, eq, isNull } from "drizzle-orm";
 import { z } from "zod";
 
-import { ChaupalResult, ExpectedRevision, mutationOptions, respond, sessionOf } from "../server/chaupal/kit.js";
+import { ChaupalResult, sessionChange, ExpectedRevision, mutationOptions, respond, sessionOf } from "../server/chaupal/kit.js";
 import { mutate, nowIso } from "../server/chaupal/state.js";
 import { schema } from "../server/db/index.js";
 
@@ -14,12 +14,14 @@ export default defineAction({
     expectedRevision: ExpectedRevision,
   }),
   outputSchema: ChaupalResult,
+  changeResource: sessionChange,
   mcpTool: true,
   run: async ({ personConfirmed, expectedRevision }, ctx) => {
     if (!personConfirmed) fail("She has not asked to erase her lines.", { errorCode: "PERSON_CONFIRMATION_REQUIRED" });
-    const { session } = await sessionOf(ctx);
+    const who = await sessionOf(ctx);
+    const { session } = who;
     const { state, result } = await mutate(
-      mutationOptions(ctx, session.id, "clear-my-strokes", { expectedRevision }),
+      mutationOptions(ctx, who, "clear-my-strokes", { expectedRevision }),
       async (tx, st) => {
         const layer = st.scene === "sulekh" ? "sulekh" : st.scene === "rangoli" || st.scene === "kolam" ? "rangoli" : null;
         if (!layer) fail("No canvas is open.", { errorCode: "CANVAS_NOT_OPEN" });

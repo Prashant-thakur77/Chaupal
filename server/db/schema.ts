@@ -1,4 +1,5 @@
 import { sql } from "drizzle-orm";
+import { createSharesTable, ownableColumns } from "@agent-native/core/db/schema";
 import { integer, pgTable, text } from "drizzle-orm/pg-core";
 
 /**
@@ -10,12 +11,15 @@ import { integer, pgTable, text } from "drizzle-orm/pg-core";
 
 export const sessions = pgTable("chaupal_sessions", {
   id: text("id").primaryKey(),
-  ownerEmail: text("owner_email").notNull(),
+  ...ownableColumns(),
   elderName: text("elder_name"),
   language: text("language").notNull().default("hi"),
   createdAt: text("created_at").notNull().default(sql`now()`),
   updatedAt: text("updated_at").notNull().default(sql`now()`),
 });
+
+/** Share grants on a household session (the family member's guest access). */
+export const sessionShares = createSharesTable("chaupal_session_shares");
 
 export const activityState = pgTable("chaupal_activity_state", {
   sessionId: text("session_id").primaryKey(),
@@ -38,6 +42,8 @@ export const activityState = pgTable("chaupal_activity_state", {
   conflict: text("conflict"),
   /** JSON: a family update waiting for the elder's approval */
   approval: text("approval"),
+  /** JSON: evaluation fixture (only set by the eval harness) */
+  fixture: text("fixture"),
   updatedAt: text("updated_at").notNull().default(sql`now()`),
 });
 

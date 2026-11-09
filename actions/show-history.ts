@@ -1,7 +1,7 @@
 import { defineAction } from "@agent-native/core/action";
 import { z } from "zod";
 
-import { ChaupalResult, mutationOptions, respond, sessionOf } from "../server/chaupal/kit.js";
+import { ChaupalResult, sessionChange, mutationOptions, respond, sessionOf } from "../server/chaupal/kit.js";
 import { mutate } from "../server/chaupal/state.js";
 
 export default defineAction({
@@ -11,11 +11,13 @@ export default defineAction({
     open: z.boolean().default(true).describe("true opens the history panel, false closes it; defaults to true"),
   }),
   outputSchema: ChaupalResult,
+  changeResource: sessionChange,
   mcpTool: true,
   run: async ({ open }, ctx) => {
-    const { session } = await sessionOf(ctx);
+    const who = await sessionOf(ctx);
+    const { session } = who;
     const { state } = await mutate(
-      mutationOptions(ctx, session.id, "show-history"),
+      mutationOptions(ctx, who, "show-history"),
       async () => ({ patch: { historyOpen: open ? 1 : 0 }, result: null }),
     );
     return respond(state, { historyOpen: open });

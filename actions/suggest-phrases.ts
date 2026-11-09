@@ -1,7 +1,7 @@
 import { defineAction } from "@agent-native/core/action";
 import { z } from "zod";
 
-import { ChaupalResult, mutationOptions, respond, sessionOf, sleep } from "../server/chaupal/kit.js";
+import { ChaupalResult, sessionChange, mutationOptions, respond, sessionOf, sleep } from "../server/chaupal/kit.js";
 import { mutate, parseJson, readActivity } from "../server/chaupal/state.js";
 import { getDb } from "../server/db/index.js";
 
@@ -19,11 +19,13 @@ export default defineAction({
     question: z.string().max(160).optional().describe("Short question shown above the choices, in her language"),
   }),
   outputSchema: ChaupalResult,
+  changeResource: sessionChange,
   mcpTool: true,
   run: async ({ suggestions, question }, ctx) => {
-    const { session } = await sessionOf(ctx);
+    const who = await sessionOf(ctx);
+    const { session } = who;
     const token = crypto.randomUUID().slice(0, 8);
-    await mutate(mutationOptions(ctx, session.id, "suggest-phrases"), async () => ({
+    await mutate(mutationOptions(ctx, who, "suggest-phrases"), async () => ({
       patch: {
         scene: "sulekh",
         pending: JSON.stringify({ kind: "phrase-choice", token, question: question ?? null, options: suggestions }),

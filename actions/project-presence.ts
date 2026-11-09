@@ -1,7 +1,7 @@
 import { defineAction } from "@agent-native/core/action";
 import { z } from "zod";
 
-import { ChaupalResult, mutationOptions, respond, sessionOf } from "../server/chaupal/kit.js";
+import { ChaupalResult, sessionChange, mutationOptions, respond, sessionOf } from "../server/chaupal/kit.js";
 import { mutate } from "../server/chaupal/state.js";
 
 export default defineAction({
@@ -14,11 +14,13 @@ export default defineAction({
     caption: z.string().max(180).optional().describe("Optional short line shown under the diya, in her language"),
   }),
   outputSchema: ChaupalResult,
+  changeResource: sessionChange,
   mcpTool: true,
   run: async ({ phase, caption }, ctx) => {
-    const { session } = await sessionOf(ctx);
+    const who = await sessionOf(ctx);
+    const { session } = who;
     const { state } = await mutate(
-      mutationOptions(ctx, session.id, "project-presence", { quiet: true }),
+      mutationOptions(ctx, who, "project-presence", { quiet: true }),
       async () => ({
         patch: { presence: phase, ...(caption !== undefined ? { caption } : {}) },
         result: null,

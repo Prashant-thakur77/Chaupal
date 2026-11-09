@@ -1,7 +1,7 @@
 import { defineAction, fail } from "@agent-native/core/action";
 import { z } from "zod";
 
-import { ChaupalResult, mutationOptions, respond, sessionOf } from "../server/chaupal/kit.js";
+import { ChaupalResult, sessionChange, mutationOptions, respond, sessionOf } from "../server/chaupal/kit.js";
 import { mutate } from "../server/chaupal/state.js";
 
 export default defineAction({
@@ -11,14 +11,16 @@ export default defineAction({
     personConfirmed: z.boolean().describe("true only when she asked to go back home"),
   }),
   outputSchema: ChaupalResult,
+  changeResource: sessionChange,
   mcpTool: true,
   run: async ({ personConfirmed }, ctx) => {
-    const { session } = await sessionOf(ctx);
+    const who = await sessionOf(ctx);
+    const { session } = who;
     if (!personConfirmed) {
       fail("She has not asked to leave this activity.", { errorCode: "PERSON_CONFIRMATION_REQUIRED" });
     }
     const { state } = await mutate(
-      mutationOptions(ctx, session.id, "go-home"),
+      mutationOptions(ctx, who, "go-home"),
       async () => ({
         patch: { scene: "home", inputMode: "none", pending: null, presence: "ready", caption: null },
         result: null,

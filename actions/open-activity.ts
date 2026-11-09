@@ -3,7 +3,7 @@ import { Chess } from "chess.js";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 
-import { ChaupalResult, ExpectedRevision, mutationOptions, respond, sessionOf } from "../server/chaupal/kit.js";
+import { ChaupalResult, sessionChange, ExpectedRevision, mutationOptions, respond, sessionOf } from "../server/chaupal/kit.js";
 import { mutate, newId } from "../server/chaupal/state.js";
 import { schema } from "../server/db/index.js";
 
@@ -21,11 +21,13 @@ export default defineAction({
     expectedRevision: ExpectedRevision,
   }),
   outputSchema: ChaupalResult,
+  changeResource: sessionChange,
   mcpTool: true,
   run: async ({ activity, elderColor, newGame, caption, expectedRevision }, ctx) => {
-    const { session } = await sessionOf(ctx);
+    const who = await sessionOf(ctx);
+    const { session } = who;
     const { state, result } = await mutate(
-      mutationOptions(ctx, session.id, "open-activity", { expectedRevision }),
+      mutationOptions(ctx, who, "open-activity", { expectedRevision }),
       async (tx, st) => {
         const patch: Record<string, unknown> = {
           scene: activity,

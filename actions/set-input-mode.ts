@@ -1,7 +1,7 @@
 import { defineAction, fail } from "@agent-native/core/action";
 import { z } from "zod";
 
-import { ChaupalResult, mutationOptions, respond, sessionOf } from "../server/chaupal/kit.js";
+import { ChaupalResult, sessionChange, mutationOptions, respond, sessionOf } from "../server/chaupal/kit.js";
 import { mutate } from "../server/chaupal/state.js";
 
 export default defineAction({
@@ -11,10 +11,12 @@ export default defineAction({
     mode: z.enum(["touch", "none"]).describe("touch (direct finger drawing, no camera) | none"),
   }),
   outputSchema: ChaupalResult,
+  changeResource: sessionChange,
   mcpTool: true,
   run: async ({ mode }, ctx) => {
-    const { session } = await sessionOf(ctx);
-    const { state } = await mutate(mutationOptions(ctx, session.id, "set-input-mode"), async (_tx, st) => {
+    const who = await sessionOf(ctx);
+    const { session } = who;
+    const { state } = await mutate(mutationOptions(ctx, who, "set-input-mode"), async (_tx, st) => {
       if (!["sulekh", "rangoli", "kolam"].includes(st.scene)) {
         fail("Open Sulekh, rangoli or kolam first.", { errorCode: "CANVAS_NOT_OPEN" });
       }
