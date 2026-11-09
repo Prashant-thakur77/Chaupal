@@ -1,6 +1,6 @@
 {
   "status": "ready",
-  "generatedAt": "2026-11-09T15:26:51.051Z",
+  "generatedAt": "2026-11-09T16:10:20.274Z",
   "model": "claude-sonnet-5-5",
   "cases": 21,
   "repetitions": 2,
@@ -119,12 +119,12 @@
   "candidate": {
     "label": "B. Chaupal actions",
     "config": "chaupal-actions",
-    "iteration": "iteration-004",
-    "passed": 38,
+    "iteration": "iteration-006",
+    "passed": 40,
     "runs": 42,
-    "rate": "90.5%",
-    "tokens": 46335,
-    "seconds": 10.9,
+    "rate": "95.2%",
+    "tokens": 49254,
+    "seconds": 10.2,
     "categories": {
       "sulekh": {
         "chaupal-actions": {
@@ -136,34 +136,34 @@
           "failedToolCalls": 1,
           "expectedGuardRejections": 4,
           "retries": 4,
-          "totalTokens": 651800,
-          "meanTokensPerRun": 40737.5,
-          "meanInputTokensPerRun": 40326.3125,
-          "meanOutputTokensPerRun": 411.1875,
-          "meanWallTimeMs": 8323.348252249998,
-          "meanModelLatencyMs": 6109.17689375,
-          "tokensPerSuccessfulOutcome": 40737.5,
-          "meanTimeToVisibleSuccessMs": 6988.6541599375005
+          "totalTokens": 626545,
+          "meanTokensPerRun": 39159.0625,
+          "meanInputTokensPerRun": 38759.875,
+          "meanOutputTokensPerRun": 399.1875,
+          "meanWallTimeMs": 8565.475936375,
+          "meanModelLatencyMs": 6365.125680062502,
+          "tokensPerSuccessfulOutcome": 39159.0625,
+          "meanTimeToVisibleSuccessMs": 6509.310796624999
         }
       },
       "shatranj": {
         "chaupal-actions": {
           "runs": 10,
-          "passed": 7,
-          "passRate": 0.7,
-          "criticalPassRate": 0.8,
+          "passed": 8,
+          "passRate": 0.8,
+          "criticalPassRate": 1,
           "firstPassValidRate": 0.7,
-          "failedToolCalls": 0,
+          "failedToolCalls": 1,
           "expectedGuardRejections": 2,
-          "retries": 2,
-          "totalTokens": 437569,
-          "meanTokensPerRun": 43756.9,
-          "meanInputTokensPerRun": 43256.9,
-          "meanOutputTokensPerRun": 500,
-          "meanWallTimeMs": 14975.851689699997,
-          "meanModelLatencyMs": 8434.598322600008,
-          "tokensPerSuccessfulOutcome": 62509.857142857145,
-          "meanTimeToVisibleSuccessMs": 16860.653124999997
+          "retries": 3,
+          "totalTokens": 449608,
+          "meanTokensPerRun": 44960.8,
+          "meanInputTokensPerRun": 44402.7,
+          "meanOutputTokensPerRun": 558.1,
+          "meanWallTimeMs": 9910.340682700002,
+          "meanModelLatencyMs": 7834.071279100007,
+          "tokensPerSuccessfulOutcome": 56201,
+          "meanTimeToVisibleSuccessMs": 8460.65121225
         }
       },
       "interface": {
@@ -176,34 +176,34 @@
           "failedToolCalls": 0,
           "expectedGuardRejections": 0,
           "retries": 0,
-          "totalTokens": 191307,
-          "meanTokensPerRun": 47826.75,
-          "meanInputTokensPerRun": 47489.75,
-          "meanOutputTokensPerRun": 337,
-          "meanWallTimeMs": 7548.505553000003,
-          "meanModelLatencyMs": 6406.037889249994,
-          "tokensPerSuccessfulOutcome": 47826.75,
-          "meanTimeToVisibleSuccessMs": 7185.520241749997
+          "totalTokens": 191432,
+          "meanTokensPerRun": 47858,
+          "meanInputTokensPerRun": 47500.25,
+          "meanOutputTokensPerRun": 357.75,
+          "meanWallTimeMs": 7413.3439555,
+          "meanModelLatencyMs": 6273.661729499996,
+          "tokensPerSuccessfulOutcome": 47858,
+          "meanTimeToVisibleSuccessMs": 5910.103553499997
         }
       },
       "rangoli": {
         "chaupal-actions": {
           "runs": 8,
-          "passed": 7,
-          "passRate": 0.875,
+          "passed": 8,
+          "passRate": 1,
           "criticalPassRate": 1,
-          "firstPassValidRate": 0.875,
+          "firstPassValidRate": 1,
           "failedToolCalls": 0,
           "expectedGuardRejections": 0,
           "retries": 0,
-          "totalTokens": 446089,
-          "meanTokensPerRun": 55761.125,
-          "meanInputTokensPerRun": 55320.25,
-          "meanOutputTokensPerRun": 440.875,
-          "meanWallTimeMs": 9352.575652749998,
-          "meanModelLatencyMs": 8001.172675374994,
-          "tokensPerSuccessfulOutcome": 63727,
-          "meanTimeToVisibleSuccessMs": 6064.462300428572
+          "totalTokens": 503479,
+          "meanTokensPerRun": 62934.875,
+          "meanInputTokensPerRun": 62507.25,
+          "meanOutputTokensPerRun": 427.625,
+          "meanWallTimeMs": 8463.057982374998,
+          "meanModelLatencyMs": 7128.746061500005,
+          "tokensPerSuccessfulOutcome": 62934.875,
+          "meanTimeToVisibleSuccessMs": 5517.209913750001
         }
       },
       "family": {
@@ -216,14 +216,14 @@
           "failedToolCalls": 0,
           "expectedGuardRejections": 0,
           "retries": 0,
-          "totalTokens": 219297,
-          "meanTokensPerRun": 54824.25,
-          "meanInputTokensPerRun": 54401.5,
-          "meanOutputTokensPerRun": 422.75,
-          "meanWallTimeMs": 17934.604374999995,
-          "meanModelLatencyMs": 6025.059791500011,
-          "tokensPerSuccessfulOutcome": 54824.25,
-          "meanTimeToVisibleSuccessMs": 16374.92925099998
+          "totalTokens": 297593,
+          "meanTokensPerRun": 74398.25,
+          "meanInputTokensPerRun": 73884.75,
+          "meanOutputTokensPerRun": 513.5,
+          "meanWallTimeMs": 23261.529936500003,
+          "meanModelLatencyMs": 11019.226613250023,
+          "tokensPerSuccessfulOutcome": 74398.25,
+          "meanTimeToVisibleSuccessMs": 17690.606990000007
         }
       }
     }
@@ -237,7 +237,7 @@
     {
       "name": "shatranj",
       "control": "6/10",
-      "candidate": "7/10"
+      "candidate": "8/10"
     },
     {
       "name": "interface",
@@ -247,7 +247,7 @@
     {
       "name": "rangoli",
       "control": "0/8",
-      "candidate": "7/8"
+      "candidate": "8/8"
     },
     {
       "name": "family",
@@ -256,10 +256,10 @@
     }
   ],
   "sync": {
-    "p50": 1.03,
-    "p95": 1.04,
-    "n": 25,
-    "where": "http://127.0.0.1:4194"
+    "p50": 3.94,
+    "p95": 5.06,
+    "n": 50,
+    "where": "https://chaupal.prashantthakur.dev"
   },
   "ocr": {
     "shaped": 21,
@@ -270,16 +270,9 @@
   },
   "failures": [
     {
-      "caseId": "chess-natural-move",
-      "reason": "Both repetitions (iteration-004): her move e2–e4 was made correctly and is the visible last move, but SHATRANJ-GROUNDING-001 failed: the agent opened the board and moved in the next call, and no screen sample showed the untouched board first (the board component loads lazily and the runner samples the screen only between calls), so the move could not be shown to be grounded in a visible board."
-    },
-    {
       "caseId": "chess-shared-turn",
-      "reason": "One of two repetitions (iteration-004): the board outcome was right (her hand move, exactly one agent reply), but the conversation judge failed it for an English, third-person process line between tool calls (\"She asked me to reply after her move, so I'll play e5.\")."
-    },
-    {
-      "caseId": "rangoli-recolour",
-      "reason": "One of two repetitions (iteration-004): exactly the centre turned yellow and the outer part red and her line stayed, but the conversation judge failed the reply for naming internal zone labels she never used (\"घेरा 2\", \"घेरा 1\") and listing the unfilled parts."
+      "iteration": "iteration-006",
+      "reason": "Both repetitions: the board outcome was right (her hand move e2–e4, then exactly one agent reply e7–e5), but CONVERSATION-QUALITY-001 failed because the agent first wrote an English, third-person aside (\"She asked me to reply after her move\") before its Hindi reply; the judge counts that as process narration."
     }
   ]
 }

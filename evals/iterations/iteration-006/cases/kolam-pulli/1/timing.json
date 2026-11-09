@@ -1,0 +1,21 @@
+{
+  "agent": {
+    "usage": {
+      "input": 6,
+      "cacheCreationInput": 1307,
+      "cacheReadInput": 19295,
+      "output": 327,
+      "total": 20935
+    },
+    "modelLatencyMs": 3455.798437999998,
+    "wallTimeMs": 3887.9289859999844,
+    "turns": 2,
+    "timedOut": false,
+    "executionError": null
+  },
+  "provider": {
+    "actionCalls": 1,
+    "totalDurationMs": 401.18061700000544,
+    "timeToVisibleSuccessMs": 1997.970971999981
+  }
+}

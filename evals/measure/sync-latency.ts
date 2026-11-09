@@ -6,9 +6,9 @@
  * from the mover's action response to the OTHER client's DOM showing the new
  * data-move-count.
  *
- *   pnpm eval:sync-latency [--base-url http://127.0.0.1:4194] [--moves 50]
+ *   pnpm eval:sync-latency [--base-url http://127.0.0.1:4194] [--moves 50] [--out-name sync-latency]
  *
- * Writes evals/measure/sync-latency.json and sync-latency.md.
+ * Writes evals/measure/<out-name>.json and <out-name>.md.
  */
 import { writeFileSync } from "node:fs";
 import { join } from "node:path";
@@ -24,6 +24,7 @@ function arg(name: string, fallback: string) {
 const BASE = arg("--base-url", process.env.CHAUPAL_SYNC_BASE_URL ?? "http://127.0.0.1:4194").replace(/\/$/, "");
 const MOVES = Number(arg("--moves", "50"));
 const OUT_DIR = import.meta.dirname;
+const OUT_NAME = arg("--out-name", "sync-latency");
 
 async function cookieFrom(response: Response) {
   const raw = response.headers.get("set-cookie") ?? "";
@@ -33,6 +34,23 @@ async function cookieFrom(response: Response) {
 }
 
 async function call(cookie: { name: string; value: string }, name: string, body: Record<string, unknown>) {
+  try {
+    return await callOnce(cookie, name, body);
+  } catch (error) {
+    // A dropped connection (not an app error): try once more. If the first
+    // attempt did land, the retry is refused as "not your turn", which means
+    // the move is already on the board.
+    if (!(error instanceof TypeError)) throw error;
+    try {
+      return await callOnce(cookie, name, body);
+    } catch (retryError) {
+      if (String(retryError).includes("CHESS_NOT_YOUR_TURN")) return { landedOnFirstAttempt: true };
+      throw retryError;
+    }
+  }
+}
+
+async function callOnce(cookie: { name: string; value: string }, name: string, body: Record<string, unknown>) {
   const response = await fetch(`${BASE}/_agent-native/actions/${name}`, {
     method: "POST",
     headers: { cookie: `${cookie.name}=${cookie.value}`, "content-type": "application/json" },
@@ -167,12 +185,12 @@ async function main() {
       actionMs: Math.round(row.actionMs),
     })),
   };
-  writeFileSync(join(OUT_DIR, "sync-latency.json"), `${JSON.stringify(report, null, 2)}\n`);
+  writeFileSync(join(OUT_DIR, `${OUT_NAME}.json`), `${JSON.stringify(report, null, 2)}\n`);
   const ms = (value: number | null) => (value === null ? "n/a" : `${Math.round(value)} ms`);
   const row = (label: string, s: ReturnType<typeof summarize>) =>
     `| ${label} | ${s.moves} | ${s.observed} | ${ms(s.p50Ms)} | ${ms(s.p95Ms)} | ${ms(s.maxMs)} | ${ms(s.fromRequestP50Ms)} | ${ms(s.fromRequestP95Ms)} | ${ms(s.fromRequestMaxMs)} | ${ms(s.actionP50Ms)} |`;
   writeFileSync(
-    join(OUT_DIR, "sync-latency.md"),
+    join(OUT_DIR, `${OUT_NAME}.md`),
     [
       "# Family sync latency",
       "",

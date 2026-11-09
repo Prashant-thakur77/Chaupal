@@ -1,14 +1,7 @@
 [
   {
-    "caseId": "chess-natural-move",
-    "reason": "Both repetitions (iteration-004): her move e2–e4 was made correctly and is the visible last move, but SHATRANJ-GROUNDING-001 failed: the agent opened the board and moved in the next call, and no screen sample showed the untouched board first (the board component loads lazily and the runner samples the screen only between calls), so the move could not be shown to be grounded in a visible board."
-  },
-  {
     "caseId": "chess-shared-turn",
-    "reason": "One of two repetitions (iteration-004): the board outcome was right (her hand move, exactly one agent reply), but the conversation judge failed it for an English, third-person process line between tool calls (\"She asked me to reply after her move, so I'll play e5.\")."
-  },
-  {
-    "caseId": "rangoli-recolour",
-    "reason": "One of two repetitions (iteration-004): exactly the centre turned yellow and the outer part red and her line stayed, but the conversation judge failed the reply for naming internal zone labels she never used (\"घेरा 2\", \"घेरा 1\") and listing the unfilled parts."
+    "iteration": "iteration-006",
+    "reason": "Both repetitions: the board outcome was right (her hand move e2–e4, then exactly one agent reply e7–e5), but CONVERSATION-QUALITY-001 failed because the agent first wrote an English, third-person aside (\"She asked me to reply after her move\") before its Hindi reply; the judge counts that as process narration."
   }
 ]

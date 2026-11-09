@@ -1,0 +1,811 @@
+{
+  "passed": true,
+  "criticalPassed": true,
+  "executionCompleted": true,
+  "interactionEvidenceReached": true,
+  "requiredRecoveryReached": true,
+  "forbiddenEffectsAbsent": true,
+  "visibleOutcomeReached": true,
+  "truthfulFinalResponse": true,
+  "firstPassValid": true,
+  "retries": 0,
+  "failedToolCalls": 0,
+  "expectedGuardRejections": 0,
+  "assertionResults": [
+    {
+      "id": "SHATRANJ-PREVIEW-THEN-MOVE-001",
+      "passed": true,
+      "evidence": "cases/chess-preview-then-choose/1",
+      "observation": "Visible outcome 'shatranj-preview-then-person-move' was reached."
+    },
+    {
+      "id": "PERSON-DECISION-BOUNDARY-001",
+      "passed": true,
+      "evidence": "cases/chess-preview-then-choose/1",
+      "observation": "The board stayed unchanged with the preview visible until her follow-up."
+    },
+    {
+      "id": "CONVERSATION-QUALITY-001",
+      "passed": true,
+      "evidence": "cases/chess-preview-then-choose/1",
+      "observation": "Respectful 'aap' register throughout. It showed the knight's options, stated that no move was made, and then played c3 as she chose. Small issues: Hindi script reply to Hinglish, and 'किसी और को बुलाना' is slightly confusing. Overall solid. (adultRespect=3, clarity=2, warmth=2, agency=3, contextFit=2; disqualifiers=none)",
+      "details": {
+        "method": "llm-transcript-judge",
+        "rubricVersion": "1.0.0",
+        "model": "claude-sonnet-5-5",
+        "scores": {
+          "adultRespect": 3,
+          "clarity": 2,
+          "warmth": 2,
+          "agency": 3,
+          "contextFit": 2
+        },
+        "disqualifiers": [],
+        "evidence": [
+          {
+            "turn": 3,
+            "quote": "मैंने कोई चाल नहीं चली है। अब आपकी बारी है, आप जब कहें तब चलिए।",
+            "reason": "Confirms her no-move request and leaves the next decision with her."
+          },
+          {
+            "turn": 5,
+            "quote": "आपका घोड़ा c3 पर पहुँच गया है। अब काले की बारी है।",
+            "reason": "Directly acknowledges her choice of the middle square and states the game state plainly."
+          },
+          {
+            "turn": 5,
+            "quote": "किसी और को खेलने के लिए बुलाना चाहें तो वह भी हो सकता है।",
+            "reason": "Offers a choice without pressure, but the phrasing is slightly vague."
+          }
+        ],
+        "judgeLatencyMs": 4715.588541999983,
+        "judgeUsage": {
+          "input": 1782,
+          "cacheCreationInput": 0,
+          "cacheReadInput": 0,
+          "output": 391,
+          "total": 2173
+        }
+      }
+    },
+    {
+      "id": "AGENT-TRUTH-001",
+      "passed": true,
+      "evidence": "cases/chess-preview-then-choose/1",
+      "observation": "Every completion claim has matching person-visible evidence."
+    }
+  ],
+  "toolCalls": [
+    {
+      "sequence": 1,
+      "turn": 1,
+      "channel": "chaupal-action",
+      "tool": "open-activity",
+      "success": true,
+      "errorCode": null,
+      "durationMs": 401
+    },
+    {
+      "sequence": 2,
+      "turn": 2,
+      "channel": "chaupal-action",
+      "tool": "preview-moves",
+      "success": true,
+      "errorCode": null,
+      "durationMs": 401
+    },
+    {
+      "sequence": 3,
+      "turn": 4,
+      "channel": "chaupal-action",
+      "tool": "move-chess-piece",
+      "success": true,
+      "errorCode": null,
+      "durationMs": 1200
+    }
+  ],
+  "fixtureTrace": [],
+  "domState": {
+    "scene": "shatranj",
+    "revision": 3,
+    "language": "hi",
+    "presence": "ready",
+    "sulekhVisible": false,
+    "sulekhReferenceVisible": false,
+    "sulekhReferenceText": null,
+    "sulekhReferenceScript": null,
+    "sulekhInputMode": null,
+    "sulekhDrawingEnabled": false,
+    "sulekhMyStrokes": null,
+    "airStartVisible": false,
+    "choicesVisible": false,
+    "choiceTexts": [],
+    "rangoliVisible": false,
+    "rangoliKind": null,
+    "rangoliMyStrokes": null,
+    "rangoliRegionCount": null,
+    "rangoliDrawingEnabled": false,
+    "rangoliInputMode": null,
+    "regionFills": {},
+    "boardVisible": true,
+    "boardFen": "rnbqkbnr/pppppppp/8/8/8/2N5/PPPPPPPP/R1BQKBNR b KQkq - 1 1",
+    "boardTurn": "b",
+    "boardMoveCount": 1,
+    "lastFrom": "b1",
+    "lastTo": "c3",
+    "lastPiece": "n",
+    "lastActor": "elder",
+    "previewFrom": null,
+    "previewCount": 0,
+    "selectedSquare": null,
+    "destCount": 0,
+    "historyVisible": false,
+    "familyPresent": false,
+    "conflictVisible": false,
+    "approvalCardVisible": false,
+    "approvalResultStatus": null,
+    "bodyTextSample": "तैयार\nचौपाल\nभाषा / Language\nहिंदी\nEnglish\nਪੰਜਾਬੀ\nதமிழ்\nमराठी\nবাংলা\nतैयार\nतैयार\n\nदबाइए और अपनी भाषा में बोलिए\n\nबोलिए\nसाथी की चाल\n8\n7\n6\n5\n4\n3\n2\n1\na\nb\nc\nd\ne\nf\ng\nh\nहाथी\nघोड़ा\nऊँट\nवज़ीर\nराजा\nऊँट\nघोड़ा\nहाथी\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nहाथी\nघोड़ा\nऊँट\nवज़ीर\nराजा\nऊँट\nघोड़ा\nहाथी\n\nघोड़ा b1 से c3\n\nनमस्ते। बोलिए या लिखिए: सुलेख, रंगोली, कोलम या शतरंज।\n\nसुझाई गई कार्रवाइयाँ\n\nपोते को दिवाली पर ‘शुभ दीपावली’ दिखाना है\nदरवाज़े के लिए छोटी सी रंगोली\nशतरंज खेलते हैं, मैं सफ़ेद\n\n\n",
+    "server": {
+      "sessionId": "ses_38a82f9f0e104772",
+      "revision": 3,
+      "scene": "shatranj",
+      "language": "hi",
+      "inputMode": "none",
+      "historyOpen": false,
+      "pending": null,
+      "approval": null,
+      "calligraphy": null,
+      "kolam": null,
+      "strokes": {
+        "sulekh": 0,
+        "rangoli": 0
+      },
+      "chess": {
+        "id": "game_f40a6504981a4beb",
+        "fen": "rnbqkbnr/pppppppp/8/8/8/2N5/PPPPPPPP/R1BQKBNR b KQkq - 1 1",
+        "elderColor": "w",
+        "opponent": "agent",
+        "opponentName": null,
+        "turnOwner": "agent",
+        "preview": null,
+        "moves": [
+          {
+            "ply": 1,
+            "from": "b1",
+            "to": "c3",
+            "san": "Nc3",
+            "actor": "elder",
+            "via": "voice"
+          }
+        ]
+      },
+      "family": [],
+      "events": [
+        {
+          "type": "board-animated",
+          "actor": "elder",
+          "caller": "ui",
+          "ok": true,
+          "errorCode": null,
+          "at": "2026-11-09 15:29:53.235+00"
+        },
+        {
+          "type": "move-chess-piece",
+          "actor": "elder",
+          "caller": "mcp",
+          "ok": true,
+          "errorCode": null,
+          "at": "2026-11-09 15:29:52.332+00"
+        },
+        {
+          "type": "preview-moves",
+          "actor": "agent",
+          "caller": "mcp",
+          "ok": true,
+          "errorCode": null,
+          "at": "2026-11-09 15:29:47.682+00"
+        },
+        {
+          "type": "open-activity",
+          "actor": "agent",
+          "caller": "mcp",
+          "ok": true,
+          "errorCode": null,
+          "at": "2026-11-09 15:29:46.161+00"
+        }
+      ]
+    },
+    "finalSettleMs": 11
+  },
+  "domTimeline": [
+    {
+      "sequence": 1,
+      "elapsedMs": 10.206961999996565,
+      "turn": 0,
+      "trigger": "initial",
+      "state": {
+        "scene": "home",
+        "revision": 0,
+        "language": "hi",
+        "presence": "ready",
+        "sulekhVisible": false,
+        "sulekhReferenceVisible": false,
+        "sulekhReferenceText": null,
+        "sulekhReferenceScript": null,
+        "sulekhInputMode": null,
+        "sulekhDrawingEnabled": false,
+        "sulekhMyStrokes": null,
+        "airStartVisible": false,
+        "choicesVisible": false,
+        "choiceTexts": [],
+        "rangoliVisible": false,
+        "rangoliKind": null,
+        "rangoliMyStrokes": null,
+        "rangoliRegionCount": null,
+        "rangoliDrawingEnabled": false,
+        "rangoliInputMode": null,
+        "regionFills": {},
+        "boardVisible": false,
+        "boardFen": null,
+        "boardTurn": null,
+        "boardMoveCount": null,
+        "lastFrom": null,
+        "lastTo": null,
+        "lastPiece": null,
+        "lastActor": null,
+        "previewFrom": null,
+        "previewCount": null,
+        "selectedSquare": null,
+        "destCount": 0,
+        "historyVisible": false,
+        "familyPresent": false,
+        "conflictVisible": false,
+        "approvalCardVisible": false,
+        "approvalResultStatus": null,
+        "bodyTextSample": "चौपाल\nभाषा / Language\nहिंदी\nEnglish\nਪੰਜਾਬੀ\nதமிழ்\nमराठी\nবাংলা\nतैयार\nआज क्या करें?\nअ\nसुलेख\nदोहराने के लिए सुंदर लिखावट\n✿\nरंगोली\nरेखा खींचें, रंग भरें\n⁘\nकोलम\nबिंदु और एक ही रेखा\n♞\nशतरंज\nहिंदी मोहरों के साथ\n\nऐसे कहिए:\n“पोते को दिवाली पर ‘शुभ दीपावली’ दिखाना है”\n\nदबाइए और अपनी भाषा में बोलिए\n\nबोलिए",
+        "server": {
+          "sessionId": "ses_38a82f9f0e104772",
+          "revision": 0,
+          "scene": "home",
+          "language": "hi",
+          "inputMode": "none",
+          "historyOpen": false,
+          "pending": null,
+          "approval": null,
+          "calligraphy": null,
+          "kolam": null,
+          "strokes": {
+            "sulekh": 0,
+            "rangoli": 0
+          },
+          "chess": null,
+          "family": [],
+          "events": []
+        }
+      }
+    },
+    {
+      "sequence": 2,
+      "elapsedMs": 3191.1693870000017,
+      "turn": 1,
+      "trigger": "after:chaupal-action:open-activity",
+      "state": {
+        "scene": "shatranj",
+        "revision": 1,
+        "language": "hi",
+        "presence": "ready",
+        "sulekhVisible": false,
+        "sulekhReferenceVisible": false,
+        "sulekhReferenceText": null,
+        "sulekhReferenceScript": null,
+        "sulekhInputMode": null,
+        "sulekhDrawingEnabled": false,
+        "sulekhMyStrokes": null,
+        "airStartVisible": false,
+        "choicesVisible": false,
+        "choiceTexts": [],
+        "rangoliVisible": false,
+        "rangoliKind": null,
+        "rangoliMyStrokes": null,
+        "rangoliRegionCount": null,
+        "rangoliDrawingEnabled": false,
+        "rangoliInputMode": null,
+        "regionFills": {},
+        "boardVisible": true,
+        "boardFen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+        "boardTurn": "w",
+        "boardMoveCount": 0,
+        "lastFrom": null,
+        "lastTo": null,
+        "lastPiece": null,
+        "lastActor": null,
+        "previewFrom": null,
+        "previewCount": 0,
+        "selectedSquare": null,
+        "destCount": 0,
+        "historyVisible": false,
+        "familyPresent": false,
+        "conflictVisible": false,
+        "approvalCardVisible": false,
+        "approvalResultStatus": null,
+        "bodyTextSample": "तैयार\nचौपाल\nभाषा / Language\nहिंदी\nEnglish\nਪੰਜਾਬੀ\nதமிழ்\nमराठी\nবাংলা\nतैयार\nतैयार\n\nदबाइए और अपनी भाषा में बोलिए\n\nबोलिए\nआपकी चाल\n8\n7\n6\n5\n4\n3\n2\n1\na\nb\nc\nd\ne\nf\ng\nh\nहाथी\nघोड़ा\nऊँट\nवज़ीर\nराजा\nऊँट\nघोड़ा\nहाथी\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nहाथी\nघोड़ा\nऊँट\nवज़ीर\nराजा\nऊँट\nघोड़ा\nहाथी\n\nनमस्ते। बोलिए या लिखिए: सुलेख, रंगोली, कोलम या शतरंज।\n\nसुझाई गई कार्रवाइयाँ\n\nपोते को दिवाली पर ‘शुभ दीपावली’ दिखाना है\nदरवाज़े के लिए छोटी सी रंगोली\nशतरंज खेलते हैं, मैं सफ़ेद\n\n\n",
+        "server": {
+          "sessionId": "ses_38a82f9f0e104772",
+          "revision": 1,
+          "scene": "shatranj",
+          "language": "hi",
+          "inputMode": "none",
+          "historyOpen": false,
+          "pending": null,
+          "approval": null,
+          "calligraphy": null,
+          "kolam": null,
+          "strokes": {
+            "sulekh": 0,
+            "rangoli": 0
+          },
+          "chess": {
+            "id": "game_f40a6504981a4beb",
+            "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+            "elderColor": "w",
+            "opponent": "agent",
+            "opponentName": null,
+            "turnOwner": "elder",
+            "preview": null,
+            "moves": []
+          },
+          "family": [],
+          "events": [
+            {
+              "type": "open-activity",
+              "actor": "agent",
+              "caller": "mcp",
+              "ok": true,
+              "errorCode": null,
+              "at": "2026-11-09 15:29:46.161+00"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "sequence": 3,
+      "elapsedMs": 4680.3568499999965,
+      "turn": 2,
+      "trigger": "after:chaupal-action:preview-moves",
+      "state": {
+        "scene": "shatranj",
+        "revision": 2,
+        "language": "hi",
+        "presence": "ready",
+        "sulekhVisible": false,
+        "sulekhReferenceVisible": false,
+        "sulekhReferenceText": null,
+        "sulekhReferenceScript": null,
+        "sulekhInputMode": null,
+        "sulekhDrawingEnabled": false,
+        "sulekhMyStrokes": null,
+        "airStartVisible": false,
+        "choicesVisible": false,
+        "choiceTexts": [],
+        "rangoliVisible": false,
+        "rangoliKind": null,
+        "rangoliMyStrokes": null,
+        "rangoliRegionCount": null,
+        "rangoliDrawingEnabled": false,
+        "rangoliInputMode": null,
+        "regionFills": {},
+        "boardVisible": true,
+        "boardFen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+        "boardTurn": "w",
+        "boardMoveCount": 0,
+        "lastFrom": null,
+        "lastTo": null,
+        "lastPiece": null,
+        "lastActor": null,
+        "previewFrom": "b1",
+        "previewCount": 2,
+        "selectedSquare": null,
+        "destCount": 0,
+        "historyVisible": false,
+        "familyPresent": false,
+        "conflictVisible": false,
+        "approvalCardVisible": false,
+        "approvalResultStatus": null,
+        "bodyTextSample": "तैयार\nचौपाल\nभाषा / Language\nहिंदी\nEnglish\nਪੰਜਾਬੀ\nதமிழ்\nमराठी\nবাংলা\nतैयार\nतैयार\n\nदबाइए और अपनी भाषा में बोलिए\n\nबोलिए\nआपकी चाल\n8\n7\n6\n5\n4\n3\n2\n1\na\nb\nc\nd\ne\nf\ng\nh\nहाथी\nघोड़ा\nऊँट\nवज़ीर\nराजा\nऊँट\nघोड़ा\nहाथी\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nहाथी\nघोड़ा\nऊँट\nवज़ीर\nराजा\nऊँट\nघोड़ा\nहाथी\n\nनमस्ते। बोलिए या लिखिए: सुलेख, रंगोली, कोलम या शतरंज।\n\nसुझाई गई कार्रवाइयाँ\n\nपोते को दिवाली पर ‘शुभ दीपावली’ दिखाना है\nदरवाज़े के लिए छोटी सी रंगोली\nशतरंज खेलते हैं, मैं सफ़ेद\n\n\n",
+        "server": {
+          "sessionId": "ses_38a82f9f0e104772",
+          "revision": 2,
+          "scene": "shatranj",
+          "language": "hi",
+          "inputMode": "none",
+          "historyOpen": false,
+          "pending": null,
+          "approval": null,
+          "calligraphy": null,
+          "kolam": null,
+          "strokes": {
+            "sulekh": 0,
+            "rangoli": 0
+          },
+          "chess": {
+            "id": "game_f40a6504981a4beb",
+            "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+            "elderColor": "w",
+            "opponent": "agent",
+            "opponentName": null,
+            "turnOwner": "elder",
+            "preview": {
+              "from": "b1",
+              "squares": [
+                "b1"
+              ],
+              "targets": [
+                "a3",
+                "c3"
+              ]
+            },
+            "moves": []
+          },
+          "family": [],
+          "events": [
+            {
+              "type": "preview-moves",
+              "actor": "agent",
+              "caller": "mcp",
+              "ok": true,
+              "errorCode": null,
+              "at": "2026-11-09 15:29:47.682+00"
+            },
+            {
+              "type": "open-activity",
+              "actor": "agent",
+              "caller": "mcp",
+              "ok": true,
+              "errorCode": null,
+              "at": "2026-11-09 15:29:46.161+00"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "sequence": 4,
+      "elapsedMs": 7001.524151999998,
+      "turn": 3,
+      "trigger": "before-followup",
+      "state": {
+        "scene": "shatranj",
+        "revision": 2,
+        "language": "hi",
+        "presence": "ready",
+        "sulekhVisible": false,
+        "sulekhReferenceVisible": false,
+        "sulekhReferenceText": null,
+        "sulekhReferenceScript": null,
+        "sulekhInputMode": null,
+        "sulekhDrawingEnabled": false,
+        "sulekhMyStrokes": null,
+        "airStartVisible": false,
+        "choicesVisible": false,
+        "choiceTexts": [],
+        "rangoliVisible": false,
+        "rangoliKind": null,
+        "rangoliMyStrokes": null,
+        "rangoliRegionCount": null,
+        "rangoliDrawingEnabled": false,
+        "rangoliInputMode": null,
+        "regionFills": {},
+        "boardVisible": true,
+        "boardFen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+        "boardTurn": "w",
+        "boardMoveCount": 0,
+        "lastFrom": null,
+        "lastTo": null,
+        "lastPiece": null,
+        "lastActor": null,
+        "previewFrom": "b1",
+        "previewCount": 2,
+        "selectedSquare": null,
+        "destCount": 0,
+        "historyVisible": false,
+        "familyPresent": false,
+        "conflictVisible": false,
+        "approvalCardVisible": false,
+        "approvalResultStatus": null,
+        "bodyTextSample": "तैयार\nचौपाल\nभाषा / Language\nहिंदी\nEnglish\nਪੰਜਾਬੀ\nதமிழ்\nमराठी\nবাংলা\nतैयार\nतैयार\n\nदबाइए और अपनी भाषा में बोलिए\n\nबोलिए\nआपकी चाल\n8\n7\n6\n5\n4\n3\n2\n1\na\nb\nc\nd\ne\nf\ng\nh\nहाथी\nघोड़ा\nऊँट\nवज़ीर\nराजा\nऊँट\nघोड़ा\nहाथी\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nहाथी\nघोड़ा\nऊँट\nवज़ीर\nराजा\nऊँट\nघोड़ा\nहाथी\n\nनमस्ते। बोलिए या लिखिए: सुलेख, रंगोली, कोलम या शतरंज।\n\nसुझाई गई कार्रवाइयाँ\n\nपोते को दिवाली पर ‘शुभ दीपावली’ दिखाना है\nदरवाज़े के लिए छोटी सी रंगोली\nशतरंज खेलते हैं, मैं सफ़ेद\n\n\n",
+        "server": {
+          "sessionId": "ses_38a82f9f0e104772",
+          "revision": 2,
+          "scene": "shatranj",
+          "language": "hi",
+          "inputMode": "none",
+          "historyOpen": false,
+          "pending": null,
+          "approval": null,
+          "calligraphy": null,
+          "kolam": null,
+          "strokes": {
+            "sulekh": 0,
+            "rangoli": 0
+          },
+          "chess": {
+            "id": "game_f40a6504981a4beb",
+            "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+            "elderColor": "w",
+            "opponent": "agent",
+            "opponentName": null,
+            "turnOwner": "elder",
+            "preview": {
+              "from": "b1",
+              "squares": [
+                "b1"
+              ],
+              "targets": [
+                "a3",
+                "c3"
+              ]
+            },
+            "moves": []
+          },
+          "family": [],
+          "events": [
+            {
+              "type": "preview-moves",
+              "actor": "agent",
+              "caller": "mcp",
+              "ok": true,
+              "errorCode": null,
+              "at": "2026-11-09 15:29:47.682+00"
+            },
+            {
+              "type": "open-activity",
+              "actor": "agent",
+              "caller": "mcp",
+              "ok": true,
+              "errorCode": null,
+              "at": "2026-11-09 15:29:46.161+00"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "sequence": 5,
+      "elapsedMs": 10138.864287000004,
+      "turn": 4,
+      "trigger": "after:chaupal-action:move-chess-piece",
+      "state": {
+        "scene": "shatranj",
+        "revision": 3,
+        "language": "hi",
+        "presence": "ready",
+        "sulekhVisible": false,
+        "sulekhReferenceVisible": false,
+        "sulekhReferenceText": null,
+        "sulekhReferenceScript": null,
+        "sulekhInputMode": null,
+        "sulekhDrawingEnabled": false,
+        "sulekhMyStrokes": null,
+        "airStartVisible": false,
+        "choicesVisible": false,
+        "choiceTexts": [],
+        "rangoliVisible": false,
+        "rangoliKind": null,
+        "rangoliMyStrokes": null,
+        "rangoliRegionCount": null,
+        "rangoliDrawingEnabled": false,
+        "rangoliInputMode": null,
+        "regionFills": {},
+        "boardVisible": true,
+        "boardFen": "rnbqkbnr/pppppppp/8/8/8/2N5/PPPPPPPP/R1BQKBNR b KQkq - 1 1",
+        "boardTurn": "b",
+        "boardMoveCount": 1,
+        "lastFrom": "b1",
+        "lastTo": "c3",
+        "lastPiece": "n",
+        "lastActor": "elder",
+        "previewFrom": null,
+        "previewCount": 0,
+        "selectedSquare": null,
+        "destCount": 0,
+        "historyVisible": false,
+        "familyPresent": false,
+        "conflictVisible": false,
+        "approvalCardVisible": false,
+        "approvalResultStatus": null,
+        "bodyTextSample": "तैयार\nचौपाल\nभाषा / Language\nहिंदी\nEnglish\nਪੰਜਾਬੀ\nதமிழ்\nमराठी\nবাংলা\nतैयार\nतैयार\n\nदबाइए और अपनी भाषा में बोलिए\n\nबोलिए\nसाथी की चाल\n8\n7\n6\n5\n4\n3\n2\n1\na\nb\nc\nd\ne\nf\ng\nh\nहाथी\nघोड़ा\nऊँट\nवज़ीर\nराजा\nऊँट\nघोड़ा\nहाथी\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nहाथी\nघोड़ा\nऊँट\nवज़ीर\nराजा\nऊँट\nघोड़ा\nहाथी\n\nघोड़ा b1 से c3\n\nनमस्ते। बोलिए या लिखिए: सुलेख, रंगोली, कोलम या शतरंज।\n\nसुझाई गई कार्रवाइयाँ\n\nपोते को दिवाली पर ‘शुभ दीपावली’ दिखाना है\nदरवाज़े के लिए छोटी सी रंगोली\nशतरंज खेलते हैं, मैं सफ़ेद\n\n\n",
+        "server": {
+          "sessionId": "ses_38a82f9f0e104772",
+          "revision": 3,
+          "scene": "shatranj",
+          "language": "hi",
+          "inputMode": "none",
+          "historyOpen": false,
+          "pending": null,
+          "approval": null,
+          "calligraphy": null,
+          "kolam": null,
+          "strokes": {
+            "sulekh": 0,
+            "rangoli": 0
+          },
+          "chess": {
+            "id": "game_f40a6504981a4beb",
+            "fen": "rnbqkbnr/pppppppp/8/8/8/2N5/PPPPPPPP/R1BQKBNR b KQkq - 1 1",
+            "elderColor": "w",
+            "opponent": "agent",
+            "opponentName": null,
+            "turnOwner": "agent",
+            "preview": null,
+            "moves": [
+              {
+                "ply": 1,
+                "from": "b1",
+                "to": "c3",
+                "san": "Nc3",
+                "actor": "elder",
+                "via": "voice"
+              }
+            ]
+          },
+          "family": [],
+          "events": [
+            {
+              "type": "board-animated",
+              "actor": "elder",
+              "caller": "ui",
+              "ok": true,
+              "errorCode": null,
+              "at": "2026-11-09 15:29:53.235+00"
+            },
+            {
+              "type": "move-chess-piece",
+              "actor": "elder",
+              "caller": "mcp",
+              "ok": true,
+              "errorCode": null,
+              "at": "2026-11-09 15:29:52.332+00"
+            },
+            {
+              "type": "preview-moves",
+              "actor": "agent",
+              "caller": "mcp",
+              "ok": true,
+              "errorCode": null,
+              "at": "2026-11-09 15:29:47.682+00"
+            },
+            {
+              "type": "open-activity",
+              "actor": "agent",
+              "caller": "mcp",
+              "ok": true,
+              "errorCode": null,
+              "at": "2026-11-09 15:29:46.161+00"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "sequence": 6,
+      "elapsedMs": 12476.449898000006,
+      "turn": 5,
+      "trigger": "final",
+      "state": {
+        "scene": "shatranj",
+        "revision": 3,
+        "language": "hi",
+        "presence": "ready",
+        "sulekhVisible": false,
+        "sulekhReferenceVisible": false,
+        "sulekhReferenceText": null,
+        "sulekhReferenceScript": null,
+        "sulekhInputMode": null,
+        "sulekhDrawingEnabled": false,
+        "sulekhMyStrokes": null,
+        "airStartVisible": false,
+        "choicesVisible": false,
+        "choiceTexts": [],
+        "rangoliVisible": false,
+        "rangoliKind": null,
+        "rangoliMyStrokes": null,
+        "rangoliRegionCount": null,
+        "rangoliDrawingEnabled": false,
+        "rangoliInputMode": null,
+        "regionFills": {},
+        "boardVisible": true,
+        "boardFen": "rnbqkbnr/pppppppp/8/8/8/2N5/PPPPPPPP/R1BQKBNR b KQkq - 1 1",
+        "boardTurn": "b",
+        "boardMoveCount": 1,
+        "lastFrom": "b1",
+        "lastTo": "c3",
+        "lastPiece": "n",
+        "lastActor": "elder",
+        "previewFrom": null,
+        "previewCount": 0,
+        "selectedSquare": null,
+        "destCount": 0,
+        "historyVisible": false,
+        "familyPresent": false,
+        "conflictVisible": false,
+        "approvalCardVisible": false,
+        "approvalResultStatus": null,
+        "bodyTextSample": "तैयार\nचौपाल\nभाषा / Language\nहिंदी\nEnglish\nਪੰਜਾਬੀ\nதமிழ்\nमराठी\nবাংলা\nतैयार\nतैयार\n\nदबाइए और अपनी भाषा में बोलिए\n\nबोलिए\nसाथी की चाल\n8\n7\n6\n5\n4\n3\n2\n1\na\nb\nc\nd\ne\nf\ng\nh\nहाथी\nघोड़ा\nऊँट\nवज़ीर\nराजा\nऊँट\nघोड़ा\nहाथी\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nप्यादा\nहाथी\nघोड़ा\nऊँट\nवज़ीर\nराजा\nऊँट\nघोड़ा\nहाथी\n\nघोड़ा b1 से c3\n\nनमस्ते। बोलिए या लिखिए: सुलेख, रंगोली, कोलम या शतरंज।\n\nसुझाई गई कार्रवाइयाँ\n\nपोते को दिवाली पर ‘शुभ दीपावली’ दिखाना है\nदरवाज़े के लिए छोटी सी रंगोली\nशतरंज खेलते हैं, मैं सफ़ेद\n\n\n",
+        "server": {
+          "sessionId": "ses_38a82f9f0e104772",
+          "revision": 3,
+          "scene": "shatranj",
+          "language": "hi",
+          "inputMode": "none",
+          "historyOpen": false,
+          "pending": null,
+          "approval": null,
+          "calligraphy": null,
+          "kolam": null,
+          "strokes": {
+            "sulekh": 0,
+            "rangoli": 0
+          },
+          "chess": {
+            "id": "game_f40a6504981a4beb",
+            "fen": "rnbqkbnr/pppppppp/8/8/8/2N5/PPPPPPPP/R1BQKBNR b KQkq - 1 1",
+            "elderColor": "w",
+            "opponent": "agent",
+            "opponentName": null,
+            "turnOwner": "agent",
+            "preview": null,
+            "moves": [
+              {
+                "ply": 1,
+                "from": "b1",
+                "to": "c3",
+                "san": "Nc3",
+                "actor": "elder",
+                "via": "voice"
+              }
+            ]
+          },
+          "family": [],
+          "events": [
+            {
+              "type": "board-animated",
+              "actor": "elder",
+              "caller": "ui",
+              "ok": true,
+              "errorCode": null,
+              "at": "2026-11-09 15:29:53.235+00"
+            },
+            {
+              "type": "move-chess-piece",
+              "actor": "elder",
+              "caller": "mcp",
+              "ok": true,
+              "errorCode": null,
+              "at": "2026-11-09 15:29:52.332+00"
+            },
+            {
+              "type": "preview-moves",
+              "actor": "agent",
+              "caller": "mcp",
+              "ok": true,
+              "errorCode": null,
+              "at": "2026-11-09 15:29:47.682+00"
+            },
+            {
+              "type": "open-activity",
+              "actor": "agent",
+              "caller": "mcp",
+              "ok": true,
+              "errorCode": null,
+              "at": "2026-11-09 15:29:46.161+00"
+            }
+          ]
+        },
+        "finalSettleMs": 11
+      }
+    }
+  ],
+  "externalRequests": [],
+  "executionError": null
+}

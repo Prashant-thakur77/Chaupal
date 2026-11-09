@@ -168,6 +168,39 @@
         "rangoli": 1,
         "family": 1
       }
+    },
+    {
+      "order": 6,
+      "iteration": "iteration-006",
+      "createdAt": "2026-11-09T15:34:40.070Z",
+      "configuration": "chaupal-actions",
+      "decision": "accepted",
+      "evalSetHash": "sha256:a428d74abe03a5738b8cff83fed0408c273389cdac5906c3a6ceed26473c2592",
+      "metric": {
+        "runs": 42,
+        "passed": 40,
+        "passRate": 0.9523809523809523,
+        "criticalPassRate": 1,
+        "firstPassValidRate": 0.9047619047619048,
+        "failedToolCalls": 2,
+        "expectedGuardRejections": 6,
+        "retries": 7,
+        "totalTokens": 2068657,
+        "meanTokensPerRun": 49253.73809523809,
+        "meanInputTokensPerRun": 48804.357142857145,
+        "meanOutputTokensPerRun": 449.3809523809524,
+        "meanWallTimeMs": 10156.070981809526,
+        "meanModelLatencyMs": 7294.862988928579,
+        "tokensPerSuccessfulOutcome": 51716.425,
+        "meanTimeToVisibleSuccessMs": 7759.3675982
+      },
+      "categories": {
+        "sulekh": 1,
+        "shatranj": 0.8,
+        "interface": 1,
+        "rangoli": 1,
+        "family": 1
+      }
     }
   ]
 }

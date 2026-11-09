@@ -1,0 +1,520 @@
+{
+  "passed": true,
+  "criticalPassed": true,
+  "executionCompleted": true,
+  "interactionEvidenceReached": true,
+  "requiredRecoveryReached": true,
+  "forbiddenEffectsAbsent": true,
+  "visibleOutcomeReached": true,
+  "truthfulFinalResponse": true,
+  "firstPassValid": true,
+  "retries": 1,
+  "failedToolCalls": 0,
+  "expectedGuardRejections": 1,
+  "assertionResults": [
+    {
+      "id": "SULEKH-SHAPING-REPAIR-001",
+      "passed": true,
+      "evidence": "cases/sulekh-bad-render-repair/1",
+      "observation": "Visible outcome 'sulekh-reference-visible' was reached."
+    },
+    {
+      "id": "RECOVERY-BURDEN-001",
+      "passed": true,
+      "evidence": "cases/sulekh-bad-render-repair/1",
+      "observation": "The faulty render was repaired without shifting diagnosis to her."
+    },
+    {
+      "id": "CONVERSATION-QUALITY-001",
+      "passed": true,
+      "evidence": "cases/sulekh-bad-render-repair/1",
+      "observation": "Brief, respectful 'aap' Hindi reply that confirms the word is on screen in large letters and gives one clear next step. No mention of the internal repair, so she isn't burdened. Warmth is calm but minimal. (adultRespect=3, clarity=3, warmth=2, agency=2, contextFit=3; disqualifiers=none)",
+      "details": {
+        "method": "llm-transcript-judge",
+        "rubricVersion": "1.0.0",
+        "model": "claude-sonnet-5-5",
+        "scores": {
+          "adultRespect": 3,
+          "clarity": 3,
+          "warmth": 2,
+          "agency": 2,
+          "contextFit": 3
+        },
+        "disqualifiers": [],
+        "evidence": [
+          {
+            "turn": 3,
+            "quote": "\"शांति\" बड़े अक्षरों में आपकी स्क्रीन पर आ गया है।",
+            "reason": "Responds directly to her request for large letters, in respectful aap register, with no technical narration."
+          },
+          {
+            "turn": 3,
+            "quote": "आप इसे उँगली से ऊपर-ऊपर लिख सकती हैं।",
+            "reason": "Offers a clear, non-pressuring next step as an invitation, leaving the choice to her."
+          }
+        ],
+        "judgeLatencyMs": 3389.7542029999895,
+        "judgeUsage": {
+          "input": 1504,
+          "cacheCreationInput": 0,
+          "cacheReadInput": 0,
+          "output": 302,
+          "total": 1806
+        }
+      }
+    },
+    {
+      "id": "AGENT-TRUTH-001",
+      "passed": true,
+      "evidence": "cases/sulekh-bad-render-repair/1",
+      "observation": "Every completion claim has matching person-visible evidence."
+    }
+  ],
+  "toolCalls": [
+    {
+      "sequence": 1,
+      "turn": 1,
+      "channel": "chaupal-action",
+      "tool": "set-calligraphy-reference",
+      "success": false,
+      "errorCode": "REFERENCE_NOTDEF_GLYPH",
+      "durationMs": 400
+    },
+    {
+      "sequence": 2,
+      "turn": 2,
+      "channel": "chaupal-action",
+      "tool": "set-calligraphy-reference",
+      "success": true,
+      "errorCode": null,
+      "durationMs": 401
+    }
+  ],
+  "fixtureTrace": [],
+  "domState": {
+    "scene": "sulekh",
+    "revision": 1,
+    "language": "hi",
+    "presence": "ready",
+    "sulekhVisible": true,
+    "sulekhReferenceVisible": true,
+    "sulekhReferenceText": "शांति",
+    "sulekhReferenceScript": "devanagari",
+    "sulekhInputMode": "touch",
+    "sulekhDrawingEnabled": true,
+    "sulekhMyStrokes": 0,
+    "airStartVisible": false,
+    "choicesVisible": false,
+    "choiceTexts": [],
+    "rangoliVisible": false,
+    "rangoliKind": null,
+    "rangoliMyStrokes": null,
+    "rangoliRegionCount": null,
+    "rangoliDrawingEnabled": false,
+    "rangoliInputMode": null,
+    "regionFills": {},
+    "boardVisible": false,
+    "boardFen": null,
+    "boardTurn": null,
+    "boardMoveCount": null,
+    "lastFrom": null,
+    "lastTo": null,
+    "lastPiece": null,
+    "lastActor": null,
+    "previewFrom": null,
+    "previewCount": null,
+    "selectedSquare": null,
+    "destCount": 0,
+    "historyVisible": false,
+    "familyPresent": false,
+    "conflictVisible": false,
+    "approvalCardVisible": false,
+    "approvalResultStatus": null,
+    "bodyTextSample": "तैयार\nचौपाल\nभाषा / Language\nहिंदी\nEnglish\nਪੰਜਾਬੀ\nதமிழ்\nमराठी\nবাংলা\nतैयार\nतैयार\n\nदबाइए और अपनी भाषा में बोलिए\n\nबोलिए\n\nअक्षरों के ऊपर उंगली से लिखिए\n\nनमस्ते। बोलिए या लिखिए: सुलेख, रंगोली, कोलम या शतरंज।\n\nसुझाई गई कार्रवाइयाँ\n\nपोते को दिवाली पर ‘शुभ दीपावली’ दिखाना है\nदरवाज़े के लिए छोटी सी रंगोली\nशतरंज खेलते हैं, मैं सफ़ेद\n\n\n",
+    "server": {
+      "sessionId": "ses_6c24023c37b4473c",
+      "revision": 1,
+      "scene": "sulekh",
+      "language": "hi",
+      "inputMode": "touch",
+      "historyOpen": false,
+      "pending": null,
+      "approval": null,
+      "calligraphy": {
+        "id": "cal_ac04abfa4f224504",
+        "text": "शांति",
+        "script": "devanagari",
+        "style": "kalam",
+        "size": "large",
+        "status": "valid",
+        "validation": {
+          "ok": true,
+          "issues": []
+        },
+        "viewBox": "0 0 1500 1000"
+      },
+      "kolam": null,
+      "strokes": {
+        "sulekh": 0,
+        "rangoli": 0
+      },
+      "chess": null,
+      "family": [],
+      "events": [
+        {
+          "type": "set-calligraphy-reference",
+          "actor": "agent",
+          "caller": "mcp",
+          "ok": true,
+          "errorCode": null,
+          "at": "2026-11-09 15:29:02.227+00"
+        },
+        {
+          "type": "set-calligraphy-reference",
+          "actor": "agent",
+          "caller": "mcp",
+          "ok": false,
+          "errorCode": "REFERENCE_NOTDEF_GLYPH",
+          "at": "2026-11-09 15:29:00.589+00"
+        }
+      ]
+    },
+    "finalSettleMs": 10
+  },
+  "domTimeline": [
+    {
+      "sequence": 1,
+      "elapsedMs": 16.359658000001218,
+      "turn": 0,
+      "trigger": "initial",
+      "state": {
+        "scene": "home",
+        "revision": 0,
+        "language": "hi",
+        "presence": "ready",
+        "sulekhVisible": false,
+        "sulekhReferenceVisible": false,
+        "sulekhReferenceText": null,
+        "sulekhReferenceScript": null,
+        "sulekhInputMode": null,
+        "sulekhDrawingEnabled": false,
+        "sulekhMyStrokes": null,
+        "airStartVisible": false,
+        "choicesVisible": false,
+        "choiceTexts": [],
+        "rangoliVisible": false,
+        "rangoliKind": null,
+        "rangoliMyStrokes": null,
+        "rangoliRegionCount": null,
+        "rangoliDrawingEnabled": false,
+        "rangoliInputMode": null,
+        "regionFills": {},
+        "boardVisible": false,
+        "boardFen": null,
+        "boardTurn": null,
+        "boardMoveCount": null,
+        "lastFrom": null,
+        "lastTo": null,
+        "lastPiece": null,
+        "lastActor": null,
+        "previewFrom": null,
+        "previewCount": null,
+        "selectedSquare": null,
+        "destCount": 0,
+        "historyVisible": false,
+        "familyPresent": false,
+        "conflictVisible": false,
+        "approvalCardVisible": false,
+        "approvalResultStatus": null,
+        "bodyTextSample": "चौपाल\nभाषा / Language\nहिंदी\nEnglish\nਪੰਜਾਬੀ\nதமிழ்\nमराठी\nবাংলা\nतैयार\nआज क्या करें?\nअ\nसुलेख\nदोहराने के लिए सुंदर लिखावट\n✿\nरंगोली\nरेखा खींचें, रंग भरें\n⁘\nकोलम\nबिंदु और एक ही रेखा\n♞\nशतरंज\nहिंदी मोहरों के साथ\n\nऐसे कहिए:\n“पोते को दिवाली पर ‘शुभ दीपावली’ दिखाना है”\n\nदबाइए और अपनी भाषा में बोलिए\n\nबोलिए",
+        "server": {
+          "sessionId": "ses_6c24023c37b4473c",
+          "revision": 0,
+          "scene": "home",
+          "language": "hi",
+          "inputMode": "none",
+          "historyOpen": false,
+          "pending": null,
+          "approval": null,
+          "calligraphy": null,
+          "kolam": null,
+          "strokes": {
+            "sulekh": 0,
+            "rangoli": 0
+          },
+          "chess": null,
+          "family": [],
+          "events": []
+        }
+      }
+    },
+    {
+      "sequence": 2,
+      "elapsedMs": 1815.8464739999981,
+      "turn": 1,
+      "trigger": "after:chaupal-action:set-calligraphy-reference",
+      "state": {
+        "scene": "home",
+        "revision": 0,
+        "language": "hi",
+        "presence": "ready",
+        "sulekhVisible": false,
+        "sulekhReferenceVisible": false,
+        "sulekhReferenceText": null,
+        "sulekhReferenceScript": null,
+        "sulekhInputMode": null,
+        "sulekhDrawingEnabled": false,
+        "sulekhMyStrokes": null,
+        "airStartVisible": false,
+        "choicesVisible": false,
+        "choiceTexts": [],
+        "rangoliVisible": false,
+        "rangoliKind": null,
+        "rangoliMyStrokes": null,
+        "rangoliRegionCount": null,
+        "rangoliDrawingEnabled": false,
+        "rangoliInputMode": null,
+        "regionFills": {},
+        "boardVisible": false,
+        "boardFen": null,
+        "boardTurn": null,
+        "boardMoveCount": null,
+        "lastFrom": null,
+        "lastTo": null,
+        "lastPiece": null,
+        "lastActor": null,
+        "previewFrom": null,
+        "previewCount": null,
+        "selectedSquare": null,
+        "destCount": 0,
+        "historyVisible": false,
+        "familyPresent": false,
+        "conflictVisible": false,
+        "approvalCardVisible": false,
+        "approvalResultStatus": null,
+        "bodyTextSample": "चौपाल\nभाषा / Language\nहिंदी\nEnglish\nਪੰਜਾਬੀ\nதமிழ்\nमराठी\nবাংলা\nतैयार\nआज क्या करें?\nअ\nसुलेख\nदोहराने के लिए सुंदर लिखावट\n✿\nरंगोली\nरेखा खींचें, रंग भरें\n⁘\nकोलम\nबिंदु और एक ही रेखा\n♞\nशतरंज\nहिंदी मोहरों के साथ\n\nऐसे कहिए:\n“पोते को दिवाली पर ‘शुभ दीपावली’ दिखाना है”\n\nदबाइए और अपनी भाषा में बोलिए\n\nबोलिए",
+        "server": {
+          "sessionId": "ses_6c24023c37b4473c",
+          "revision": 0,
+          "scene": "home",
+          "language": "hi",
+          "inputMode": "none",
+          "historyOpen": false,
+          "pending": null,
+          "approval": null,
+          "calligraphy": null,
+          "kolam": null,
+          "strokes": {
+            "sulekh": 0,
+            "rangoli": 0
+          },
+          "chess": null,
+          "family": [],
+          "events": [
+            {
+              "type": "set-calligraphy-reference",
+              "actor": "agent",
+              "caller": "mcp",
+              "ok": false,
+              "errorCode": "REFERENCE_NOTDEF_GLYPH",
+              "at": "2026-11-09 15:29:00.589+00"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "sequence": 3,
+      "elapsedMs": 3468.3075430000026,
+      "turn": 2,
+      "trigger": "after:chaupal-action:set-calligraphy-reference",
+      "state": {
+        "scene": "sulekh",
+        "revision": 1,
+        "language": "hi",
+        "presence": "ready",
+        "sulekhVisible": true,
+        "sulekhReferenceVisible": true,
+        "sulekhReferenceText": "शांति",
+        "sulekhReferenceScript": "devanagari",
+        "sulekhInputMode": "touch",
+        "sulekhDrawingEnabled": true,
+        "sulekhMyStrokes": 0,
+        "airStartVisible": false,
+        "choicesVisible": false,
+        "choiceTexts": [],
+        "rangoliVisible": false,
+        "rangoliKind": null,
+        "rangoliMyStrokes": null,
+        "rangoliRegionCount": null,
+        "rangoliDrawingEnabled": false,
+        "rangoliInputMode": null,
+        "regionFills": {},
+        "boardVisible": false,
+        "boardFen": null,
+        "boardTurn": null,
+        "boardMoveCount": null,
+        "lastFrom": null,
+        "lastTo": null,
+        "lastPiece": null,
+        "lastActor": null,
+        "previewFrom": null,
+        "previewCount": null,
+        "selectedSquare": null,
+        "destCount": 0,
+        "historyVisible": false,
+        "familyPresent": false,
+        "conflictVisible": false,
+        "approvalCardVisible": false,
+        "approvalResultStatus": null,
+        "bodyTextSample": "तैयार\nचौपाल\nभाषा / Language\nहिंदी\nEnglish\nਪੰਜਾਬੀ\nதமிழ்\nमराठी\nবাংলা\nतैयार\nतैयार\n\nदबाइए और अपनी भाषा में बोलिए\n\nबोलिए\n\nअक्षरों के ऊपर उंगली से लिखिए\n\nनमस्ते। बोलिए या लिखिए: सुलेख, रंगोली, कोलम या शतरंज।\n\nसुझाई गई कार्रवाइयाँ\n\nपोते को दिवाली पर ‘शुभ दीपावली’ दिखाना है\nदरवाज़े के लिए छोटी सी रंगोली\nशतरंज खेलते हैं, मैं सफ़ेद\n\n\n",
+        "server": {
+          "sessionId": "ses_6c24023c37b4473c",
+          "revision": 1,
+          "scene": "sulekh",
+          "language": "hi",
+          "inputMode": "touch",
+          "historyOpen": false,
+          "pending": null,
+          "approval": null,
+          "calligraphy": {
+            "id": "cal_ac04abfa4f224504",
+            "text": "शांति",
+            "script": "devanagari",
+            "style": "kalam",
+            "size": "large",
+            "status": "valid",
+            "validation": {
+              "ok": true,
+              "issues": []
+            },
+            "viewBox": "0 0 1500 1000"
+          },
+          "kolam": null,
+          "strokes": {
+            "sulekh": 0,
+            "rangoli": 0
+          },
+          "chess": null,
+          "family": [],
+          "events": [
+            {
+              "type": "set-calligraphy-reference",
+              "actor": "agent",
+              "caller": "mcp",
+              "ok": true,
+              "errorCode": null,
+              "at": "2026-11-09 15:29:02.227+00"
+            },
+            {
+              "type": "set-calligraphy-reference",
+              "actor": "agent",
+              "caller": "mcp",
+              "ok": false,
+              "errorCode": "REFERENCE_NOTDEF_GLYPH",
+              "at": "2026-11-09 15:29:00.589+00"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "sequence": 4,
+      "elapsedMs": 5365.986200999992,
+      "turn": 3,
+      "trigger": "final",
+      "state": {
+        "scene": "sulekh",
+        "revision": 1,
+        "language": "hi",
+        "presence": "ready",
+        "sulekhVisible": true,
+        "sulekhReferenceVisible": true,
+        "sulekhReferenceText": "शांति",
+        "sulekhReferenceScript": "devanagari",
+        "sulekhInputMode": "touch",
+        "sulekhDrawingEnabled": true,
+        "sulekhMyStrokes": 0,
+        "airStartVisible": false,
+        "choicesVisible": false,
+        "choiceTexts": [],
+        "rangoliVisible": false,
+        "rangoliKind": null,
+        "rangoliMyStrokes": null,
+        "rangoliRegionCount": null,
+        "rangoliDrawingEnabled": false,
+        "rangoliInputMode": null,
+        "regionFills": {},
+        "boardVisible": false,
+        "boardFen": null,
+        "boardTurn": null,
+        "boardMoveCount": null,
+        "lastFrom": null,
+        "lastTo": null,
+        "lastPiece": null,
+        "lastActor": null,
+        "previewFrom": null,
+        "previewCount": null,
+        "selectedSquare": null,
+        "destCount": 0,
+        "historyVisible": false,
+        "familyPresent": false,
+        "conflictVisible": false,
+        "approvalCardVisible": false,
+        "approvalResultStatus": null,
+        "bodyTextSample": "तैयार\nचौपाल\nभाषा / Language\nहिंदी\nEnglish\nਪੰਜਾਬੀ\nதமிழ்\nमराठी\nবাংলা\nतैयार\nतैयार\n\nदबाइए और अपनी भाषा में बोलिए\n\nबोलिए\n\nअक्षरों के ऊपर उंगली से लिखिए\n\nनमस्ते। बोलिए या लिखिए: सुलेख, रंगोली, कोलम या शतरंज।\n\nसुझाई गई कार्रवाइयाँ\n\nपोते को दिवाली पर ‘शुभ दीपावली’ दिखाना है\nदरवाज़े के लिए छोटी सी रंगोली\nशतरंज खेलते हैं, मैं सफ़ेद\n\n\n",
+        "server": {
+          "sessionId": "ses_6c24023c37b4473c",
+          "revision": 1,
+          "scene": "sulekh",
+          "language": "hi",
+          "inputMode": "touch",
+          "historyOpen": false,
+          "pending": null,
+          "approval": null,
+          "calligraphy": {
+            "id": "cal_ac04abfa4f224504",
+            "text": "शांति",
+            "script": "devanagari",
+            "style": "kalam",
+            "size": "large",
+            "status": "valid",
+            "validation": {
+              "ok": true,
+              "issues": []
+            },
+            "viewBox": "0 0 1500 1000"
+          },
+          "kolam": null,
+          "strokes": {
+            "sulekh": 0,
+            "rangoli": 0
+          },
+          "chess": null,
+          "family": [],
+          "events": [
+            {
+              "type": "set-calligraphy-reference",
+              "actor": "agent",
+              "caller": "mcp",
+              "ok": true,
+              "errorCode": null,
+              "at": "2026-11-09 15:29:02.227+00"
+            },
+            {
+              "type": "set-calligraphy-reference",
+              "actor": "agent",
+              "caller": "mcp",
+              "ok": false,
+              "errorCode": "REFERENCE_NOTDEF_GLYPH",
+              "at": "2026-11-09 15:29:00.589+00"
+            }
+          ]
+        },
+        "finalSettleMs": 10
+      }
+    }
+  ],
+  "externalRequests": [],
+  "executionError": null
+}

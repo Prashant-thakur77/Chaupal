@@ -60,7 +60,8 @@ for (const f of ["evals/measure/sync-latency.deployed.json", "evals/measure/sync
     const s = read(f);
     const sec = (ms) => Math.round((ms / 1000) * 100) / 100;
     // End to end: from the mover's request until the other screen shows the move.
-    sync = { p50: sec(s.fromRequestP50Ms ?? s.p50Ms), p95: sec(s.fromRequestP95Ms ?? s.p95Ms), n: s.n, where: s.where ?? s.baseUrl ?? f };
+    const a = s.all ?? s;
+    sync = { p50: sec(a.fromRequestP50Ms ?? s.fromRequestP50Ms), p95: sec(a.fromRequestP95Ms ?? s.fromRequestP95Ms), n: a.moves ?? s.n, where: s.where ?? s.baseUrl ?? f };
     break;
   }
 }

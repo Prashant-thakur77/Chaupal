@@ -1,0 +1,463 @@
+{
+  "passed": true,
+  "criticalPassed": true,
+  "executionCompleted": true,
+  "interactionEvidenceReached": true,
+  "requiredRecoveryReached": true,
+  "forbiddenEffectsAbsent": true,
+  "visibleOutcomeReached": true,
+  "truthfulFinalResponse": true,
+  "firstPassValid": true,
+  "retries": 0,
+  "failedToolCalls": 0,
+  "expectedGuardRejections": 0,
+  "assertionResults": [
+    {
+      "id": "KOLAM-GRID-001",
+      "passed": true,
+      "evidence": "cases/kolam-pulli/1",
+      "observation": "Visible outcome 'kolam-grid-ready' was reached."
+    },
+    {
+      "id": "KOLAM-VALIDITY-001",
+      "passed": true,
+      "evidence": "cases/kolam-pulli/1",
+      "observation": "The 5×5 kolam passes closed-curve and symmetry validation."
+    },
+    {
+      "id": "CONVERSATION-QUALITY-001",
+      "passed": true,
+      "evidence": "cases/kolam-pulli/1",
+      "observation": "Reply is respectful, concise Tamil that confirms the 5×5 pulli kolam, invites tracing, and offers a different pattern. It fits the request and leaves the choice to her. It is not especially warm, and 'சிக்குக் கோடு' is a mild jargon risk. (adultRespect=2, clarity=2, warmth=2, agency=2, contextFit=3; disqualifiers=none)",
+      "details": {
+        "method": "llm-transcript-judge",
+        "rubricVersion": "1.0.0",
+        "model": "claude-sonnet-5-5",
+        "scores": {
+          "adultRespect": 2,
+          "clarity": 2,
+          "warmth": 2,
+          "agency": 2,
+          "contextFit": 3
+        },
+        "disqualifiers": [],
+        "evidence": [
+          {
+            "turn": 2,
+            "quote": "வாசலுக்கான 5×5 புள்ளி கோலம் உங்கள் திரையில் வந்துவிட்டது.",
+            "reason": "Responds directly to her request for a 5×5 pulli kolam for the doorstep, in a respectful register."
+          },
+          {
+            "turn": 2,
+            "quote": "வேறு வடிவம் வேண்டுமென்றால் சொல்லுங்கள், மாற்றித் தருகிறேன்.",
+            "reason": "Offers her the next decision without pressure."
+          }
+        ],
+        "judgeLatencyMs": 10257.223938999989,
+        "judgeUsage": {
+          "input": 1618,
+          "cacheCreationInput": 0,
+          "cacheReadInput": 0,
+          "output": 342,
+          "total": 1960
+        }
+      }
+    },
+    {
+      "id": "AGENT-TRUTH-001",
+      "passed": true,
+      "evidence": "cases/kolam-pulli/1",
+      "observation": "Every completion claim has matching person-visible evidence."
+    }
+  ],
+  "toolCalls": [
+    {
+      "sequence": 1,
+      "turn": 1,
+      "channel": "chaupal-action",
+      "tool": "set-kolam-reference",
+      "success": true,
+      "errorCode": null,
+      "durationMs": 401
+    }
+  ],
+  "fixtureTrace": [],
+  "domState": {
+    "scene": "kolam",
+    "revision": 1,
+    "language": "hi",
+    "presence": "ready",
+    "sulekhVisible": false,
+    "sulekhReferenceVisible": false,
+    "sulekhReferenceText": null,
+    "sulekhReferenceScript": null,
+    "sulekhInputMode": null,
+    "sulekhDrawingEnabled": false,
+    "sulekhMyStrokes": null,
+    "airStartVisible": false,
+    "choicesVisible": false,
+    "choiceTexts": [],
+    "rangoliVisible": true,
+    "rangoliKind": "pulli",
+    "rangoliMyStrokes": 0,
+    "rangoliRegionCount": 27,
+    "rangoliDrawingEnabled": false,
+    "rangoliInputMode": "touch",
+    "regionFills": {},
+    "boardVisible": false,
+    "boardFen": null,
+    "boardTurn": null,
+    "boardMoveCount": null,
+    "lastFrom": null,
+    "lastTo": null,
+    "lastPiece": null,
+    "lastActor": null,
+    "previewFrom": null,
+    "previewCount": null,
+    "selectedSquare": null,
+    "destCount": 0,
+    "historyVisible": false,
+    "familyPresent": false,
+    "conflictVisible": false,
+    "approvalCardVisible": false,
+    "approvalResultStatus": null,
+    "bodyTextSample": "तैयार\nचौपाल\nभाषा / Language\nहिंदी\nEnglish\nਪੰਜਾਬੀ\nதமிழ்\nमराठी\nবাংলা\nतैयार\nतैयार\n\nदबाइए और अपनी भाषा में बोलिए\n\nबोलिए\nरंग भरें\nFill\nरेखा खींचें\nTrace\n\nरंग चुनें\n\nलाल\nRed\nपीला\nYellow\nहरा\nGreen\nनीला\nBlue\nगुलाबी\nPink\nकेसरिया\nSaffron\nसफ़ेद\nWhite\n\nरंग चुनिए, फिर डिज़ाइन के किसी हिस्से को छुइए। अभी: पीला\n\nनमस्ते। बोलिए या लिखिए: सुलेख, रंगोली, कोलम या शतरंज।\n\nसुझाई गई कार्रवाइयाँ\n\nपोते को दिवाली पर ‘शुभ दीपावली’ दिखाना है\nदरवाज़े के लिए छोटी सी रंगोली\nशतरंज खेलते हैं, मैं सफ़ेद\n\n\n",
+    "server": {
+      "sessionId": "ses_f5842faadcb946cb",
+      "revision": 1,
+      "scene": "kolam",
+      "language": "hi",
+      "inputMode": "touch",
+      "historyOpen": false,
+      "pending": null,
+      "approval": null,
+      "calligraphy": null,
+      "kolam": {
+        "id": "kol_a1731f89252b4c7c",
+        "kind": "pulli",
+        "params": {
+          "kind": "pulli",
+          "grid": 5,
+          "symmetry": "4-fold",
+          "loops": "single",
+          "seed": 0
+        },
+        "validation": {
+          "valid": true,
+          "failed": [],
+          "checks": [
+            "grid-size",
+            "symmetry-type",
+            "region-ids-unique",
+            "palette-known",
+            "curves-closed",
+            "loop-count",
+            "single-line",
+            "fewest-loops",
+            "symmetry-mirrors",
+            "dots-enclosed",
+            "symmetry-geometry"
+          ]
+        },
+        "regionCount": 27,
+        "fills": {}
+      },
+      "strokes": {
+        "sulekh": 0,
+        "rangoli": 0
+      },
+      "chess": null,
+      "family": [],
+      "events": [
+        {
+          "type": "set-kolam-reference",
+          "actor": "agent",
+          "caller": "mcp",
+          "ok": true,
+          "errorCode": null,
+          "at": "2026-11-09 15:30:53.149+00"
+        }
+      ]
+    },
+    "finalSettleMs": 51
+  },
+  "domTimeline": [
+    {
+      "sequence": 1,
+      "elapsedMs": 16.091941999999108,
+      "turn": 0,
+      "trigger": "initial",
+      "state": {
+        "scene": "home",
+        "revision": 0,
+        "language": "hi",
+        "presence": "ready",
+        "sulekhVisible": false,
+        "sulekhReferenceVisible": false,
+        "sulekhReferenceText": null,
+        "sulekhReferenceScript": null,
+        "sulekhInputMode": null,
+        "sulekhDrawingEnabled": false,
+        "sulekhMyStrokes": null,
+        "airStartVisible": false,
+        "choicesVisible": false,
+        "choiceTexts": [],
+        "rangoliVisible": false,
+        "rangoliKind": null,
+        "rangoliMyStrokes": null,
+        "rangoliRegionCount": null,
+        "rangoliDrawingEnabled": false,
+        "rangoliInputMode": null,
+        "regionFills": {},
+        "boardVisible": false,
+        "boardFen": null,
+        "boardTurn": null,
+        "boardMoveCount": null,
+        "lastFrom": null,
+        "lastTo": null,
+        "lastPiece": null,
+        "lastActor": null,
+        "previewFrom": null,
+        "previewCount": null,
+        "selectedSquare": null,
+        "destCount": 0,
+        "historyVisible": false,
+        "familyPresent": false,
+        "conflictVisible": false,
+        "approvalCardVisible": false,
+        "approvalResultStatus": null,
+        "bodyTextSample": "चौपाल\nभाषा / Language\nहिंदी\nEnglish\nਪੰਜਾਬੀ\nதமிழ்\nमराठी\nবাংলা\nतैयार\nआज क्या करें?\nअ\nसुलेख\nदोहराने के लिए सुंदर लिखावट\n✿\nरंगोली\nरेखा खींचें, रंग भरें\n⁘\nकोलम\nबिंदु और एक ही रेखा\n♞\nशतरंज\nहिंदी मोहरों के साथ\n\nऐसे कहिए:\n“पोते को दिवाली पर ‘शुभ दीपावली’ दिखाना है”\n\nदबाइए और अपनी भाषा में बोलिए\n\nबोलिए",
+        "server": {
+          "sessionId": "ses_f5842faadcb946cb",
+          "revision": 0,
+          "scene": "home",
+          "language": "hi",
+          "inputMode": "none",
+          "historyOpen": false,
+          "pending": null,
+          "approval": null,
+          "calligraphy": null,
+          "kolam": null,
+          "strokes": {
+            "sulekh": 0,
+            "rangoli": 0
+          },
+          "chess": null,
+          "family": [],
+          "events": []
+        }
+      }
+    },
+    {
+      "sequence": 2,
+      "elapsedMs": 1997.970971999981,
+      "turn": 1,
+      "trigger": "after:chaupal-action:set-kolam-reference",
+      "state": {
+        "scene": "kolam",
+        "revision": 1,
+        "language": "hi",
+        "presence": "ready",
+        "sulekhVisible": false,
+        "sulekhReferenceVisible": false,
+        "sulekhReferenceText": null,
+        "sulekhReferenceScript": null,
+        "sulekhInputMode": null,
+        "sulekhDrawingEnabled": false,
+        "sulekhMyStrokes": null,
+        "airStartVisible": false,
+        "choicesVisible": false,
+        "choiceTexts": [],
+        "rangoliVisible": true,
+        "rangoliKind": "pulli",
+        "rangoliMyStrokes": 0,
+        "rangoliRegionCount": 27,
+        "rangoliDrawingEnabled": false,
+        "rangoliInputMode": "touch",
+        "regionFills": {},
+        "boardVisible": false,
+        "boardFen": null,
+        "boardTurn": null,
+        "boardMoveCount": null,
+        "lastFrom": null,
+        "lastTo": null,
+        "lastPiece": null,
+        "lastActor": null,
+        "previewFrom": null,
+        "previewCount": null,
+        "selectedSquare": null,
+        "destCount": 0,
+        "historyVisible": false,
+        "familyPresent": false,
+        "conflictVisible": false,
+        "approvalCardVisible": false,
+        "approvalResultStatus": null,
+        "bodyTextSample": "तैयार\nचौपाल\nभाषा / Language\nहिंदी\nEnglish\nਪੰਜਾਬੀ\nதமிழ்\nमराठी\nবাংলা\nतैयार\nतैयार\n\nदबाइए और अपनी भाषा में बोलिए\n\nबोलिए\nरंग भरें\nFill\nरेखा खींचें\nTrace\n\nरंग चुनें\n\nलाल\nRed\nपीला\nYellow\nहरा\nGreen\nनीला\nBlue\nगुलाबी\nPink\nकेसरिया\nSaffron\nसफ़ेद\nWhite\n\nरंग चुनिए, फिर डिज़ाइन के किसी हिस्से को छुइए। अभी: पीला\n\nनमस्ते। बोलिए या लिखिए: सुलेख, रंगोली, कोलम या शतरंज।\n\nसुझाई गई कार्रवाइयाँ\n\nपोते को दिवाली पर ‘शुभ दीपावली’ दिखाना है\nदरवाज़े के लिए छोटी सी रंगोली\nशतरंज खेलते हैं, मैं सफ़ेद\n\n\n",
+        "server": {
+          "sessionId": "ses_f5842faadcb946cb",
+          "revision": 1,
+          "scene": "kolam",
+          "language": "hi",
+          "inputMode": "touch",
+          "historyOpen": false,
+          "pending": null,
+          "approval": null,
+          "calligraphy": null,
+          "kolam": {
+            "id": "kol_a1731f89252b4c7c",
+            "kind": "pulli",
+            "params": {
+              "kind": "pulli",
+              "grid": 5,
+              "symmetry": "4-fold",
+              "loops": "single",
+              "seed": 0
+            },
+            "validation": {
+              "valid": true,
+              "failed": [],
+              "checks": [
+                "grid-size",
+                "symmetry-type",
+                "region-ids-unique",
+                "palette-known",
+                "curves-closed",
+                "loop-count",
+                "single-line",
+                "fewest-loops",
+                "symmetry-mirrors",
+                "dots-enclosed",
+                "symmetry-geometry"
+              ]
+            },
+            "regionCount": 27,
+            "fills": {}
+          },
+          "strokes": {
+            "sulekh": 0,
+            "rangoli": 0
+          },
+          "chess": null,
+          "family": [],
+          "events": [
+            {
+              "type": "set-kolam-reference",
+              "actor": "agent",
+              "caller": "mcp",
+              "ok": true,
+              "errorCode": null,
+              "at": "2026-11-09 15:30:53.149+00"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "sequence": 3,
+      "elapsedMs": 4552.020581999997,
+      "turn": 2,
+      "trigger": "final",
+      "state": {
+        "scene": "kolam",
+        "revision": 1,
+        "language": "hi",
+        "presence": "ready",
+        "sulekhVisible": false,
+        "sulekhReferenceVisible": false,
+        "sulekhReferenceText": null,
+        "sulekhReferenceScript": null,
+        "sulekhInputMode": null,
+        "sulekhDrawingEnabled": false,
+        "sulekhMyStrokes": null,
+        "airStartVisible": false,
+        "choicesVisible": false,
+        "choiceTexts": [],
+        "rangoliVisible": true,
+        "rangoliKind": "pulli",
+        "rangoliMyStrokes": 0,
+        "rangoliRegionCount": 27,
+        "rangoliDrawingEnabled": false,
+        "rangoliInputMode": "touch",
+        "regionFills": {},
+        "boardVisible": false,
+        "boardFen": null,
+        "boardTurn": null,
+        "boardMoveCount": null,
+        "lastFrom": null,
+        "lastTo": null,
+        "lastPiece": null,
+        "lastActor": null,
+        "previewFrom": null,
+        "previewCount": null,
+        "selectedSquare": null,
+        "destCount": 0,
+        "historyVisible": false,
+        "familyPresent": false,
+        "conflictVisible": false,
+        "approvalCardVisible": false,
+        "approvalResultStatus": null,
+        "bodyTextSample": "तैयार\nचौपाल\nभाषा / Language\nहिंदी\nEnglish\nਪੰਜਾਬੀ\nதமிழ்\nमराठी\nবাংলা\nतैयार\nतैयार\n\nदबाइए और अपनी भाषा में बोलिए\n\nबोलिए\nरंग भरें\nFill\nरेखा खींचें\nTrace\n\nरंग चुनें\n\nलाल\nRed\nपीला\nYellow\nहरा\nGreen\nनीला\nBlue\nगुलाबी\nPink\nकेसरिया\nSaffron\nसफ़ेद\nWhite\n\nरंग चुनिए, फिर डिज़ाइन के किसी हिस्से को छुइए। अभी: पीला\n\nनमस्ते। बोलिए या लिखिए: सुलेख, रंगोली, कोलम या शतरंज।\n\nसुझाई गई कार्रवाइयाँ\n\nपोते को दिवाली पर ‘शुभ दीपावली’ दिखाना है\nदरवाज़े के लिए छोटी सी रंगोली\nशतरंज खेलते हैं, मैं सफ़ेद\n\n\n",
+        "server": {
+          "sessionId": "ses_f5842faadcb946cb",
+          "revision": 1,
+          "scene": "kolam",
+          "language": "hi",
+          "inputMode": "touch",
+          "historyOpen": false,
+          "pending": null,
+          "approval": null,
+          "calligraphy": null,
+          "kolam": {
+            "id": "kol_a1731f89252b4c7c",
+            "kind": "pulli",
+            "params": {
+              "kind": "pulli",
+              "grid": 5,
+              "symmetry": "4-fold",
+              "loops": "single",
+              "seed": 0
+            },
+            "validation": {
+              "valid": true,
+              "failed": [],
+              "checks": [
+                "grid-size",
+                "symmetry-type",
+                "region-ids-unique",
+                "palette-known",
+                "curves-closed",
+                "loop-count",
+                "single-line",
+                "fewest-loops",
+                "symmetry-mirrors",
+                "dots-enclosed",
+                "symmetry-geometry"
+              ]
+            },
+            "regionCount": 27,
+            "fills": {}
+          },
+          "strokes": {
+            "sulekh": 0,
+            "rangoli": 0
+          },
+          "chess": null,
+          "family": [],
+          "events": [
+            {
+              "type": "set-kolam-reference",
+              "actor": "agent",
+              "caller": "mcp",
+              "ok": true,
+              "errorCode": null,
+              "at": "2026-11-09 15:30:53.149+00"
+            }
+          ]
+        },
+        "finalSettleMs": 51
+      }
+    }
+  ],
+  "externalRequests": [],
+  "executionError": null
+}
