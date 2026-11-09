@@ -106,6 +106,7 @@ export function createWebGpuFlameRenderer(
           ripple: state.ripple,
           swirl: state.swirl,
           sparks: state.sparks,
+          glowColor: state.glowColor,
         },
       });
       const target = canvasSurface;

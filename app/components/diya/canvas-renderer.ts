@@ -109,31 +109,17 @@ export function createCanvasFlameRenderer(options: RendererOptions): DiyaRendere
     g.translate(gx, gy);
     g.scale(1, 1 / 0.9);
     const halo = g.createRadialGradient(0, 0, 0, 0, 0, radius);
-    halo.addColorStop(0, `rgba(242,169,59,${0.5 * glow})`);
-    halo.addColorStop(0.18, `rgba(242,158,52,${0.34 * glow})`);
-    halo.addColorStop(0.42, `rgba(226,112,32,${0.15 * glow})`);
-    halo.addColorStop(0.72, `rgba(199,61,13,${0.05 * glow})`);
-    halo.addColorStop(1, "rgba(199,61,13,0)");
+    const [cr, cg, cb] = f.glowColor;
+    const tint = (k: number, alpha: number) =>
+      `rgba(${Math.round(cr * 255 * k)},${Math.round(cg * 255 * k)},${Math.round(cb * 255 * k)},${Math.max(0, alpha)})`;
+    halo.addColorStop(0, tint(1, 0.5 * glow));
+    halo.addColorStop(0.18, tint(0.97, 0.34 * glow));
+    halo.addColorStop(0.42, tint(0.86, 0.15 * glow));
+    halo.addColorStop(0.72, tint(0.66, 0.05 * glow));
+    halo.addColorStop(1, tint(0.6, 0));
     g.fillStyle = halo;
     g.fillRect(-radius, -radius, radius * 2, radius * 2);
 
-    // Receiving: rings of light spreading outward.
-    if (f.ripple > 0.01) {
-      for (let k = 0; k < 3; k += 1) {
-        const phase = (t * 0.34 + k / 3) % 1;
-        const r = radius * (0.3 + phase * 0.62);
-        const band = radius * 0.07;
-        const alpha = f.ripple * 0.18 * Math.sin(phase * Math.PI) * (1 - phase * 0.4);
-        const ring = g.createRadialGradient(0, 0, Math.max(0, r - band), 0, 0, r + band);
-        ring.addColorStop(0, "rgba(242,169,59,0)");
-        ring.addColorStop(0.5, `rgba(246,182,82,${alpha})`);
-        ring.addColorStop(1, "rgba(242,169,59,0)");
-        g.fillStyle = ring;
-        g.beginPath();
-        g.arc(0, 0, r + band, 0, Math.PI * 2);
-        g.fill();
-      }
-    }
     g.restore();
 
     // Less light falls on the outside of the bowl below the lip.
@@ -217,9 +203,9 @@ export function createCanvasFlameRenderer(options: RendererOptions): DiyaRendere
       ],
       H * 1.05,
       [
-        [0, "rgba(240,128,36,0.9)"],
-        [0.5, "rgba(232,96,22,0.75)"],
-        [1, "rgba(214,70,14,0)"],
+        [0, "rgba(244,150,52,0.9)"],
+        [0.5, "rgba(242,138,46,0.75)"],
+        [1, "rgba(220,92,26,0)"],
       ],
     );
     g.shadowBlur = 0;
@@ -233,8 +219,8 @@ export function createCanvasFlameRenderer(options: RendererOptions): DiyaRendere
       ],
       H,
       [
-        [0, "rgba(246,170,64,1)"],
-        [0.45, "rgba(240,134,40,0.9)"],
+        [0, "rgba(244,169,60,1)"],
+        [0.45, "rgba(242,138,46,0.9)"],
         [1, "rgba(226,88,20,0)"],
       ],
     );
@@ -247,8 +233,8 @@ export function createCanvasFlameRenderer(options: RendererOptions): DiyaRendere
       ],
       H * 0.74,
       [
-        [0, "rgba(255,214,128,1)"],
-        [0.6, "rgba(250,186,92,0.8)"],
+        [0, "rgba(255,213,140,1)"],
+        [0.6, "rgba(255,200,102,0.8)"],
         [1, "rgba(242,150,60,0)"],
       ],
     );
@@ -261,22 +247,22 @@ export function createCanvasFlameRenderer(options: RendererOptions): DiyaRendere
       ],
       H * 0.56,
       [
-        [0, "rgba(255,250,236,1)"],
-        [0.55, "rgba(255,240,205,0.85)"],
+        [0, "rgba(255,250,240,1)"],
+        [0.55, "rgba(255,226,170,0.85)"],
         [1, "rgba(255,226,160,0)"],
       ],
     );
     g.restore();
 
-    // Faint blue skirt where the oil vapour meets the wick.
+    // Faint indigo skirt where the oil vapour meets the wick.
     g.save();
     g.translate(X(bendAt(0)), Y(0.015 * H));
     g.scale(1, 0.42);
     const skirtR = W * unit * 1.05;
     const skirt = g.createRadialGradient(0, 0, skirtR * 0.45, 0, 0, skirtR);
-    skirt.addColorStop(0, "rgba(80,110,250,0)");
-    skirt.addColorStop(0.6, "rgba(80,110,250,0.22)");
-    skirt.addColorStop(1, "rgba(80,110,250,0)");
+    skirt.addColorStop(0, "rgba(156,156,240,0)");
+    skirt.addColorStop(0.6, "rgba(156,156,240,0.24)");
+    skirt.addColorStop(1, "rgba(156,156,240,0)");
     g.fillStyle = skirt;
     g.beginPath();
     g.arc(0, 0, skirtR, 0, Math.PI);
@@ -310,11 +296,17 @@ export function createCanvasFlameRenderer(options: RendererOptions): DiyaRendere
           f.swirl * front * 0.95,
         );
       }
-      for (let j = 0; j < 6 && f.sparks > 0.01; j += 1) {
-        const life = (t * 0.62 + j * 0.173) % 1;
-        const sway = Math.sin(j * 7.3 + t * 1.6) * 0.12 * life;
+      // Three embers rise 0.6 flame heights and fade, 1.8s each, 0.6s apart.
+      for (let j = 0; j < 3 && f.sparks > 0.01; j += 1) {
+        const life = (t / 1.8 + j / 3) % 1;
+        const sway = Math.sin(j * 7.3 + t * 1.6) * 0.07 * life;
         const fade = (1 - life) * Math.min(1, life / 0.12);
-        dot(bendAt(1) + sway, H * 0.82 + life * 0.75, unit * 0.04, f.sparks * fade);
+        dot(
+          bendAt(1) + sway + (j - 1) * 0.05,
+          H * 0.86 + life * 0.6,
+          unit * 0.055,
+          f.sparks * fade,
+        );
       }
       g.restore();
     }

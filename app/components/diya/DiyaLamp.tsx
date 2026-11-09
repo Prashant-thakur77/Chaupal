@@ -126,39 +126,28 @@ export function DiyaLamp({
           <stop offset="1" stopColor="#7A3018" />
         </linearGradient>
         <radialGradient id={`${id}-oil`} cx="0.5" cy="0.8" r="0.75">
-          <stop offset="0" stopColor="#5a2a0c" />
-          <stop offset="0.5" stopColor="#2c1307" />
-          <stop offset="1" stopColor="#160803" />
+          <stop offset="0" stopColor="#4a1d08" />
+          <stop offset="0.5" stopColor="#240d05" />
+          <stop offset="1" stopColor="#120603" />
         </radialGradient>
         {compact ? null : (
           <>
-            {/* Clay grain: fractal noise folded into the bowl's own colour. */}
+            {/* Clay grain: grey fractal noise, soft-light blended on the bowl. */}
             <filter id={`${id}-clay`} x="0" y="0" width="100%" height="100%">
               <feTurbulence
                 type="fractalNoise"
-                baseFrequency="0.95"
+                baseFrequency="0.9"
                 numOctaves="2"
                 seed="7"
-                result="noise"
               />
               <feColorMatrix
-                in="noise"
                 type="matrix"
-                values="0 0 0 0 0.5  0 0 0 0 0.5  0 0 0 0 0.5  0.9 0.9 0.9 0 -1.05"
-                result="grain"
+                values="1.4 0 0 0 -0.2  1.4 0 0 0 -0.2  1.4 0 0 0 -0.2  0 0 0 0 1"
               />
-              <feComposite
-                in="grain"
-                in2="SourceGraphic"
-                operator="arithmetic"
-                k1="0"
-                k2="0.22"
-                k3="1"
-                k4="-0.11"
-                result="grained"
-              />
-              <feComposite in="grained" in2="SourceGraphic" operator="in" />
             </filter>
+            <clipPath id={`${id}-bowlclip`}>
+              <path d={BOWL} />
+            </clipPath>
             <filter id={`${id}-soft`} x="-30%" y="-80%" width="160%" height="260%">
               <feGaussianBlur stdDeviation="3.2" />
             </filter>
@@ -255,11 +244,19 @@ export function DiyaLamp({
       />
 
       {/* Bowl, with clay grain. */}
-      <path
-        d={BOWL}
-        fill={ref("body")}
-        filter={compact ? undefined : ref("clay")}
-      />
+      <path d={BOWL} fill={ref("body")} />
+      {compact ? null : (
+        <rect
+          x="50"
+          y="122"
+          width="100"
+          height="40"
+          filter={ref("clay")}
+          clipPath={ref("bowlclip")}
+          opacity="0.32"
+          style={{ mixBlendMode: "soft-light" }}
+        />
+      )}
       <path d={BOWL} fill={ref("underside")} />
 
       {/* Painted chalk dot arc and scallop. */}
@@ -332,7 +329,13 @@ export function DiyaLampLight({ compact = false }: { compact?: boolean }) {
           <stop offset="1" stopColor="#F4A93C" stopOpacity="0" />
         </radialGradient>
       </defs>
-      <ellipse cx="100" cy="166" rx="92" ry="24" fill={ref("floor")} />
+      <ellipse
+        cx="100"
+        cy="166"
+        rx={compact ? 70 : 92}
+        ry={compact ? 18 : 24}
+        fill={ref("floor")}
+      />
       <path d={BOWL} fill={ref("bowl")} />
       <path
         d="M57 124.2 Q100 114.5 143 124.2"

@@ -44,6 +44,9 @@
 }
 
 .living-diya__lamp,
+.living-diya__light,
+.living-diya__aura,
+.living-diya__svg,
 .living-diya__flame,
 .living-diya__static {
   position: absolute;
@@ -53,12 +56,113 @@
 }
 
 .living-diya__lamp {
-  overflow: visible;
+  isolation: isolate;
 }
 
-/* The flame light reaching the clay, oil and floor. */
-.living-diya__lit {
+/* The flame's light on the clay, oil and floor: one layer, faded as a whole
+   by the renderer's --diya-light, so each frame is a compositor-only change. */
+.living-diya__light {
+  mix-blend-mode: screen;
   opacity: clamp(0.15, calc(var(--diya-light) * 0.78), 1);
+  will-change: opacity;
+}
+
+/* Aura: the awaiting halo and the speaking / receiving rings. */
+.living-diya__aura {
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.living-diya__halo,
+.living-diya__ring {
+  position: absolute;
+  left: var(--diya-aura-x, 50%);
+  top: var(--diya-aura-y, 60%);
+  width: var(--diya-aura-d, 60%);
+  aspect-ratio: 1;
+  translate: -50% -50%;
+}
+
+.living-diya__halo {
+  overflow: visible;
+  opacity: 0;
+  transition: opacity 420ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.living-diya[data-presence="awaiting"] .living-diya__halo {
+  opacity: 0.68;
+  animation: living-diya-turn 24s linear infinite;
+}
+
+.living-diya__ring {
+  display: none;
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.living-diya__ring--out {
+  border: 1.5px solid rgb(255 213 140 / 0.75);
+  box-shadow:
+    0 0 10px rgb(255 213 140 / 0.3),
+    inset 0 0 10px rgb(255 213 140 / 0.18);
+  animation: living-diya-ring-out 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.living-diya__ring--in {
+  border: 1.5px solid rgb(244 169 60 / 0.6);
+  box-shadow: 0 0 12px rgb(244 169 60 / 0.28);
+  animation: living-diya-ring-in 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.living-diya__ring--late {
+  animation-delay: 0.9s;
+}
+
+.living-diya[data-presence="speaking"] .living-diya__ring--out,
+.living-diya[data-presence="receiving"] .living-diya__ring--in {
+  display: block;
+}
+
+@keyframes living-diya-turn {
+  to {
+    rotate: 1turn;
+  }
+}
+
+/* Speaking: two chalk-gold rings expand 0.6 → 1.5 and fade (voice going out). */
+@keyframes living-diya-ring-out {
+  0% {
+    scale: 0.6;
+    opacity: 0;
+  }
+  18% {
+    opacity: 0.9;
+  }
+  100% {
+    scale: 1.5;
+    opacity: 0;
+  }
+}
+
+/* Receiving: rings gather inward 1.5 → 0.6 (words coming in). */
+@keyframes living-diya-ring-in {
+  0% {
+    scale: 1.5;
+    opacity: 0;
+  }
+  45% {
+    opacity: 0.75;
+  }
+  100% {
+    scale: 0.6;
+    opacity: 0;
+  }
+}
+
+[data-motion="paused"] .living-diya__halo,
+[data-motion="paused"] .living-diya__ring {
+  animation-play-state: paused;
 }
 
 /* Screen keeps the glow additive: it warms the clay and the night. */
@@ -143,7 +247,30 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .living-diya__lit {
-    transition: opacity 2.4s ease;
+  /* Static cues keep each phase's meaning (DESIGN.md §7). */
+  .living-diya[data-presence="awaiting"] .living-diya__halo {
+    animation: none;
+  }
+
+  .living-diya__ring {
+    animation: none;
+  }
+
+  .living-diya__ring--late {
+    display: none !important;
+  }
+
+  .living-diya[data-presence="speaking"] .living-diya__ring--out {
+    scale: 1.15;
+    opacity: 0.6;
+  }
+
+  .living-diya[data-presence="receiving"] .living-diya__ring--in {
+    scale: 0.85;
+    opacity: 0.55;
+  }
+
+  .living-diya__halo {
+    transition-duration: 1.6s;
   }
 }

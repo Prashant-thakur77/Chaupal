@@ -13,39 +13,68 @@ export interface FlameFrame {
   lean: number;
   turbulence: number;
   flickerSpeed: number;
-  /** Overall brightness of the flame body (0.4..1.6). */
+  /** Overall heat of the flame body (0.4..1.6). */
   core: number;
   glow: number;
   glowRadius: number;
+  /** Halo colour, 0..1 RGB. */
+  glowColor: [number, number, number];
   ripple: number;
   swirl: number;
   sparks: number;
-  /** Light that reaches the clay (drives the CSS rim light). */
+  /** Light that reaches the clay (drives the lamp's light layer). */
   light: number;
 }
 
 const BEHAVIOR_COUNT = 6;
-const BEHAVIOR_TRANSITION_MS = 1080;
+// DESIGN.md §7: flame scale and glow cross-fade over 420ms. Never snap.
+const BEHAVIOR_TRANSITION_MS = 420;
+const REDUCED_TRANSITION_MS = 2400;
 const TAU = Math.PI * 2;
 
-type Shape = Omit<FlameFrame, "time" | "light">;
+type Shape = Omit<FlameFrame, "time" | "light" | "glowColor">;
+type Rgb = [number, number, number];
+
+const hex = (value: number): Rgb => [
+  ((value >> 16) & 255) / 255,
+  ((value >> 8) & 255) / 255,
+  (value & 255) / 255,
+];
+
+/** Halo colour per behaviour (DESIGN.md §7 phase table). */
+const GLOW_COLORS: Rgb[] = [
+  hex(0xf4a93c), // ready: marigold
+  hex(0xffc866), // listening: a warmer, closer light
+  hex(0xf4a93c), // receiving
+  hex(0xf28a2e), // creating: saffron
+  hex(0xffd58c), // speaking: pale gold
+  hex(0x9c9cf0), // awaiting: indigo
+];
 
 function speechEnvelope(t: number) {
-  // Syllable beats inside slower phrases: a rhythmic pulse that still
-  // breathes like speech rather than a metronome.
-  const syllable = Math.max(0, Math.sin(TAU * 2.1 * t));
-  const accent = Math.max(0, Math.sin(TAU * 1.05 * t + 0.6));
+  // Syllable beats (~0.44s) inside slower phrases: rhythmic, like speech.
+  const syllable = Math.max(0, Math.sin(TAU * 2.27 * t));
+  const accent = Math.max(0, Math.sin(TAU * 1.13 * t + 0.6));
   const phrase = 0.55 + 0.45 * Math.sin(TAU * 0.32 * t);
-  return Math.min(1, (syllable ** 2 * 0.75 + accent ** 3 * 0.35) * phrase + 0.08);
+  return Math.min(
+    1,
+    (syllable ** 2 * 0.75 + accent ** 3 * 0.35) * phrase + 0.08,
+  );
 }
 
-function behaviorShape(index: number, t: number): Shape {
+/**
+ * Each phase's flame at time t. With `still`, breath and flicker freeze at a
+ * neutral frame: reduced motion keeps each phase's height, lean and light,
+ * never its movement.
+ */
+function behaviorShape(index: number, t: number, still = false): Shape {
+  const m = still ? 0 : 1;
   switch (index) {
     case 1: // listening: leans in, steadies, comes a little closer
       return {
-        height: 1.08 + 0.025 * Math.sin(0.9 * t),
+        height: 1.08 + 0.025 * Math.sin(0.9 * t) * m,
         width: 1.08,
-        lean: 0.17 + 0.03 * Math.sin(0.75 * t),
+        lean: 0.16 + 0.03 * Math.sin(0.75 * t) * m,
         turbulence: 0.3,
         flickerSpeed: 0.75,
         core: 1.05,
@@ -55,82 +84,88 @@ function behaviorShape(index: number, t: number): Shape {
         swirl: 0,
         sparks: 0,
       };
-    case 2: // receiving: ripples rise through the flame and spread outward
+    case 2: // receiving: ripples rise through the flame, light gathers in
       return {
-        height: 0.98 + 0.02 * Math.sin(1.4 * t),
+        height: 0.98 + 0.02 * Math.sin(1.4 * t) * m,
         width: 1.02,
-        lean: 0.04 * Math.sin(1.1 * t),
+        lean: 0.04 * Math.sin(1.1 * t) * m,
         turbulence: 0.45,
         flickerSpeed: 1.05,
-        core: 0.92,
-        glow: 0.82,
-        glowRadius: 1.08,
+        core: 0.94,
+        glow: 0.84,
+        glowRadius: 1.04,
         ripple: 1,
         swirl: 0,
         sparks: 0,
       };
-    case 3: // creating: tall, bright, embers circulate
+    case 3: // creating: 1.22 tall, bright, quick flicker, embers circulate
       return {
-        height: 1.2 + 0.05 * Math.sin(2.3 * t) + 0.03 * Math.sin(3.7 * t),
+        height:
+          1.22 +
+          (0.05 * Math.sin((TAU * t) / 0.9) + 0.03 * Math.sin(3.7 * t)) * m,
         width: 1.06,
-        lean: 0.07 * Math.sin(1.6 * t) + 0.03 * Math.sin(2.9 * t),
+        lean: (0.07 * Math.sin(1.6 * t) + 0.03 * Math.sin(2.9 * t)) * m,
         turbulence: 0.85,
         flickerSpeed: 1.4,
-        core: 1.22,
-        glow: 1.18,
+        core: 1.2,
+        glow: 1.14,
         glowRadius: 1.12,
         ripple: 0,
         swirl: 1,
-        sparks: 0.55,
+        sparks: 0.9,
       };
     case 4: {
-      // speaking: rhythmic pulse of height and light
-      const p = speechEnvelope(t);
+      // speaking: rhythmic pulse of height and light, 1.0–1.25
+      const p = still ? 0.45 : speechEnvelope(t);
       return {
-        height: 0.96 + 0.2 * p,
+        height: 1 + 0.22 * p,
         width: 1 + 0.07 * p,
-        lean: 0.03 * Math.sin(0.9 * t),
+        lean: 0.03 * Math.sin(0.9 * t) * m,
         turbulence: 0.42,
         flickerSpeed: 1,
-        core: 0.92 + 0.28 * p,
-        glow: 0.72 + 0.48 * p,
-        glowRadius: 0.95 + 0.12 * p,
+        core: 0.94 + 0.26 * p,
+        glow: 0.8 + 0.42 * p,
+        glowRadius: 0.96 + 0.12 * p,
         ripple: 0,
         swirl: 0,
         sparks: 0,
       };
     }
     case 5: {
-      // awaiting: low and calm, slow breath, still glowing
-      const b = 0.5 + 0.5 * Math.sin((TAU * t) / 5.6);
+      // awaiting: low (0.82) and calm, a slow 4.8s breath, still glowing
+      const b = still ? 0.5 : 0.5 + 0.5 * Math.sin((TAU * t) / 4.8);
       return {
-        height: 0.62 + 0.05 * b,
-        width: 0.92,
-        lean: 0.02 * Math.sin(0.35 * t),
+        height: 0.8 + 0.04 * b,
+        width: 0.94,
+        lean: 0.02 * Math.sin(0.35 * t) * m,
         turbulence: 0.2,
         flickerSpeed: 0.5,
-        core: 0.82 + 0.06 * b,
+        core: 0.84 + 0.06 * b,
         glow: 0.66 + 0.1 * b,
-        glowRadius: 1.22,
+        glowRadius: 1.2,
         ripple: 0,
         swirl: 0,
         sparks: 0,
       };
     }
-    default: // ready: an easy natural flicker
+    default: {
+      // ready: full flame with a slow 3.2s breath (scale .94–1, light
+      // .78–1) and a small 2.6s skew.
+      const b = still ? 1 : 0.5 + 0.5 * Math.sin((TAU * t) / 3.2);
       return {
-        height: 1 + 0.03 * Math.sin(1.3 * t),
+        height: 0.94 + 0.06 * b,
         width: 1,
-        lean: 0.035 * Math.sin(0.7 * t) + 0.02 * Math.sin(1.9 * t),
+        lean: 0.028 * Math.sin((TAU * t) / 2.6) * m,
         turbulence: 0.55,
         flickerSpeed: 1,
-        core: 1,
-        glow: 0.86,
+        core: 0.96 + 0.06 * b,
+        glow: 0.86 * (0.78 + 0.22 * b),
         glowRadius: 1,
         ripple: 0,
         swirl: 0,
         sparks: 0,
       };
+    }
   }
 }
 
@@ -148,13 +183,16 @@ const SHAPE_KEYS: (keyof Shape)[] = [
   "sparks",
 ];
 
+/** Reduced motion freezes the flame at this calm, neutral moment. */
+const STILL_TIME = 2.4;
+
 export class DiyaMotion {
-  private vitalityTarget = 0.92;
-  private vitality = 0.92;
-  private behaviorIndex = 0;
-  private weights = [1, 0, 0, 0, 0, 0];
-  private startWeights = [1, 0, 0, 0, 0, 0];
-  private targetWeights = [1, 0, 0, 0, 0, 0];
+  private vitalityTarget: number;
+  private vitality: number;
+  private behaviorIndex: number;
+  private weights: number[];
+  private startWeights: number[];
+  private targetWeights: number[];
   private transitionStart = -1;
   private reactionKind: DiyaReaction | null = null;
   private reactionStart = -1;
@@ -170,6 +208,7 @@ export class DiyaMotion {
     this.vitality = this.vitalityTarget = initialVitality;
     this.behaviorIndex = initialBehavior;
     this.weights = this.weightsFor(initialBehavior);
+    this.startWeights = [...this.weights];
     this.targetWeights = [...this.weights];
   }
 
@@ -202,28 +241,33 @@ export class DiyaMotion {
     this.reactionDuration = kind === "recoil" ? 920 : 1220;
   }
 
-  /** True when nothing would change on the next frame (reduced motion only). */
+  /** True when a reduced-motion frame would no longer change. */
   get settled() {
-    return Math.abs(this.vitality - this.vitalityTarget) < 0.0008;
+    return (
+      this.transitionStart < 0 &&
+      Math.abs(this.vitality - this.vitalityTarget) < 0.0008
+    );
   }
 
   step(now: number): FlameFrame {
     if (this.epoch < 0) this.epoch = now;
     const dt = this.lastNow < 0 ? 16 : Math.min(64, now - this.lastNow);
     this.lastNow = now;
+    const reduced = this.reduced;
 
-    if (this.reduced) return this.stepReduced(dt);
-
-    // Vitality eases in like the base runtime (0.035 per 60fps frame).
-    const k = 1 - Math.pow(1 - 0.035, dt / 16.67);
+    // Vitality eases in like the base runtime (0.035 per 60fps frame);
+    // reduced motion lets the brightness drift over a few seconds instead.
+    const rate = reduced ? 0.012 : 0.035;
+    const k = 1 - Math.pow(1 - rate, dt / 16.67);
     this.vitality += (this.vitalityTarget - this.vitality) * k;
+    if (Math.abs(this.vitality - this.vitalityTarget) < 0.0008) {
+      this.vitality = this.vitalityTarget;
+    }
 
     if (this.transitionStart >= 0) {
-      const p = Math.min(
-        1,
-        Math.max(0, (now - this.transitionStart) / BEHAVIOR_TRANSITION_MS),
-      );
-      const e = p * p * (3 - 2 * p);
+      const duration = reduced ? REDUCED_TRANSITION_MS : BEHAVIOR_TRANSITION_MS;
+      const p = Math.min(1, Math.max(0, (now - this.transitionStart) / duration));
+      const e = p * p * p * (p * (p * 6 - 15) + 10);
       for (let i = 0; i < BEHAVIOR_COUNT; i += 1) {
         this.weights[i] =
           this.startWeights[i] +
@@ -232,7 +276,7 @@ export class DiyaMotion {
       if (p >= 1) this.transitionStart = -1;
     }
 
-    const t = (now - this.epoch) * 0.001;
+    const t = reduced ? STILL_TIME : (now - this.epoch) * 0.001;
     const out: Shape = {
       height: 0,
       width: 0,
@@ -246,21 +290,27 @@ export class DiyaMotion {
       swirl: 0,
       sparks: 0,
     };
+    const glowColor: Rgb = [0, 0, 0];
     for (let i = 0; i < BEHAVIOR_COUNT; i += 1) {
       const w = this.weights[i];
       if (w <= 0.0001) continue;
-      const s = behaviorShape(i, t);
+      const s = behaviorShape(i, t, reduced);
       for (const key of SHAPE_KEYS) out[key] += s[key] * w;
+      const c = GLOW_COLORS[i];
+      glowColor[0] += c[0] * w;
+      glowColor[1] += c[1] * w;
+      glowColor[2] += c[2] * w;
     }
 
     const v = this.vitality;
     out.glow *= 0.72 + 0.28 * v;
     out.core *= 0.84 + 0.16 * v;
     out.turbulence *= 0.65 + 0.35 * v;
+    if (reduced) out.turbulence = Math.min(out.turbulence, 0.35);
 
     // Reactions: celebrate leaps up and showers sparks; recoil ducks and shivers.
     const re = now - this.reactionStart;
-    if (this.reactionKind && re >= 0 && re < this.reactionDuration) {
+    if (!reduced && this.reactionKind && re >= 0 && re < this.reactionDuration) {
       const p = re / this.reactionDuration;
       const env = Math.sin(p * Math.PI) * (1 - p * 0.16);
       if (this.reactionKind === "celebrate") {
@@ -286,31 +336,8 @@ export class DiyaMotion {
     return {
       time: t,
       ...out,
+      glowColor,
       light: Math.max(0, Math.min(1.4, out.glow * (0.6 + 0.4 * out.core))),
-    };
-  }
-
-  /**
-   * Reduced motion: a still flame in its resting shape. Only brightness moves,
-   * and only slowly, when the phase changes.
-   */
-  private stepReduced(dt: number): FlameFrame {
-    const k = 1 - Math.pow(1 - 0.012, dt / 16.67);
-    this.vitality += (this.vitalityTarget - this.vitality) * k;
-    if (this.settled) this.vitality = this.vitalityTarget;
-    const v = this.vitality;
-    const shape = behaviorShape(0, 0);
-    const glow = 0.42 + 0.6 * v;
-    const core = 0.78 + 0.26 * v;
-    return {
-      time: 2.4,
-      ...shape,
-      height: 0.95,
-      turbulence: 0.35,
-      lean: 0.015,
-      core,
-      glow,
-      light: glow * (0.6 + 0.4 * core),
     };
   }
 }

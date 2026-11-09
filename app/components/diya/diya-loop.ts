@@ -26,13 +26,16 @@ const REDUCED_QUERY = "(prefers-reduced-motion: reduce)";
 /**
  * The render loop shared by both renderers, after the base repo's presence
  * runtime: one RAF loop, paused while the tab is hidden or the canvas is
- * offscreen, DPR capped at 2, and in reduced motion it only draws while the
- * brightness is still settling.
+ * offscreen, DPR capped at 2, and in reduced motion (or under an ancestor
+ * with data-motion="paused") it only draws while the brightness settles.
  */
 export function createDiyaLoop(options: DiyaLoopOptions) {
   const { canvas } = options;
   const media = window.matchMedia(REDUCED_QUERY);
-  const motion = new DiyaMotion(options.vitality, options.behavior, media.matches);
+  // Reduced motion, or the app's "pause motion" switch on any ancestor.
+  const isStill = () =>
+    media.matches || canvas.closest('[data-motion="paused"]') !== null;
+  const motion = new DiyaMotion(options.vitality, options.behavior, isStill());
   let raf = 0;
   let disposed = false;
   let visible = true;
@@ -52,8 +55,10 @@ export function createDiyaLoop(options: DiyaLoopOptions) {
   const tick = (now: number) => {
     raf = 0;
     if (disposed || !visible || document.hidden) return;
+    const still = isStill();
+    motion.setReduced(still);
     render(now);
-    if (!media.matches || !motion.settled) raf = requestAnimationFrame(tick);
+    if (!still || !motion.settled) raf = requestAnimationFrame(tick);
   };
 
   const request = () => {
@@ -96,9 +101,10 @@ export function createDiyaLoop(options: DiyaLoopOptions) {
     else request();
   };
   const onReducedChange = () => {
-    motion.setReduced(media.matches);
+    motion.setReduced(isStill());
     request();
   };
+  const pauseObserver = new MutationObserver(onReducedChange);
   const onWindowResize = () => resize();
 
   return {
@@ -109,6 +115,11 @@ export function createDiyaLoop(options: DiyaLoopOptions) {
       intersection.observe(canvas);
       document.addEventListener("visibilitychange", onVisibility);
       media.addEventListener("change", onReducedChange);
+      pauseObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["data-motion"],
+        subtree: true,
+      });
       window.addEventListener("resize", onWindowResize, { passive: true });
       resize();
       render(performance.now());
@@ -134,6 +145,7 @@ export function createDiyaLoop(options: DiyaLoopOptions) {
       intersection.disconnect();
       document.removeEventListener("visibilitychange", onVisibility);
       media.removeEventListener("change", onReducedChange);
+      pauseObserver.disconnect();
       window.removeEventListener("resize", onWindowResize);
     },
   };

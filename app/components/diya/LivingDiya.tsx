@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 
-import { DiyaLamp } from "./DiyaLamp";
+import { DiyaLamp, DiyaLampLight } from "./DiyaLamp";
 import { DIYA_LAYOUT_COMPACT, DIYA_LAYOUT_FULL } from "./diya-geometry";
 import type { DiyaRenderer } from "./diya-loop";
 import {
@@ -235,11 +235,37 @@ export function LivingDiya({
                 "--diya-wick-x": layout.wick.x,
                 "--diya-wick-y": layout.wick.y,
                 "--diya-unit": layout.unit,
+                // Aura (halo and rings) centre and base radius, after
+                // DESIGN.md §7: r 88 around a 99-unit flame.
+                "--diya-aura-x": `${layout.wick.x * 100}%`,
+                "--diya-aura-y": `${(layout.wick.y - layout.unit * 0.3) * 100}%`,
+                "--diya-aura-d": `${layout.unit * 0.89 * 200}%`,
               } as CSSProperties
             }
           >
             <div ref={lampRef} className="living-diya__lamp">
               <DiyaLamp compact={compact} pixelSize={px} />
+              <div className="living-diya__light">
+                <DiyaLampLight compact={compact} />
+              </div>
+            </div>
+            <div className="living-diya__aura" aria-hidden="true">
+              <svg className="living-diya__halo" viewBox="0 0 100 100">
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="47"
+                  fill="none"
+                  stroke="#9C9CF0"
+                  strokeWidth={compact ? 3.6 : 2.6}
+                  strokeLinecap="round"
+                  strokeDasharray="1.6 7.1"
+                />
+              </svg>
+              <span className="living-diya__ring living-diya__ring--out" />
+              <span className="living-diya__ring living-diya__ring--out living-diya__ring--late" />
+              <span className="living-diya__ring living-diya__ring--in" />
+              <span className="living-diya__ring living-diya__ring--in living-diya__ring--late" />
             </div>
             <div className="living-diya__static" aria-hidden="true" />
             <canvas

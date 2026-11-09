@@ -19,16 +19,21 @@ struct Params {
   ripple: f32,
   swirl: f32,
   sparks: f32,
+  glowColor: vec3f,
 }
 @group(0) @binding(0) var<uniform> params: Params;
 
 const TAU = 6.28318530718;
-const SAFFRON_DEEP = vec3f(0.78, 0.24, 0.05);
-const SAFFRON = vec3f(0.96, 0.46, 0.11);
-const MARIGOLD = vec3f(0.949, 0.663, 0.231);
-const WARM_YELLOW = vec3f(1.0, 0.86, 0.53);
-const WHITE_YELLOW = vec3f(1.0, 0.975, 0.9);
-const EMBER = vec3f(1.0, 0.76, 0.38);
+// Flame tokens (DESIGN.md §7): outer #F28A2E → #F4A93C → #FFC866,
+// core #FFD58C → #FFFAF0, with a faint indigo base.
+const SAFFRON_DEEP = vec3f(0.86, 0.36, 0.1);
+const SAFFRON = vec3f(0.949, 0.541, 0.18);
+const MARIGOLD = vec3f(0.957, 0.663, 0.235);
+const WARM_YELLOW = vec3f(1.0, 0.784, 0.4);
+const PALE_GOLD = vec3f(1.0, 0.835, 0.549);
+const CORE_WHITE = vec3f(1.0, 0.98, 0.94);
+const INDIGO = vec3f(0.612, 0.612, 0.941);
+const EMBER = vec3f(1.0, 0.784, 0.4);
 
 fn hash21(p: vec2f) -> f32 {
   var q = fract(p * vec2f(123.34, 456.21));
@@ -63,15 +68,18 @@ fn fbm(p: vec2f) -> f32 {
 fn ramp(h: f32) -> vec3f {
   let x = clamp(h, 0.0, 1.0);
   if (x < 0.25) {
-    return mix(mix(SAFFRON_DEEP, SAFFRON, 0.55), SAFFRON, x / 0.25);
+    return mix(SAFFRON_DEEP, SAFFRON, x / 0.25);
   }
-  if (x < 0.52) {
-    return mix(SAFFRON, MARIGOLD, (x - 0.25) / 0.27);
+  if (x < 0.5) {
+    return mix(SAFFRON, MARIGOLD, (x - 0.25) / 0.25);
   }
-  if (x < 0.78) {
-    return mix(MARIGOLD, WARM_YELLOW, (x - 0.52) / 0.26);
+  if (x < 0.7) {
+    return mix(MARIGOLD, WARM_YELLOW, (x - 0.5) / 0.2);
   }
-  return mix(WARM_YELLOW, WHITE_YELLOW, (x - 0.78) / 0.22);
+  if (x < 0.85) {
+    return mix(WARM_YELLOW, PALE_GOLD, (x - 0.7) / 0.15);
+  }
+  return mix(PALE_GOLD, CORE_WHITE, (x - 0.85) / 0.15);
 }
 
 // Radius of a teardrop flame at height y: round belly, long pointed tip.
@@ -131,9 +139,9 @@ fn profile(y: f32, height: f32, halfWidth: f32) -> f32 {
   heat = clamp(heat * 0.88 * params.core + coreMask * 0.5 * params.core, 0.0, 1.0);
 
   var flameColor = ramp(heat);
-  // A faint blue skirt at the base where the oil vapour burns cleanly.
+  // A faint indigo skirt at the base where the oil vapour burns cleanly.
   let blue = (1.0 - smoothstep(0.0, 0.14 * H, y)) * smoothstep(0.6, 0.95, nd) * smoothstep(-0.07 * H, 0.0, y);
-  flameColor = mix(flameColor, vec3f(0.36, 0.46, 0.98), blue * 0.28);
+  flameColor = mix(flameColor, INDIGO, blue * 0.32);
   var flameAlpha = body * (0.62 + 0.38 * heat);
   flameAlpha *= 1.0 - smoothstep(0.72, 1.08, y / H) * 0.55;
   flameAlpha = clamp(flameAlpha * mix(0.9, 1.0, params.core), 0.0, 1.0);
@@ -143,15 +151,12 @@ fn profile(y: f32, height: f32, halfWidth: f32) -> f32 {
   let gd = length((p - gc) * vec2f(1.0, 0.86)) / max(params.glowRadius, 0.3);
   var g = params.glow * (0.42 * exp(-gd * gd * 4.2) + 0.2 / (1.0 + gd * gd * 7.0));
   g *= 1.0 + (valueNoise(vec2f(ft * 6.0, 0.5)) - 0.5) * 0.2 * params.turbulence;
-  // Receiving: soft rings of light spreading outward.
-  let ringWave = pow(max(0.0, sin(gd * 11.0 - t * 3.0)), 10.0);
-  g += params.ripple * ringWave * smoothstep(0.22, 0.5, gd) * exp(-gd * 1.2) * 0.42;
   // Less light falls on the outside of the bowl below the lip.
   g *= mix(0.5, 1.0, smoothstep(-0.55, 0.12, p.y));
   let edge = max(abs(uv.x - 0.5), abs(uv.y - 0.5)) * 2.0;
   g *= 1.0 - smoothstep(0.62, 1.0, edge);
   let glowAlpha = clamp(g, 0.0, 0.85);
-  let glowColor = mix(MARIGOLD, SAFFRON_DEEP, smoothstep(0.1, 1.3, gd));
+  let glowColor = params.glowColor * mix(1.0, 0.6, smoothstep(0.1, 1.3, gd));
 
   // Creating: embers circulate around the flame; celebrate: sparks rise.
   var ember = 0.0;
@@ -168,14 +173,15 @@ fn profile(y: f32, height: f32, halfWidth: f32) -> f32 {
     }
   }
   if (params.sparks > 0.001) {
-    for (var j = 0; j < 6; j++) {
+    // Three embers rise 0.6 flame heights and fade, 1.8s each, 0.6s apart.
+    for (var j = 0; j < 3; j++) {
       let fj = f32(j);
-      let life = fract(t * 0.62 + fj * 0.173);
-      let sway = sin(fj * 7.3 + t * 1.6) * 0.12 * life;
-      let pos = vec2f(bend + sway, H * 0.82 + life * 0.75);
+      let life = fract(t / 1.8 + fj / 3.0);
+      let sway = sin(fj * 7.3 + t * 1.6) * 0.07 * life;
+      let pos = vec2f(bend + sway + (fj - 1.0) * 0.05, H * 0.86 + life * 0.6);
       let fade = (1.0 - life) * smoothstep(0.0, 0.12, life);
       let d = p - pos;
-      ember += params.sparks * fade * 0.00022 / (dot(d, d) + 0.00012);
+      ember += params.sparks * fade * 0.00034 / (dot(d, d) + 0.00016);
     }
   }
   let emberAlpha = clamp(ember, 0.0, 1.0);
