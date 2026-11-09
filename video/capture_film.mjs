@@ -30,7 +30,9 @@ const DPR = 1.5;
 // --agent: her request is typed into the in-app agent dock and the agent answers (needs the agent chat working on the
 // deployed app). Default: her words go straight to the same action the agent would call (move-chess-piece with her
 // phrase, set-calligraphy-reference, fill-region with her phrase, draft-family-update); the film labels those steps.
-const AGENT = process.argv.includes("--agent");
+// --agent hero,sulekh : those shots go through the in-app agent; the rest through the actions (labelled in the film)
+const AGENT_SHOTS = process.argv.includes("--agent") ? (arg("--agent", "") || "hero,sulekh,rangoli,guard").split(",") : [];
+let AGENT = false;
 fs.mkdirSync(OUT, { recursive: true });
 const log = fs.existsSync(LOGF) ? JSON.parse(fs.readFileSync(LOGF, "utf8")) : {};
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -118,15 +120,27 @@ const tap = async (page, sel, ms = 550) => {
 };
 /** Types her request into the dock like a person would (visible typing), then sends it. Returns [typeStart, submit]. */
 const say = async (page, text, clock) => {
-  const toggle = page.locator(".ch-dock-type").first();
-  if (await toggle.isVisible().catch(() => false)) { await tap(page, ".ch-dock-type"); await sleep(400); }
   const input = page.locator('[data-testid="say-input"]');
+  for (const sel of [".ch-dock-type", '[data-testid="chat-toggle"]']) {
+    if (await input.isVisible().catch(() => false)) break;
+    if (await page.locator(sel).first().isVisible().catch(() => false)) { await tap(page, sel); await sleep(700); }
+  }
   await input.waitFor({ state: "visible", timeout: 20000 });
   await input.click();
   const t1 = clock();
   await page.keyboard.type(text, { delay: 55 });
   await sleep(500);
-  await tap(page, '[data-testid="say-submit"]', 350);
+  // the send button can sit under the board's frame layer at tablet size: show the touch on it, then press it in the DOM
+  const sb = await page.locator('[data-testid="say-submit"]').first().boundingBox();
+  if (sb) {
+    const x = sb.x + sb.width / 2, y = sb.y + sb.height / 2;
+    await page.evaluate(([x, y]) => { window.__touch && window.__touch.move(x, y, 350); }, [x, y]);
+    await sleep(430);
+    await page.evaluate(([x, y]) => window.__touch && window.__touch.ripple(x, y), [x, y]);
+  }
+  await page.locator('[data-testid="say-submit"]').first().evaluate((b) => b.click());
+  await sleep(250);
+  await page.evaluate(() => window.__touch && window.__touch.at(-200, -200, false));
   return [t1, clock()];
 };
 const moveCount = (page) => page.locator('[data-testid="shatranj-board"]').getAttribute("data-move-count").then(Number).catch(() => -1);
@@ -162,7 +176,8 @@ await fp.waitForSelector('[data-testid="shatranj-board"]', { timeout: 90000 });
 const famApi = (name, body) => api(fam, name, body);
 
 const shot = async (id, pages, body) => {
-  console.log(`== ${id}`);
+  AGENT = AGENT_SHOTS.includes(id);
+  console.log(`== ${id}${AGENT ? " (in-app agent)" : ""}`);
   const recs = [];
   for (const [p, name, w, h] of pages) recs.push([await recorder(p === ep ? elder : fam, p, `${id}-${name}`, w, h), name]);
   await sleep(600);
@@ -200,7 +215,7 @@ if (ONLY.includes("hero")) {
     ev.landTablet = clock();
     await until(async () => (await moveCount(fp)) >= 7, 30000, 25);
     ev.land = clock();
-    await sleep(2600);
+    await sleep(AGENT ? 5000 : 2600); // let her agent's reply appear in the chat panel
     ev.reply = clock();
     await tap(fp, '[data-testid="piece-g7"]', 450);
     await tap(fp, '[data-testid="dest-h6"]', 450);
@@ -230,7 +245,7 @@ if (ONLY.includes("sulekh")) {
     else { ev.request = ev.submit = clock(); await api(elder, "set-calligraphy-reference", { text: "शुभ दीपावली" }); }
     await until(async () => (await ep.locator('[data-testid="sulekh-reference"]').getAttribute("data-reference-text").catch(() => null)) === "शुभ दीपावली", 150000);
     ev.reference = clock();
-    await sleep(2500);
+    await sleep(AGENT ? 5000 : 2500);
     if (await ep.locator('[data-testid="touch-draw"]').isVisible().catch(() => false)) { await tap(ep, '[data-testid="touch-draw"]'); await sleep(900); }
     const ref = await box(ep, '[data-testid="sulekh-reference"]');
     const layer = await box(ep, '[data-testid="stroke-layer"]');
@@ -304,6 +319,9 @@ if (ONLY.includes("guard")) {
     // the draft call holds until she answers on her screen, so it is not awaited here
     else { ev.request = ev.submit = clock(); api(elder, "draft-family-update", { messageHi: "दिवाली की रंगोली, आपके लिए", messageEn: "A Diwali rangoli, for you" }).then((r) => { ev.draftResult = r.status ?? r.errorCode ?? null; }).catch(() => {}); }
     await ep.waitForSelector('[data-testid="approval-card"]', { timeout: 150000 });
+    ev.cardShown = clock();
+    // the card's picture is a raster made on the server: wait until it has really loaded before the beat
+    ev.imageLoaded = await ep.waitForFunction(() => { const i = document.querySelector('[data-testid="approval-card"] img'); return !!i && i.complete && i.naturalWidth > 0; }, null, { timeout: 45000 }).then(() => true).catch(() => false);
     ev.card = clock();
     const card = await box(ep, '[data-testid="approval-card"]');
     await sleep(3000);
@@ -332,6 +350,47 @@ if (ONLY.includes("guard")) {
     ev.conflict = clock();
     await sleep(4000);
     return { mode: AGENT ? "agent" : "action", src: "captures/guard-tablet.mp4", events: ev, boxes: { card, conflict: await box(ep, '[data-testid="conflict-card"]') }, recap: [ev.card + 0.6, ev.conflict + 0.6] };
+  });
+}
+
+// ---------- TELEGRAM: her "हाँ" sends the picture to the family's Telegram chat (one real message per run)
+if (ONLY.includes("telegram")) {
+  if (!ONLY.includes("rangoli")) {
+    await api(elder, "open-activity", { activity: "rangoli" });
+    await api(elder, "set-rangoli-reference", { festival: "diwali" });
+    await api(elder, "fill-region", { phrase: "बीच में पीला, बाहर लाल" });
+    await ep.waitForSelector('[data-testid="rangoli-canvas"] svg', { timeout: 60000 });
+    await sleep(2500);
+  }
+  await shot("telegram", [[ep, "tablet", 1366, 1024]], async (clock) => {
+    const ev = {};
+    await sleep(1200);
+    ev.request = clock();
+    let draft = null;
+    api(elder, "draft-family-update", { messageHi: "दिवाली की रंगोली, आपके लिए", messageEn: "A Diwali rangoli, for you" }).then((r) => { draft = r; }).catch(() => {});
+    await ep.waitForSelector('[data-testid="approval-card"]', { timeout: 150000 });
+    await ep.waitForFunction(() => { const i = document.querySelector('[data-testid="approval-card"] img'); return !!i && i.complete && i.naturalWidth > 0; }, null, { timeout: 45000 }).catch(() => {});
+    ev.card = clock();
+    const card = await box(ep, '[data-testid="approval-card"]');
+    await sleep(2600);
+    await tap(ep, '[data-testid="approve-send"]');
+    ev.approve = clock();
+    await ep.waitForSelector('[data-testid="approval-result"][data-status="sent"], [data-testid="approval-result"][data-status="failed"]', { timeout: 60000 }).catch(() => {});
+    ev.result = clock();
+    ev.resultStatus = await ep.locator('[data-testid="approval-result"]').getAttribute("data-status").catch(() => null);
+    const result = await box(ep, '[data-testid="approval-result"]');
+    await sleep(3500);
+    for (let i = 0; i < 20 && !draft; i++) await sleep(500);
+    const st = await api(elder, "get-session-state", undefined, "GET").catch(() => ({}));
+    const a = st.approval || {};
+    const tg = { status: a.status ?? draft?.status ?? ev.resultStatus, messageId: a.telegramMessageId ?? null, decidedAt: a.decidedAt ?? null,
+      captionHi: a.captionHi ?? null, captionEn: a.captionEn ?? null, imagePath: a.imagePath ?? null, draftStatus: draft?.status ?? null };
+    if (tg.imagePath) {
+      const r = await elder.request.get(BASE + tg.imagePath).catch(() => null);
+      if (r && r.ok()) { fs.writeFileSync(path.join(HERE, "film", "public", "svg", "telegram-sent.svg"), await r.body()); tg.picture = "svg/telegram-sent.svg"; }
+    }
+    console.log("   telegram:", JSON.stringify(tg));
+    return { mode: "action", src: "captures/telegram-tablet.mp4", events: ev, telegram: tg, boxes: { card, result }, recap: [ev.result + 0.5] };
   });
 }
 

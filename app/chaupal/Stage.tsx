@@ -1,5 +1,5 @@
 import { AgentPanel } from "@agent-native/toolkit/app/chat";
-import { BookImage, History, Users, X } from "lucide-react";
+import { BookImage, History, House, Users, X } from "lucide-react";
 import { Suspense, useEffect, useState } from "react";
 
 import { LivingDiya, useDiyaPhaseFromAgent } from "@/components/diya/LivingDiya";
@@ -70,6 +70,7 @@ export function Stage() {
   const choose = useActionMutation("choose-suggestion");
   const dismissConflict = useActionMutation("dismiss-conflict");
   const showHistory = useActionMutation("show-history");
+  const goHome = useActionMutation("go-home");
   const setLanguage = useActionMutation("set-language");
   const approve = useActionMutation("answer-family-update", { uiOnly: true });
 
@@ -114,6 +115,17 @@ export function Stage() {
           <span className="ch-wordmark">{t.appName}</span>
         </div>
         <nav className="ch-topnav" aria-label="Chaupal">
+          {scene !== "home" ? (
+            <button
+              type="button"
+              className="ch-pill ch-home-btn"
+              data-testid="go-home"
+              disabled={goHome.isPending}
+              onClick={() => goHome.mutate({ personConfirmed: true })}
+            >
+              <House size={22} aria-hidden /> {t.home}
+            </button>
+          ) : null}
           {data.family.length ? (
             <span className="ch-pill" data-testid="family-present">
               <span className="ch-dot" aria-hidden /> {t.joined(familyName!)}

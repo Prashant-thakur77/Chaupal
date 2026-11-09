@@ -71,8 +71,11 @@ export default function ShatranjScene(props: {
           moveCount={chess.moves.length}
           language={props.lang === "en" ? "en" : "hi"}
           onMove={async (from, to, via) => {
-            if (props.viewer === "family") await familyMove.mutateAsync({ from, to, expectedRevision: data.revision });
-            else await boardMove.mutateAsync({ from, to, via, expectedRevision: data.revision });
+            // A tap is only possible on her (or his) own turn, and the server
+            // checks the turn and the move's legality on the live board, so an
+            // unrelated change elsewhere on the screen must not bounce it.
+            if (props.viewer === "family") await familyMove.mutateAsync({ from, to });
+            else await boardMove.mutateAsync({ from, to, via });
           }}
           onAnimationComplete={(ply) => {
             if (props.viewer !== "elder" || ply <= acked.current) return;

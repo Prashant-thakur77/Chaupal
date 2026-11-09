@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { AbsoluteFill, continueRender, delayRender, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
-import { C, FONT } from "../theme";
+import { FONT, T } from "../theme";
 import { interp, ramp, rise, OUT, INOUT } from "../lib/anim";
 import { Sky } from "../components/World";
 
@@ -35,7 +35,7 @@ export const RangoliReveal: React.FC<any> = (p) => {
       el.setAttribute("pathLength", "1");
       el.setAttribute("stroke-dasharray", "1 1");
       el.setAttribute("stroke-dashoffset", String(1 - k));
-      el.setAttribute("stroke", C.chalk);
+      el.setAttribute("stroke", T.line);
       el.setAttribute("stroke-width", "3");
       el.setAttribute("fill", "none");
     });
@@ -47,17 +47,17 @@ export const RangoliReveal: React.FC<any> = (p) => {
       <Sky glow={{ x: 960, y: 560, r: 900, i: 0.55 }} floor={0.62} stars />
       <AbsoluteFill style={{ perspective: 1400, alignItems: "center", justifyContent: "center" }}>
         <div style={{ position: "relative", width: 860, height: 860, transform: `rotateX(${tilt}deg) scale(${scale})`, transformOrigin: "50% 60%" }}>
-          <div style={{ position: "absolute", inset: -40, borderRadius: 30, background: `radial-gradient(circle, ${C.clay700} 0%, ${C.clay800} 75%, rgba(58,26,12,0) 100%)` }} />
+          <div style={{ position: "absolute", inset: -40, borderRadius: 30, background: `radial-gradient(circle, ${T.clayFloor} 0%, ${T.clayFloor2} 75%, rgba(0,0,0,0) 100%)` }} />
           <div ref={ref} style={{ position: "absolute", inset: 0, filter: "url(#chalk)" }} dangerouslySetInnerHTML={{ __html: (outline ?? "").replace(/<svg /, '<svg width="860" height="860" ') }} />
           <div style={{ position: "absolute", inset: 0, opacity: colour, filter: "url(#chalk)" }} dangerouslySetInnerHTML={{ __html: (filled ?? "").replace(/<svg /, '<svg width="860" height="860" ') }} />
         </div>
       </AbsoluteFill>
       <div style={{ position: "absolute", left: 90, top: 90, ...rise(f, 10) }}>
-        <div style={{ fontFamily: FONT.display, fontSize: 86, color: C.chalk }}>रंगोली</div>
-        <div style={{ fontFamily: FONT.sans, fontSize: 32, color: C.muted }}>drawn by the app's rangoli generator</div>
+        <div style={{ fontFamily: FONT.display, fontSize: 86, color: T.ink }}>रंगोली</div>
+        <div style={{ fontFamily: FONT.sans, fontSize: 32, color: T.inkMuted }}>drawn by the app's rangoli generator</div>
       </div>
       <div style={{ position: "absolute", right: 90, top: 110, textAlign: "right", ...rise(f, Math.round(D * 0.55)) }}>
-        <div style={{ fontFamily: FONT.sans, fontSize: 30, color: C.chalkSoft }}>{p.caption ?? "8 petals · 4 rings · 8-fold symmetry"}</div>
+        <div style={{ fontFamily: FONT.sans, fontSize: 30, color: T.inkSoft }}>{p.caption ?? "8 petals · 4 rings · 8-fold symmetry"}</div>
       </div>
     </AbsoluteFill>
   );

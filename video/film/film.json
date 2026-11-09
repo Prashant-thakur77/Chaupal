@@ -3,6 +3,7 @@
  "fps": 30,
  "width": 1920,
  "height": 1080,
+ "palette": "light",
  "kolam": {
   "d": "M156 95.8C202.19 95.8 217.66 116.74 242 156C270.2 201.48 282.52 213.8 328 242C367.26 266.34 388.2 281.81 388.2 328C388.2 374.19 367.26 389.66 328 414C288.74 438.34 267.8 453.81 267.8 500C267.8 537.46 290.54 560.2 328 560.2C374.19 560.2 389.66 539.26 414 500C442.2 454.52 454.52 442.2 500 414C545.48 385.8 557.8 373.48 586 328C610.34 288.74 625.81 267.8 672 267.8C718.19 267.8 733.66 288.74 758 328C786.2 373.48 798.52 385.8 844 414C883.26 438.34 904.2 453.81 904.2 500C904.2 546.19 883.26 561.66 844 586C804.74 610.34 783.8 625.81 783.8 672C783.8 709.46 806.54 732.2 844 732.2C881.46 732.2 904.2 709.46 904.2 672C904.2 625.81 883.26 610.34 844 586C804.74 561.66 783.8 546.19 783.8 500C783.8 453.81 804.74 438.34 844 414C883.26 389.66 904.2 374.19 904.2 328C904.2 281.81 883.26 266.34 844 242C804.74 217.66 783.8 202.19 783.8 156C783.8 118.54 806.54 95.8 844 95.8C881.46 95.8 904.2 118.54 904.2 156C904.2 202.19 883.26 217.66 844 242C798.52 270.2 786.2 282.52 758 328C733.66 367.26 718.19 388.2 672 388.2C625.81 388.2 610.34 367.26 586 328C561.66 288.74 546.19 267.8 500 267.8C462.54 267.8 439.8 290.54 439.8 328C439.8 374.19 460.74 389.66 500 414C545.48 442.2 557.8 454.52 586 500C614.2 545.48 626.52 557.8 672 586C711.26 610.34 732.2 625.81 732.2 672C732.2 718.19 711.26 733.66 672 758C626.52 786.2 614.2 798.52 586 844C561.66 883.26 546.19 904.2 500 904.2C453.81 904.2 438.34 883.26 414 844C389.66 804.74 374.19 783.8 328 783.8C290.54 783.8 267.8 806.54 267.8 844C267.8 881.46 290.54 904.2 328 904.2C374.19 904.2 389.66 883.26 414 844C438.34 804.74 453.81 783.8 500 783.8C546.19 783.8 561.66 804.74 586 844C610.34 883.26 625.81 904.2 672 904.2C718.19 904.2 733.66 883.26 758 844C782.34 804.74 797.81 783.8 844 783.8C881.46 783.8 904.2 806.54 904.2 844C904.2 881.46 881.46 904.2 844 904.2C797.81 904.2 782.34 883.26 758 844C729.8 798.52 717.48 786.2 672 758C632.74 733.66 611.8 718.19 611.8 672C611.8 625.81 632.74 610.34 672 586C711.26 561.66 732.2 546.19 732.2 500C732.2 462.54 709.46 439.8 672 439.8C625.81 439.8 610.34 460.74 586 500C557.8 545.48 545.48 557.8 500 586C454.52 614.2 442.2 626.52 414 672C389.66 711.26 374.19 732.2 328 732.2C281.81 732.2 266.34 711.26 242 672C213.8 626.52 201.48 614.2 156 586C116.74 561.66 95.8 546.19 95.8 500C95.8 453.81 116.74 438.34 156 414C195.26 389.66 216.2 374.19 216.2 328C216.2 290.54 193.46 267.8 156 267.8C118.54 267.8 95.8 290.54 95.8 328C95.8 374.19 116.74 389.66 156 414C195.26 438.34 216.2 453.81 216.2 500C216.2 546.19 195.26 561.66 156 586C116.74 610.34 95.8 625.81 95.8 672C95.8 718.19 116.74 733.66 156 758C195.26 782.34 216.2 797.81 216.2 844C216.2 881.46 193.46 904.2 156 904.2C118.54 904.2 95.8 881.46 95.8 844C95.8 797.81 116.74 782.34 156 758C201.48 729.8 213.8 717.48 242 672C266.34 632.74 281.81 611.8 328 611.8C374.19 611.8 389.66 632.74 414 672C438.34 711.26 453.81 732.2 500 732.2C537.46 732.2 560.2 709.46 560.2 672C560.2 625.81 539.26 610.34 500 586C454.52 557.8 442.2 545.48 414 500C385.8 454.52 373.48 442.2 328 414C288.74 389.66 267.8 374.19 267.8 328C267.8 281.81 288.74 266.34 328 242C373.48 213.8 385.8 201.48 414 156C438.34 116.74 453.81 95.8 500 95.8C546.19 95.8 561.66 116.74 586 156C610.34 195.26 625.81 216.2 672 216.2C709.46 216.2 732.2 193.46 732.2 156C732.2 118.54 709.46 95.8 672 95.8C625.81 95.8 610.34 116.74 586 156C561.66 195.26 546.19 216.2 500 216.2C453.81 216.2 438.34 195.26 414 156C389.66 116.74 374.19 95.8 328 95.8C281.81 95.8 266.34 116.74 242 156C217.66 195.26 202.19 216.2 156 216.2C118.54 216.2 95.8 193.46 95.8 156C95.8 118.54 118.54 95.8 156 95.8Z",
   "dots": [
@@ -200,13 +201,6 @@
    },
    "shots": [
     {
-     "src": "footage/sunset.mp4",
-     "dur": 2.71,
-     "push": 0.05,
-     "pan": 0.0,
-     "what": "the sun going down over a river"
-    },
-    {
      "src": "footage/path.mp4",
      "dur": 3.4,
      "push": 0.05,
@@ -229,10 +223,10 @@
     },
     {
      "src": "footage/city.mp4",
-     "dur": 3.6900000000000013,
+     "dur": 6.4,
      "push": 0.07,
      "pan": 0.0,
-     "what": "a city at night"
+     "what": "city lights at night, seen from orbit"
     }
    ],
    "pins": [
@@ -248,7 +242,7 @@
     {
      "at": 0.4,
      "until": 4.5,
-     "text": "Footage: India at dusk (stock, not our users)"
+     "text": "Footage: stock, not our users"
     }
    ]
   },
@@ -286,7 +280,7 @@
   {
    "id": "hero",
    "type": "twocities",
-   "duration": 19.0,
+   "duration": 18.167,
    "leadIn": 0.6,
    "min": 18,
    "transition": {
@@ -299,9 +293,11 @@
     "hi": "घोड़े से उसका हाथी मार दो",
     "en": "“Take his rook with the knight”"
    },
-   "typedNote": "her exact words, sent straight to move-chess-piece (the action her agent calls)",
-   "requestAt": 5.86,
+   "typedNote": "request typed into the dock for the recording; she can also say it",
+   "requestAt": 4.54,
    "syncLabel": "median 3.94 s",
+   "lineAt": 9.69,
+   "lineDur": 1.24,
    "tablet": "captures/hero-tablet.mp4",
    "phone": "captures/hero-phone.mp4",
    "segments": [
@@ -310,13 +306,17 @@
      "from": 0.0
     },
     {
-     "at": 16.4,
-     "from": 21.81,
-     "note": "his move on its way · 5.4 s later"
+     "at": 8.49,
+     "from": 28.21,
+     "note": "her agent at work · 19.7 s later"
+    },
+    {
+     "at": 15.06,
+     "from": 36.67
     }
    ],
-   "landAt": 10.9,
-   "replyAt": 17.7,
+   "landAt": 10.93,
+   "replyAt": 17.67,
    "tabletBoard": {
     "x": 446,
     "y": 194,
@@ -363,7 +363,7 @@
   {
    "id": "sulekh",
    "type": "screen",
-   "duration": 14.533,
+   "duration": 14.833,
    "leadIn": 1.1,
    "min": 14,
    "transition": {
@@ -383,25 +383,35 @@
    "segments": [
     {
      "at": 0,
-     "from": 0.9
+     "from": 0.99
     },
     {
      "at": 2.85,
-     "from": 7.56,
-     "note": "waiting for the reference · 3.8 s later"
+     "from": 24.21,
+     "note": "her agent at work · 20.4 s later"
     },
     {
-     "at": 9.88,
-     "from": 11.38,
+     "at": 10.16,
+     "from": 30.52,
      "rate": 10.0,
      "note": "her tracing, sped up ×10"
     },
     {
-     "at": 12.67,
-     "from": 40.94
+     "at": 12.94,
+     "from": 59.52
     }
    ],
    "zooms": [
+    {
+     "at": 1.4000000000000001,
+     "dur": 2.2,
+     "box": {
+      "x": 59,
+      "y": 772,
+      "w": 466,
+      "h": 205
+     }
+    },
     {
      "at": 4.45,
      "dur": 3.2,
@@ -413,7 +423,7 @@
      }
     },
     {
-     "at": 6.67,
+     "at": 10.16,
      "dur": 3.0,
      "box": {
       "x": 447,
@@ -428,19 +438,19 @@
     {
      "at": 1.1,
      "until": 4.15,
-     "text": "sent straight to set-calligraphy-reference (the action her agent calls)"
+     "text": "typed into the dock for the recording; the in-app agent answers"
     },
     {
-     "at": 6.67,
-     "until": 12.63,
+     "at": 10.16,
+     "until": 12.86,
      "text": "her tracing: drawn by the recording script"
     }
    ],
    "pip": {
     "src": "captures/sulekh-phone.mp4",
     "at": 5.65,
-    "from": 4.71,
-    "until": 7.17
+    "from": 21.36,
+    "until": 10.66
    }
   },
   {
@@ -470,7 +480,7 @@
    "chips": [
     {
      "at": 0.3,
-     "until": 4.25,
+     "until": 4.29,
      "text": "बीच में पीला, बाहर लाल",
      "sub": "“Yellow in the middle, red outside”",
      "y": 840
@@ -483,14 +493,14 @@
      "from": 1.7
     },
     {
-     "at": 1.45,
-     "from": 7.09,
-     "note": "waiting for the fill · 3.9 s later"
+     "at": 1.49,
+     "from": 6.21,
+     "note": "waiting for the fill · 3 s later"
     }
    ],
    "zooms": [
     {
-     "at": 2.35,
+     "at": 2.39,
      "dur": 3.0,
      "box": {
       "x": 446,
@@ -504,17 +514,56 @@
    "notes": [
     {
      "at": 0.3,
-     "until": 4.25,
+     "until": 4.29,
      "text": "sent straight to fill-region (the action her agent calls)"
     }
    ]
   },
   {
+   "id": "telegram",
+   "type": "telegram",
+   "duration": 8.0,
+   "leadIn": 1.3,
+   "min": 8.0,
+   "transition": {
+    "type": "fade",
+    "dur": 0.4
+   },
+   "phoneRec": "footage/telegram-phone.mp4",
+   "src": "captures/telegram-tablet.mp4",
+   "segments": [
+    {
+     "at": 0,
+     "from": 19.23
+    },
+    {
+     "at": 2.2,
+     "from": 26.79,
+     "note": "delivering to Telegram · 5.4 s later"
+    }
+   ],
+   "approveAt": 2.0,
+   "resultAt": 3.5,
+   "picture": "svg/telegram-sent.svg",
+   "captionHi": "दिवाली की रंगोली, आपके लिए",
+   "captionEn": "A Diwali rangoli, for you",
+   "proof": "Telegram · delivered to the family chat · message #3 · 10 Nov, 00:01 IST",
+   "notes": [
+    {
+     "at": 1.4,
+     "until": 4.2,
+     "text": "her tap on हाँ, by the recording script"
+    }
+   ],
+   "phoneLabel": "the family's Telegram, recorded on a phone a minute after the send",
+   "proofSub": "the send above is the first picture in the clip (“दिवाली की रंगोली, आपके लिए”) · from the Telegram Bot API reply"
+  },
+  {
    "id": "guard",
    "type": "screen",
-   "duration": 11.0,
+   "duration": 9.0,
    "leadIn": 0.3,
-   "min": 11,
+   "min": 9,
    "transition": {
     "type": "kolam",
     "dur": 1.7
@@ -523,12 +572,17 @@
    "segments": [
     {
      "at": 0,
-     "from": 13.04
+     "from": 8.25
     },
     {
-     "at": 5.37,
-     "from": 68.43,
-     "note": "switching to the board · 50 s later"
+     "at": 0.8,
+     "from": 12.85,
+     "note": "pause · 3.8 s later"
+    },
+    {
+     "at": 3.61,
+     "from": 42.27,
+     "note": "switching to the board · 26.6 s later"
     }
    ],
    "zooms": [
@@ -544,7 +598,7 @@
      "scale": 1.35
     },
     {
-     "at": 6.87,
+     "at": 5.11,
      "dur": 2.6,
      "box": {
       "x": 563,
@@ -557,8 +611,8 @@
    ],
    "chips": [
     {
-     "at": 4.680000000000001,
-     "until": 7.28,
+     "at": 4.8500000000000005,
+     "until": 7.45,
      "text": "मत भेजो · nothing was sent",
      "tone": "good",
      "y": 840
@@ -571,8 +625,8 @@
      "text": "sent straight to draft-family-update (the action her agent calls)"
     },
     {
-     "at": 6.07,
-     "until": 9.17,
+     "at": 4.3100000000000005,
+     "until": 7.41,
      "text": "his move tapped on his phone; the agent's now-stale move sent to move-chess-piece"
     }
    ]
@@ -580,7 +634,7 @@
   {
    "id": "hood",
    "type": "chabutra",
-   "duration": 24.033,
+   "duration": 24.133,
    "leadIn": 1.1,
    "min": 18,
    "hold": 0.8,
@@ -589,13 +643,13 @@
     "dur": 0.5
    },
    "cues": {
-    "actions": 2.97,
+    "actions": 2.99,
     "surfaces": 0.4,
-    "gate": 8.61,
-    "sql": 13.35,
-    "stale": 14.35,
-    "engines": 17.95,
-    "yes": 10.41
+    "gate": 8.75,
+    "sql": 13.39,
+    "stale": 14.39,
+    "engines": 18.11,
+    "yes": 10.55
    }
   },
   {
@@ -653,18 +707,18 @@
     "measuredAt": "2026-11-09T09:58:16.901Z",
     "source": "evals/render-accuracy/results.json"
    },
-   "atControl": 6.41,
-   "atOurs": 8.98,
-   "atBadge": 11.21,
-   "atOcr": 16.96,
+   "atControl": 6.33,
+   "atOurs": 8.99,
+   "atBadge": 11.13,
+   "atOcr": 16.93,
    "failure": "Still failing: 1 of 21 cases. Before its Hindi reply, the agent sometimes writes an English aside.",
-   "atFail": 23.56,
+   "atFail": 23.45,
    "footnote": "Same model and prompt in both arms; control = browser control only, no actions. Model claude-sonnet-5-5. OCR: tesseract exact match over 50 phrases in 5 scripts, calligraphic fonts; with plain fonts 31 vs 13. Unshaped text = the same font drawn code point by code point."
   },
   {
    "id": "recap",
    "type": "recap",
-   "duration": 12.667,
+   "duration": 12.567,
    "leadIn": 1.1,
    "min": 9,
    "transition": {
@@ -677,15 +731,15 @@
      "text": "Her language, not an app's."
     },
     {
-     "at": 3.75,
+     "at": 3.67,
      "text": "Her family, at the same board."
     },
     {
-     "at": 5.96,
+     "at": 6.01,
      "text": "Nothing leaves without her say."
     },
     {
-     "at": 8.49,
+     "at": 8.46,
      "text": "40/42 with actions · 8/42 without",
      "strong": true
     }
@@ -693,31 +747,31 @@
    "clips": [
     {
      "src": "captures/hero-tablet.mp4",
-     "from": 10.293000000000001
+     "from": 28.813
     },
     {
      "src": "captures/hero-tablet.mp4",
-     "from": 22.707
+     "from": 38.876000000000005
     },
     {
      "src": "captures/sulekh-tablet.mp4",
-     "from": 9.663
+     "from": 26.306
     },
     {
      "src": "captures/sulekh-tablet.mp4",
-     "from": 37.909
+     "from": 56.525
     },
     {
      "src": "captures/rangoli-tablet.mp4",
-     "from": 8.892
+     "from": 8.014
     },
     {
      "src": "captures/guard-tablet.mp4",
-     "from": 13.940999999999999
+     "from": 9.147
     },
     {
      "src": "captures/guard-tablet.mp4",
-     "from": 70.326
+     "from": 44.17
     }
    ],
    "cut": 1.0

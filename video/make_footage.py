@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""The opening's real footage: licensed clips from Wikimedia Commons (CC0 and CC BY only; no BY-SA, so the film carries
-no share-alike obligation), cut to the shots the story uses and normalised to 1920x1080, 30 fps, BT.709.
+"""The opening's real footage: CC0 and public-domain clips from Wikimedia Commons only, so no attribution or
+share-alike is owed anywhere, cut to the shots the story uses and normalised to 1920x1080, 30 fps, BT.709.
 The grade (warm, a little desaturated, shadows toward indigo) is applied in the Remotion scene so it matches the world.
 Stock people are footage, not our users: the scene says so on screen.
 
@@ -14,18 +14,17 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 RAW = Path("/home/prashant/projects/.chaupal-work/film/footage/raw")
 OUT = HERE / "film" / "public" / "footage"
-DAY = "A_day_in_the_life_of_India_promo_version.webm"            # CC BY 3.0 (MEA External Publicity Division)
+ISS = "ISS_Europe_to_SE_Asia_night.ogv"                          # public domain (NASA, ISS Expedition 29 crew)
 SUKHAD = "Women_at_Work_Sukhad_Watchal_Comfortable_journey.webm"  # CC0 (Lek Ladki Abhiyan / CIS-A2K)
 VISHWASU = "Women_at_Work_Vishwasu_Prawas_Trusted_transport.webm" # CC0 (Lek Ladki Abhiyan / CIS-A2K)
-LETTERBOX = "crop=1452:817:234:131"  # the Day film is 2.35:1 inside 16:9: take a 16:9 window from the picture area
+ISS_CROP = "crop=840:472:0:44"  # 3:2 source -> a 16:9 window
 
 # name, file, in, out, speed (<1 = slowed with motion interpolation), crop, push, pan, what
 SHOTS = [
-    ("sunset", DAY, 102.06, 103.2, 0.42, LETTERBOX, 0.05, 0.0, "the sun going down over a river"),
     ("path", SUKHAD, 23.0, 26.4, 1.0, None, 0.05, 0.3, "a village path under trees"),
     ("hand", VISHWASU, 389.0, 391.6, 1.0, None, 0.06, 0.0, "an older woman's hand, steady"),
     ("craft", SUKHAD, 85.6, 88.2, 1.0, None, 0.05, -0.2, "hands at work"),
-    ("city", DAY, 103.32, 104.36, 0.24, LETTERBOX, 0.07, 0.0, "a city at night"),
+    ("city", ISS, 19.0, 21.7, 0.55, ISS_CROP, 0.07, 0.0, "city lights at night, seen from orbit"),
 ]
 
 
@@ -51,6 +50,16 @@ def main():
         shots.append({"src": f"footage/{name}.mp4", "dur": dur, "push": push, "pan": pan, "what": what})
         print(f"{name:7} {dur:5.2f} s  {what}")
     (OUT / "footage.json").write_text(json.dumps({"shots": shots}, indent=1) + "\n")
+    # the owner's own phone recording of the family's Telegram chat (optional): no audio, slowed to 0.8x, last frame held
+    tg = HERE / "footage" / "telegram-phone.mp4"
+    out = OUT / "telegram-phone.mp4"
+    if tg.exists() and (not out.exists() or out.stat().st_mtime < tg.stat().st_mtime):
+        tmp = OUT / "telegram-phone.part.mp4"
+        subprocess.run(["ffmpeg", "-v", "error", "-y", "-i", str(tg), "-an", "-vf",
+                        "setpts=1.25*PTS,fps=30,scale=720:1600:flags=lanczos,tpad=stop_mode=clone:stop_duration=6,format=yuv420p,setparams=colorspace=bt709:color_primaries=bt709:color_trc=bt709",
+                        "-c:v", "libx264", "-crf", "17", "-preset", "medium", "-movflags", "+faststart", str(tmp)], check=True)
+        tmp.rename(out)
+        print("telegram phone clip ->", out)
 
 
 if __name__ == "__main__":

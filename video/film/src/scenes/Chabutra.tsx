@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import * as THREE from "three";
 import { ThreeCanvas } from "@remotion/three";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
-import { C, FONT } from "../theme";
+import { C, FONT, T, LIGHT_MODE } from "../theme";
 import { interp, ramp, rise, OUT, INOUT } from "../lib/anim";
 import { Cam, Diya, type Pose } from "../components/Diya3D";
 import { Sky } from "../components/World";
@@ -14,9 +14,9 @@ import { Sky } from "../components/World";
  *  revision tier; a Telegram packet waits at needsApproval until her "हाँ". Every tier rises on the word that names it. */
 type Tier = { id: string; y: number; title: string; sub: string; color: string; hero?: boolean };
 const TIERS: Tier[] = [
-  { id: "engines", y: 0, title: "Engines own the truth", sub: "HarfBuzz text shaping · rangoli generator · chess.js", color: C.clay600 },
-  { id: "sql", y: 1.45, title: "Shared SQL + revisions", sub: "saveIfCurrent · live sync to every screen", color: C.clay500 },
-  { id: "actions", y: 2.9, title: "One defineAction set", sub: "open-activity · fill-region · move-chess-piece · …", color: C.terracotta, hero: true },
+  { id: "engines", y: 0, title: "Engines own the truth", sub: "HarfBuzz text shaping · rangoli generator · chess.js", color: T.slab1 },
+  { id: "sql", y: 1.45, title: "Shared SQL + revisions", sub: "saveIfCurrent · live sync to every screen", color: T.slab2 },
+  { id: "actions", y: 2.9, title: "One defineAction set", sub: "open-activity · fill-region · move-chess-piece · …", color: T.slab3, hero: true },
 ];
 const SAT = [
   { id: "voice", label: "her voice", hi: "आवाज़", a: -0.95 },
@@ -31,12 +31,12 @@ const Slab: React.FC<{ t: Tier; show: number; pulse: number }> = ({ t, show, pul
   <group position={[0, t.y - (1 - show) * 2.2, 0]} scale={[1, 1, 1]}>
     <mesh castShadow receiveShadow>
       <boxGeometry args={[7.2, 0.5, 3.4]} />
-      <meshStandardMaterial color={t.color} roughness={0.8} transparent opacity={show} emissive={t.hero ? C.marigold : "#000"} emissiveIntensity={t.hero ? 0.12 + 0.25 * pulse : 0} />
+      <meshStandardMaterial color={t.color} roughness={0.8} transparent opacity={show} emissive={t.hero ? T.slabGlow : "#000"} emissiveIntensity={t.hero ? (0.12 + 0.25 * pulse) * T.slabGlowK : 0} />
     </mesh>
     {/* chalk border on the top face */}
     <lineSegments position={[0, 0.252, 0]} rotation={[-Math.PI / 2, 0, 0]}>
       <edgesGeometry args={[new THREE.PlaneGeometry(6.8, 3.0)]} />
-      <lineBasicMaterial color={C.chalk} transparent opacity={0.7 * show} />
+      <lineBasicMaterial color={T.line} transparent opacity={0.7 * show} />
     </lineSegments>
   </group>
 );
@@ -83,7 +83,7 @@ export const Chabutra: React.FC<any> = (p) => {
     else if (t < 0.65 && f > cQ) pos = lerp3(mid, low, (t - 0.4) / 0.25);
     else pos = lerp3(f > cQ ? low : mid, top, Math.max(0, (t - 0.65) / 0.35));
     if (s.id === "telegram" && f > cGate - 30 && f < cYes + 40) return; // the held packet is drawn below
-    packets.push(<Packet key={s.id} p={pos} color={C.marigold400} o={ramp(f, cS + i * 6, 8)} />);
+    packets.push(<Packet key={s.id} p={pos} color={T.packet} o={ramp(f, cS + i * 6, 8)} />);
   });
   // the stale move: comes down from the agent's lane, hits the revision tier, is refused
   const staleT = interp(f, [cStale - 0.7 * fps, cStale], [0, 1], INOUT);
@@ -102,9 +102,10 @@ export const Chabutra: React.FC<any> = (p) => {
       <Sky glow={{ x: 960, y: 420, r: 1000, i: 0.35 }} floor={0.3} />
       <ThreeCanvas width={1920} height={1080} camera={{ fov: 34, near: 0.1, far: 100 }} gl={{ antialias: true, preserveDrawingBuffer: true }}>
         <Cam pose={pose} />
-        <ambientLight intensity={0.55} color="#b9b2ff" />
-        <hemisphereLight args={["#9c9cf0", "#5A2A17", 0.45]} />
-        <directionalLight position={[-6, 10, 8]} intensity={0.6} color="#9c9cf0" />
+        <ambientLight intensity={LIGHT_MODE ? 0.9 : 0.55} color={T.ambient} />
+        <hemisphereLight args={[T.hemiSky, T.hemiGround, 0.45]} />
+        <directionalLight position={[-6, 10, 8]} intensity={LIGHT_MODE ? 0.9 : 0.6} color={T.key} />
+        {LIGHT_MODE && <directionalLight position={[6, 14, 10]} intensity={1.4} color="#FFF6E8" />}
         <group position={[3.9, 3.15, 1.1]} scale={0.45}><Diya lit={ramp(f, cA, 18)} /></group>
         {TIERS.map((t) => <Slab key={t.id} t={t} show={shown[t.id]} pulse={pulse} />)}
         {SAT.map((s, i) => {
@@ -117,37 +118,41 @@ export const Chabutra: React.FC<any> = (p) => {
           );
         })}
         {packets}
-        {f > cStale - 0.7 * fps && f < cStale + 0.9 * fps && <Packet p={stalePos} color={C.bad} size={0.15} o={1 - ramp(f, cStale + 0.5 * fps, 10)} />}
-        {f > cGate - 0.6 * fps && f < cYes + 0.6 * fps && <Packet p={heldPos} color={C.marigold} size={0.15} />}
+        {f > cStale - 0.7 * fps && f < cStale + 0.9 * fps && <Packet p={stalePos} color={T.bad} size={0.15} o={1 - ramp(f, cStale + 0.5 * fps, 10)} />}
+        {f > cGate - 0.6 * fps && f < cYes + 0.6 * fps && <Packet p={heldPos} color={T.packet} size={0.15} />}
         {f > cGate - 0.3 * fps && f < cYes + 0.4 * fps && (
           <mesh position={gate} rotation={[0, 0, 0]}>
             <torusGeometry args={[0.42, 0.04, 12, 48]} />
-            <meshBasicMaterial color={f < cYes ? C.marigold400 : C.good} />
+            <meshBasicMaterial color={f < cYes ? T.accentText : T.good} />
           </mesh>
         )}
       </ThreeCanvas>
       {TIERS.map((t, i) => (
         <div key={t.id} style={{ position: "absolute", left: 40, top: 300 + (2 - i) * 210, width: 520, opacity: shown[t.id], transform: `translateY(${(1 - shown[t.id]) * 12}px)` }}>
-          <div style={{ fontFamily: FONT.display, fontSize: 40, color: t.hero ? C.marigold400 : C.chalk, lineHeight: 1.1 }}>{t.title}</div>
-          <div style={{ fontFamily: FONT.sans, fontSize: 27, fontWeight: 500, color: C.chalkSoft, marginTop: 6, lineHeight: 1.25 }}>{t.sub}</div>
+          <div style={{ fontFamily: FONT.display, fontSize: 40, color: t.hero ? T.accentText : T.ink, lineHeight: 1.1 }}>{t.title}</div>
+          <div style={{ fontFamily: FONT.sans, fontSize: 27, fontWeight: 500, color: T.inkSoft, marginTop: 6, lineHeight: 1.25 }}>{t.sub}</div>
         </div>
       ))}
       {SAT.map((s, i) => {
         const [x, y] = L(satPos(s.a));
         return (
           <div key={s.id} style={{ position: "absolute", left: x, top: y - 92, textAlign: "center", opacity: rise(f, cS + i * 5 + 6).opacity, transform: `translateX(-50%) ${rise(f, cS + i * 5 + 6).transform}` }}>
-            <div style={{ fontFamily: FONT.sans, fontSize: 28, fontWeight: 600, color: C.chalk, whiteSpace: "nowrap" }}>{s.label}</div>
+            <div style={{ fontFamily: FONT.sans, fontSize: 28, fontWeight: 600, color: T.ink, whiteSpace: "nowrap" }}>{s.label}</div>
           </div>
         );
       })}
+      <div style={{ position: "absolute", right: 60, bottom: 250, display: "flex", gap: 28, fontFamily: FONT.sans, fontSize: 27, color: T.inkSoft, opacity: ramp(f, cS + 20, 12) }}>
+        <span><span style={{ display: "inline-block", width: 18, height: 18, borderRadius: 9, background: T.packet, marginRight: 8, verticalAlign: "middle" }} />a call to an action</span>
+        <span><span style={{ display: "inline-block", width: 18, height: 18, borderRadius: 9, background: T.bad, marginRight: 8, verticalAlign: "middle" }} />a stale write</span>
+      </div>
       {f >= cStale && f < cStale + 2.4 * fps && (
         <div style={{ position: "absolute", left: sx - 470, top: sy + 30, ...rise(f, cStale) }}>
-          <div style={{ fontFamily: FONT.sans, fontSize: 30, fontWeight: 600, color: C.bad, background: "rgba(14,12,32,.85)", padding: "8px 16px", borderRadius: 12, border: `1.5px solid ${C.bad}` }}>stale revision · refused, nothing changes</div>
+          <div style={{ fontFamily: FONT.sans, fontSize: 30, fontWeight: 600, color: T.bad, background: T.noteBg, padding: "8px 16px", borderRadius: 12, border: `1.5px solid ${T.bad}` }}>stale revision · refused, nothing changes</div>
         </div>
       )}
       {f >= cGate && f < cYes + 1.6 * fps && (
         <div style={{ position: "absolute", left: gx + 40, top: gy - 120, ...rise(f, cGate) }}>
-          <div style={{ fontFamily: FONT.sans, fontSize: 30, fontWeight: 600, color: f < cYes ? C.marigold400 : C.good, background: "rgba(14,12,32,.85)", padding: "8px 16px", borderRadius: 12, border: `1.5px solid ${f < cYes ? C.marigold400 : C.good}` }}>
+          <div style={{ fontFamily: FONT.sans, fontSize: 30, fontWeight: 600, color: f < cYes ? T.accentText : T.good, background: T.noteBg, padding: "8px 16px", borderRadius: 12, border: `1.5px solid ${f < cYes ? T.accentText : T.good}` }}>
             {f < cYes ? "needsApproval · waiting for her" : "हाँ, भेज दो · sent after her yes"}
           </div>
         </div>

@@ -84,6 +84,12 @@ for z in rg.get("zooms", []):
     cue(start["rangoli"] + z["at"] + 0.4, "puff", -13)
     cue(start["rangoli"] + z["at"] + 0.9, "puff", -15)
 
+tg = by.get("telegram") or {}
+if tg.get("approveAt") is not None:
+    cue(start["telegram"] + tg["approveAt"], "tick", -16)
+if tg.get("resultAt") is not None:
+    cue(start["telegram"] + tg["resultAt"] + 0.3, "chime", -17)
+
 gd = by["guard"]
 for c in gd.get("chips", []):
     cue(start["guard"] + c["at"] - 0.4, "tick", -16)

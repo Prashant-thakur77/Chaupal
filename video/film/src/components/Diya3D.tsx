@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { useCurrentFrame } from "remotion";
-import { C } from "../theme";
+import { C, T } from "../theme";
 import { rand } from "../lib/anim";
 
 /** Canvas textures are made once per page (they only depend on constants). */
@@ -61,7 +61,7 @@ const floorTex = memo(() => {
   const c = document.createElement("canvas");
   c.width = c.height = 512;
   const g = c.getContext("2d")!;
-  g.fillStyle = C.clay700; g.fillRect(0, 0, 512, 512);
+  g.fillStyle = T.clayFloor; g.fillRect(0, 0, 512, 512);
   for (let i = 0; i < 9000; i++) {
     g.fillStyle = `rgba(${rand(i) > 0.5 ? "30,12,5" : "160,90,60"},${0.05 + rand(i * 5) * 0.08})`;
     g.fillRect(rand(i * 13) * 512, rand(i * 17) * 512, 2, 2);
@@ -137,7 +137,7 @@ export const Floor: React.FC<{ dots?: number; ringR?: number }> = ({ dots = 1, r
       return (
         <mesh key={i} position={[Math.cos(a) * ringR, 0.012, Math.sin(a) * ringR]} rotation={[-Math.PI / 2, 0, 0]} scale={show}>
           <circleGeometry args={[0.055, 12]} />
-          <meshBasicMaterial color={C.chalk} transparent opacity={0.85} />
+          <meshBasicMaterial color={T.diyaLine} transparent opacity={0.85} />
         </mesh>
       );
     })}

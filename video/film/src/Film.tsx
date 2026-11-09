@@ -3,7 +3,7 @@ import { AbsoluteFill, useVideoConfig } from "remotion";
 import { linearTiming, TransitionSeries } from "@remotion/transitions";
 import { fade } from "@remotion/transitions/fade";
 import { film, type Scene } from "./film";
-import { C, loadFonts } from "./theme";
+import { loadFonts, T } from "./theme";
 import { INOUT } from "./lib/anim";
 import { ChalkFilter } from "./components/World";
 import { kolamLoop } from "./components/KolamLoop";
@@ -17,6 +17,7 @@ import { RangoliReveal } from "./scenes/RangoliReveal";
 import { Chabutra } from "./scenes/Chabutra";
 import { Proof } from "./scenes/Proof";
 import { Recap, Close } from "./scenes/Recap";
+import { Telegram } from "./scenes/Telegram";
 
 loadFonts();
 
@@ -33,6 +34,7 @@ const Body: React.FC<{ s: Scene; dur: number }> = ({ s, dur }) => {
     case "proof": return <Proof {...p} />;
     case "recap": return <Recap {...p} />;
     case "close": return <Close {...p} />;
+    case "telegram": return <Telegram {...p} />;
     default: return null;
   }
 };
@@ -56,7 +58,7 @@ export const Film: React.FC = () => {
     }
   });
   return (
-    <AbsoluteFill style={{ backgroundColor: C.night950 }}>
+    <AbsoluteFill style={{ backgroundColor: T.bg }}>
       <svg width={0} height={0} style={{ position: "absolute" }}><defs><ChalkFilter /></defs></svg>
       <TransitionSeries>{items}</TransitionSeries>
       {film.captions && <Captions file={film.captions} off={film.captionsOff} />}

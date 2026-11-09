@@ -137,6 +137,27 @@ export async function mutate<T>(
     state: ActivityRow,
   ) => Promise<{ patch?: StatePatch; result: T; payload?: unknown }>,
 ): Promise<{ revision: number; result: T; state: ActivityRow }> {
+  // A caller that named no revision has no stale read to protect, so a write
+  // that lands at the same moment is not a conflict for it: run again on the
+  // fresh state. Callers that pass expectedRevision still get save_conflict.
+  for (let attempt = 1; ; attempt += 1) {
+    try {
+      return await mutateOnce(opts, fn);
+    } catch (error) {
+      const raced = (error as { errorCode?: string } | null)?.errorCode === "save_conflict";
+      if (!raced || opts.expectedRevision !== undefined || attempt >= 4) throw error;
+      await new Promise((resolve) => setTimeout(resolve, 40 * attempt));
+    }
+  }
+}
+
+async function mutateOnce<T>(
+  opts: MutationOptions,
+  fn: (
+    tx: Tx,
+    state: ActivityRow,
+  ) => Promise<{ patch?: StatePatch; result: T; payload?: unknown }>,
+): Promise<{ revision: number; result: T; state: ActivityRow }> {
   const db = getDb();
   try {
     return await db.transaction(async (tx) => {

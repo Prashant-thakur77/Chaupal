@@ -4,6 +4,28 @@
 two-session moment of the live app (tablet view + phone view) comes early, then the product told through Remotion 3D and chalk animation, the
 required "Under the hood" stack, proof, recap, end card. Target ~2:30 (no length rule; soft).
 
+## v2 look: "Subah" (the owner's note: lighter, softer, calmer; replaces the dusk look below)
+
+**Idea, re-lit:** a morning in a lime-washed courtyard. A pulli kolam is drawn at the door at dawn (that is when it is
+drawn), the diya from the night before still burns small, and one line drawn on that floor reaches the city where her
+family lives. Same signature transition (the kolam loop), now drawn in warm brown rice-paste on a pale floor, and the
+iris opens in daylight instead of lamplight.
+
+**Palette (from the app's light theme, "Subah"):** page #FAF6EF, sky #FDFBF7 → #FAF5ED → #F6ECDE, floor #F0E4D2;
+text #2D2620 / #5A4D42 / #75675B; kolam line #8A4B2E, diya line #9A7350; peacock teal #2B6B6C used sparingly for the
+one thing that matters in a frame (the sync line's disc, our proof dots, the active caption word, the defineAction
+tier); marigold #E9A340 only for the lamp's warmth; good #2F7A43, bad #A8321F; board #C4936B / #F1DFC4 with ivory
+(#FDF6EA) and teal (#2B6B6C) discs, as in the app. Warm soft shadows (rgb 70 50 30 / .11).
+
+**3D in daylight:** light clay floors, a soft sun plus sky fill instead of the night fog, lots of white space around
+the diya, the board and the chabutra stack. The architecture tiers are pale clay with a teal-tinted top tier.
+
+**Motion, type, sound:** unchanged (one ease, 12 px rise, Tiro Devanagari + Mukta). Sound: the tanpura drone is gone
+on the owner's note; santoor, bansuri and tabla play phrases with real silence between them.
+
+**What stays honest:** opening footage is CC0 / public domain only and labelled stock; personas labelled; every
+scripted step labelled; the in-app agent shown doing the hero move and the calligraphy.
+
 ## The idea, in one sentence
 
 The film is lit by one lamp: everything happens in the diya's light on a clay floor at dusk, and the light travels

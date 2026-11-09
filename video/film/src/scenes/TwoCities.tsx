@@ -1,6 +1,6 @@
 import React from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
-import { C, FONT } from "../theme";
+import { FONT, T } from "../theme";
 import { interp, ramp, rise, OUT, INOUT } from "../lib/anim";
 import { Band, Chip, Note, Sky } from "../components/World";
 import { ClipSeq, SegNotes } from "../components/ClipSeq";
@@ -43,11 +43,11 @@ const Line: React.FC<{ from: [number, number]; to: [number, number]; at: number;
   const [dx, dy] = q(interp(f, [at + 4, at + dur], [0, 1], INOUT));
   return (
     <g opacity={fade}>
-      <path d={d} pathLength={1} fill="none" stroke={C.chalk} strokeWidth={5} strokeLinecap="round" strokeDasharray="1 1" strokeDashoffset={1 - p} filter="url(#chalk)" />
-      <circle cx={dx} cy={dy} r={16} fill={C.marigold} opacity={p < 1 ? 1 : 1 - ramp(f, at + dur, 8)} />
-      <circle cx={dx} cy={dy} r={40} fill={C.marigold} opacity={(p < 1 ? 0.25 : 0)} />
-      <circle cx={to[0]} cy={to[1]} r={34 + 30 * ramp(f, at + dur, 12)} fill="none" stroke={C.marigold400} strokeWidth={4} opacity={1 - ramp(f, at + dur, 18)} />
-      {label && <text x={mx} y={my + 70} textAnchor="middle" fontFamily={FONT.display} fontSize={54} fill={C.marigold400} opacity={ramp(f, at + dur - 4, 10)} filter="url(#chalk)">{label}</text>}
+      <path d={d} pathLength={1} fill="none" stroke={T.line} strokeWidth={5} strokeLinecap="round" strokeDasharray="1 1" strokeDashoffset={1 - p} filter="url(#chalk)" />
+      <circle cx={dx} cy={dy} r={16} fill={T.accent} opacity={p < 1 ? 1 : 1 - ramp(f, at + dur, 8)} />
+      <circle cx={dx} cy={dy} r={40} fill={T.accent} opacity={(p < 1 ? 0.25 : 0)} />
+      <circle cx={to[0]} cy={to[1]} r={34 + 30 * ramp(f, at + dur, 12)} fill="none" stroke={T.accentText} strokeWidth={4} opacity={1 - ramp(f, at + dur, 18)} />
+      {label && <text x={mx} y={my + 70} textAnchor="middle" fontFamily={FONT.display} fontSize={54} fill={T.accentText} opacity={ramp(f, at + dur - 4, 10)} filter="url(#chalk)">{label}</text>}
     </g>
   );
 };
@@ -68,19 +68,19 @@ export const TwoCities: React.FC<any> = (p) => {
   const S = (1 + 0.18 * push) * (1 + 0.035 * Math.min(1, f / Math.max(1, p.dur))); // a slow push under everything: never a frozen frame
   const ox = -260 * push, oy = 40 * push;
   return (
-    <AbsoluteFill style={{ background: C.night950 }}>
+    <AbsoluteFill style={{ background: T.bg }}>
       <Sky glow={{ x: 600, y: 700, r: 1100, i: 0.6 }} floor={0.18} />
       {/* his side of the frame is a cooler, city light */}
-      <AbsoluteFill style={{ background: "linear-gradient(90deg, rgba(0,0,0,0) 62%, rgba(40,60,120,.35) 74%, rgba(20,30,70,.55))" }} />
+      <AbsoluteFill style={{ background: `linear-gradient(90deg, rgba(0,0,0,0) 62%, rgba(${T.cityTint},.14) 74%, rgba(${T.cityTint},.22))` }} />
       <AbsoluteFill style={{ transformOrigin: "40% 50%", transform: `translate(${ox}px, ${oy}px) scale(${S})` }}>
-        <div style={{ position: "absolute", left: TAB.x, top: TAB.y, width: TAB.w * TAB.s, height: TAB.h * TAB.s, borderRadius: 26, overflow: "hidden", boxShadow: "0 30px 90px rgba(0,0,0,.55), 0 0 0 10px #0b0a18, 0 0 120px rgba(244,169,60,.25)", opacity: enter, transform: `translateX(${(1 - enter) * -60}px)` }}>
+        <div style={{ position: "absolute", left: TAB.x, top: TAB.y, width: TAB.w * TAB.s, height: TAB.h * TAB.s, borderRadius: 26, overflow: "hidden", boxShadow: `0 30px 90px ${T.shadow}, 0 0 0 10px ${T.frame}, 0 0 120px rgba(${T.glow},.25)`, opacity: enter, transform: `translateX(${(1 - enter) * -60}px)` }}>
           {p.tablet ? <ClipSeq src={p.tablet} segs={p.segments} from={p.from} w={TAB.w * TAB.s} h={TAB.h * TAB.s} /> : <Pending what="tablet capture" />}
         </div>
-        <div style={{ position: "absolute", left: PH.x, top: PH.y, width: PH.w * PH.s, height: PH.h * PH.s, borderRadius: 40, overflow: "hidden", boxShadow: "0 30px 90px rgba(0,0,0,.55), 0 0 0 10px #0b0a18, 0 0 90px rgba(120,150,255,.18)", opacity: enter, transform: `translateX(${(1 - enter) * 60}px)` }}>
+        <div style={{ position: "absolute", left: PH.x, top: PH.y, width: PH.w * PH.s, height: PH.h * PH.s, borderRadius: 40, overflow: "hidden", boxShadow: `0 30px 90px ${T.shadow}, 0 0 0 10px ${T.frame}, 0 0 90px rgba(${T.cityTint},.18)`, opacity: enter, transform: `translateX(${(1 - enter) * 60}px)` }}>
           {p.phone ? <ClipSeq src={p.phone} segs={p.segments} from={p.from} w={PH.w * PH.s} h={PH.h * PH.s} /> : <Pending what="phone capture" />}
         </div>
         <svg width={1920} height={1080} style={{ position: "absolute", inset: 0, overflow: "visible" }}>
-          <Line from={from} to={to} at={at(p.landAt) - Math.round(0.35 * fps)} dur={Math.round(0.6 * fps)} label={p.syncLabel} f={f} />
+          <Line from={from} to={to} at={p.lineAt !== undefined ? at(p.lineAt) : at(p.landAt) - Math.round(0.35 * fps)} dur={p.lineDur !== undefined ? Math.round(p.lineDur * fps) : Math.round(0.6 * fps)} label={p.syncLabel} f={f} />
           <Line from={rFrom} to={rTo} at={at(p.replyAt) - Math.round(0.35 * fps)} dur={Math.round(0.6 * fps)} f={f} />
         </svg>
       </AbsoluteFill>
@@ -94,14 +94,14 @@ export const TwoCities: React.FC<any> = (p) => {
       <Note at={8} text="Illustrative personas · the deployed app in two live sessions" style={{ left: "50%", transform: "translateX(-50%)", top: 40 }} until={at(p.requestAt)} />
       {p.typedNote && <Note at={at(p.requestAt)} until={at(p.landAt) + 20} text={p.typedNote} style={{ left: 120, bottom: 330 }} />}
       {p.speedNote && <Note at={at(p.speedNote.at)} until={at(p.speedNote.until)} text={p.speedNote.text} style={{ right: 60, bottom: 230 }} />}
-      <SegNotes segs={p.segments} style={{ top: 120 }} />
+      <SegNotes segs={p.segments} style={{ top: undefined, right: undefined, left: 120, bottom: 430 }} />
       <Band />
     </AbsoluteFill>
   );
 };
 
 export const Pending: React.FC<{ what: string }> = ({ what }) => (
-  <AbsoluteFill style={{ background: C.night800, alignItems: "center", justifyContent: "center", border: `3px dashed ${C.marigold}` }}>
-    <div style={{ fontFamily: FONT.sans, fontSize: 32, fontWeight: 600, color: C.marigold400, textAlign: "center", padding: 30 }}>PLACEHOLDER: {what}<br />(recorded last, from the deployed app)</div>
+  <AbsoluteFill style={{ background: T.chipBg, alignItems: "center", justifyContent: "center", border: `3px dashed ${T.accent}` }}>
+    <div style={{ fontFamily: FONT.sans, fontSize: 32, fontWeight: 600, color: T.accentText, textAlign: "center", padding: 30 }}>PLACEHOLDER: {what}<br />(recorded last, from the deployed app)</div>
   </AbsoluteFill>
 );

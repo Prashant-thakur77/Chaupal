@@ -1,5 +1,5 @@
 {
- "duration": 168.934,
+ "duration": 174.401,
  "vo": "/home/prashant/projects/Chaupal/video/narration/vo_full.wav",
  "music": [
   {
@@ -9,7 +9,7 @@
    "gain_db": -9,
    "fade_in": 0.3,
    "fade_out": 2.5,
-   "end": 168.934
+   "end": 174.401
   }
  ],
  "sfx": [

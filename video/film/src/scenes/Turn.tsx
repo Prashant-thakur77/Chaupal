@@ -1,7 +1,7 @@
 import React from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig } from "remotion";
 import { ThreeCanvas } from "@remotion/three";
-import { C, FONT } from "../theme";
+import { C, FONT, T, LIGHT_MODE } from "../theme";
 import { interp, ramp, rise, OUT, INOUT } from "../lib/anim";
 import { Cam, Diya, Floor, lerpPose, type Pose } from "../components/Diya3D";
 import { Board3D } from "../components/Board3D";
@@ -30,26 +30,27 @@ export const Turn: React.FC<any> = (p) => {
   const fly = interp(bt, [bd * 0.8, bd], [0, 1], INOUT);
   const cross = ramp(f, boardAt - 8, 10);
   return (
-    <AbsoluteFill style={{ background: C.night950 }}>
+    <AbsoluteFill style={{ background: T.bg }}>
       {!inBoard && (
         <AbsoluteFill style={{ opacity: 1 - cross }}>
           <Sky glow={{ x: 1180, y: 600, r: 700 * lit + 1, i: 0.25 * lit }} floor={0.36} />
           <ThreeCanvas width={1920} height={1080} camera={{ fov: 30, near: 0.1, far: 120 }} gl={{ antialias: true, preserveDrawingBuffer: true }}>
             <Cam pose={pose} />
-            <fog attach="fog" args={["#15132B", 9, 26]} />
-            <ambientLight intensity={0.12} color="#9c9cf0" />
-            <hemisphereLight args={["#2E2955", "#3A1A0C", 0.25]} />
+            <fog attach="fog" args={[T.fog, 9, 26]} />
+            <ambientLight intensity={LIGHT_MODE ? 0.55 : 0.12} color={T.ambient} />
+            <hemisphereLight args={[T.hemiSky, T.hemiGround, LIGHT_MODE ? 0.8 : 0.25]} />
+            {LIGHT_MODE && <directionalLight position={[5, 12, 8]} intensity={1.3} color="#FFF6E8" />}
             <Floor dots={interp(f, [0.6 * fps, 2.2 * fps], [0, 1])} ringR={2.3} />
             <Diya lit={lit} />
           </ThreeCanvas>
           <div style={{ position: "absolute", right: 130, top: 170, textAlign: "right" }}>
-            <div style={{ fontFamily: FONT.display, fontSize: 168, color: C.chalk, lineHeight: 1, filter: "url(#chalk)", ...rise(f, Math.round(1.3 * fps), 14) }}>चौपाल</div>
-            <div style={{ fontFamily: FONT.display, fontStyle: "italic", fontSize: 64, color: C.marigold400, marginTop: 6, ...rise(f, Math.round(1.7 * fps)) }}>Chaupal</div>
+            <div style={{ fontFamily: FONT.display, fontSize: 168, color: T.ink, lineHeight: 1, filter: "url(#chalk)", ...rise(f, Math.round(1.3 * fps), 14) }}>चौपाल</div>
+            <div style={{ fontFamily: FONT.display, fontStyle: "italic", fontSize: 64, color: T.accentText, marginTop: 6, ...rise(f, Math.round(1.7 * fps)) }}>Chaupal</div>
             <div style={{ display: "flex", gap: 30, marginTop: 58, justifyContent: "flex-end" }}>
               {[["लिखना", "writes"], ["रंगोली", "draws"], ["शतरंज", "plays"]].map(([hi, en], i) => (
                 <div key={i} style={{ ...rise(f, wordsAt + i * 9) }}>
-                  <div style={{ fontFamily: FONT.display, fontSize: 58, color: C.chalk }}>{hi}</div>
-                  <div style={{ fontFamily: FONT.sans, fontSize: 30, color: C.muted }}>{en}</div>
+                  <div style={{ fontFamily: FONT.display, fontSize: 58, color: T.ink }}>{hi}</div>
+                  <div style={{ fontFamily: FONT.sans, fontSize: 30, color: T.inkMuted }}>{en}</div>
                 </div>
               ))}
             </div>
@@ -61,14 +62,14 @@ export const Turn: React.FC<any> = (p) => {
           <Sky glow={{ x: 1300, y: 420, r: 900, i: 0.4 }} floor={0.2} stars={false} />
           <ThreeCanvas width={1920} height={1080} camera={{ fov: 34, near: 0.1, far: 120 }} gl={{ antialias: true, preserveDrawingBuffer: true }}>
             <Cam pose={bpose} />
-            <ambientLight intensity={0.35} color="#c9c0ff" />
+            <ambientLight intensity={LIGHT_MODE ? 0.8 : 0.35} color={T.ambient} />
             <pointLight position={[4.5, 4.5, 1]} intensity={42} distance={30} decay={1.6} color="#ffb45a" />
-            <directionalLight position={[-6, 9, 6]} intensity={0.5} color="#9c9cf0" />
+            <directionalLight position={[-6, 9, 6]} intensity={LIGHT_MODE ? 0.9 : 0.5} color={T.key} />
             <Board3D move={move} fly={fly} reveal={interp(bt, [0, 0.8 * fps], [0, 1], OUT)} />
           </ThreeCanvas>
           <div style={{ position: "absolute", right: 90, top: 70, textAlign: "right", ...rise(f, boardAt + 14) }}>
-            <div style={{ fontFamily: FONT.display, fontSize: 64, color: C.chalk }}>घोड़े से उसका हाथी</div>
-            <div style={{ fontFamily: FONT.sans, fontSize: 32, color: C.muted }}>knight takes rook</div>
+            <div style={{ fontFamily: FONT.display, fontSize: 64, color: T.ink }}>घोड़े से उसका हाथी</div>
+            <div style={{ fontFamily: FONT.sans, fontSize: 32, color: T.inkMuted }}>knight takes rook</div>
           </div>
         </AbsoluteFill>
       )}

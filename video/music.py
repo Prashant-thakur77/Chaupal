@@ -3,7 +3,7 @@
 recording could match (Content ID cannot claim it).
 
 One continuous theme in raag Bhupali (an evening raag; pentatonic S R G P D, just intonation) with Sa = D:
-  - tanpura   additive strings with a jawari "bloom" (a formant sweeping up the partials), Pa-Sa-Sa-Sa, from frame 1
+  - (no tanpura drone: removed so nothing hums under the voice; between phrases the track is silent)
   - bansuri   breathy additive flute with vibrato and meend (glides): free alaap over the story, the tune in the recap
   - santoor   hammered strings (three detuned strings per course, stretched partials): enters on the turn, carries
               the gat (the composed tune) through the product
@@ -262,22 +262,8 @@ def build(T: dict) -> Track:
         tr.L += reverb(layer.L, seed, 2.2, wet) * np.float32(g)
         tr.R += reverb(layer.R, seed + 10, 2.2, wet) * np.float32(g)
 
-    tan = Track(end)
-
-    # tanpura: Pa-Sa-Sa-Sa(kharaj), one cycle every 4 beats-ish, from 0 to the very end
-    t, i = 0.0, 0
-    cyc = [("P.", 0.0), ("S", 1.15), ("S", 2.3), ("S.", 3.45)]
-    while t < end + 1:
-        for sw, off in cyc:
-            f = hz(sw)
-            tan.add(tanpura(f, 5.2, 0.55), t + off, pan=(-0.35 + 0.23 * i) % 0.7 - 0.35)
-            i += 1
-        t += 4.6
-    fade = np.clip(np.arange(tan.n) / SR / 2.0, 0, 1)
-    tan.L *= fade.astype(np.float32)
-    tan.R *= fade.astype(np.float32)
-    mix(tan, 0.55, 1, 0.22)
-    del tan
+    # no drone and no continuous bed: the music is phrases with real silence between them (the tanpura layer was
+    # removed on the owner's note: it read as a constant hum under the voice)
     ban = Track(end)
 
     # bansuri alaap over the story (free time, before the turn)
@@ -307,6 +293,8 @@ def build(T: dict) -> Track:
         sect = "intro" if bt < T["hero"] else "hero" if bt < T["guard"] else "guard" if bt < T["hood"] else \
             "hood" if bt < T["proof"] else "proof" if bt < T["recap"] else "recap" if bt < T["close"] else "close"
         line = (GAT_B if (bar // 4) % 2 else GAT)[bar % 4].split()
+        # call and rest: under the narration the tune plays one cycle and rests the next, so there is silence between phrases
+        resting = sect in ("hero", "guard", "hood", "proof") and bar % 2 == 1
         if sect == "close":
             san.add(santoor(hz("S"), 3.5, 0.6), bt, pan=-0.2)
             san.add(santoor(hz("S."), 3.5, 0.45), bt, pan=0.2)
@@ -314,7 +302,7 @@ def build(T: dict) -> Track:
         for k, sw in enumerate(line):
             at = bt + k * BEAT
             g = gain_at(at, T)
-            if g == 0 or sw == "-":
+            if g == 0 or sw == "-" or resting:
                 continue
             if sect in ("hood", "guard") and k % 2:
                 continue  # sparser under dense narration
@@ -334,6 +322,8 @@ def build(T: dict) -> Track:
                 if g == 0:
                     continue
                 if sect in ("hood", "guard") and k not in (0, 3, 4, 7):
+                    continue
+                if resting and k != 0:
                     continue
                 vel = (0.55 if k in (0, 4) else 0.4) * g
                 tab.add(tabla(bol, vel), at, pan=0.1)

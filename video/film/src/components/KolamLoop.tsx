@@ -2,7 +2,7 @@ import React from "react";
 import { AbsoluteFill } from "remotion";
 import type { TransitionPresentation, TransitionPresentationComponentProps } from "@remotion/transitions";
 import { film } from "../film";
-import { C } from "../theme";
+import { C, T } from "../theme";
 import { interp, OUT } from "../lib/anim";
 
 type P = { seed?: number };
@@ -17,7 +17,7 @@ const Kolam: React.FC<TransitionPresentationComponentProps<P>> = ({ children, pr
     return (
       <AbsoluteFill>
         {children}
-        <AbsoluteFill style={{ background: C.night950, opacity: dim }} />
+        <AbsoluteFill style={{ background: T.bg, opacity: dim }} />
       </AbsoluteFill>
     );
   }
@@ -36,18 +36,18 @@ const Kolam: React.FC<TransitionPresentationComponentProps<P>> = ({ children, pr
         <defs>
           <radialGradient id="kl-glow">
             <stop offset="0%" stopColor={C.flame} stopOpacity={0.9} />
-            <stop offset="45%" stopColor={C.marigold} stopOpacity={0.55} />
-            <stop offset="100%" stopColor={C.marigold} stopOpacity={0} />
+            <stop offset="45%" stopColor={T.accent} stopOpacity={0.55} />
+            <stop offset="100%" stopColor={T.accent} stopOpacity={0} />
           </radialGradient>
         </defs>
         <circle cx={960} cy={540} r={260 + 500 * glow} fill="url(#kl-glow)" opacity={glow * 0.8} />
         <g transform={`translate(${960 - (k.view * S) / 2}, ${540 - (k.view * S) / 2}) scale(${S})`} opacity={fadeChalk}>
           {k.dots.map(([x, y], i) => (
-            <circle key={i} cx={x} cy={y} r={10.5} fill={C.chalk} opacity={interp(dots, [i / 40, i / 40 + 0.4], [0, 1])} filter="url(#chalk)" />
+            <circle key={i} cx={x} cy={y} r={10.5} fill={T.line} opacity={interp(dots, [i / 40, i / 40 + 0.4], [0, 1])} filter="url(#chalk)" />
           ))}
-          <path d={k.d} pathLength={1} fill="none" stroke={C.chalk} strokeWidth={7 / S * 0.9} strokeLinecap="round" strokeLinejoin="round"
+          <path d={k.d} pathLength={1} fill="none" stroke={T.line} strokeWidth={7 / S * 0.9} strokeLinecap="round" strokeLinejoin="round"
             strokeDasharray="1 1" strokeDashoffset={1 - line} filter="url(#chalk)" />
-          <path d={k.d} pathLength={1} fill="none" stroke={C.marigold400} strokeWidth={14 / S} strokeLinecap="round"
+          <path d={k.d} pathLength={1} fill="none" stroke={T.accentText} strokeWidth={14 / S} strokeLinecap="round"
             strokeDasharray="0.012 0.988" strokeDashoffset={1 - line + 0.006} opacity={line > 0 && line < 1 ? 0.9 : 0} />
         </g>
       </svg>

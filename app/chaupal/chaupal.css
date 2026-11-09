@@ -974,3 +974,36 @@
 .ch-chat-host textarea:focus-visible {
   outline: none;
 }
+
+/* Back to the four activities, always one tap away. */
+.ch-home-btn {
+  color: var(--ch-text);
+  cursor: pointer;
+}
+.ch-home-btn:hover {
+  border-color: var(--ch-accent);
+}
+
+/* In the side panel the typing box fits the panel, and the spoken-hint line
+   steps aside while she types so nothing slides under the chat. */
+.ch-companion > * {
+  min-width: 0;
+}
+.ch-companion .ch-dock-form {
+  width: 100%;
+}
+.ch-dock-form input {
+  width: 0;
+  min-width: 0;
+}
+.ch-companion .ch-dock[data-typing="true"] .ch-dock-hint,
+.ch-companion .ch-dock[data-typing="true"] .ch-dock-heard {
+  display: none;
+}
+
+/* Beside the chat its own text box is right there; one box to type in, not two. */
+@media (min-width: 1100px) {
+  .ch-companion .ch-dock-type {
+    display: none;
+  }
+}

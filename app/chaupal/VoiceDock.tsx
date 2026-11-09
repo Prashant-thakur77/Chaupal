@@ -60,7 +60,7 @@ export function VoiceDock(props: {
   }
 
   return (
-    <div className="ch-dock" data-testid="voice-dock">
+    <div className="ch-dock" data-testid="voice-dock" data-typing={typing ? "true" : "false"}>
       {heard || stt.isActive ? (
         <p className="ch-dock-heard" aria-live="polite" lang={speechLang(props.lang)}>
           {stt.isActive ? stt.transcript + (stt.interimText ? ` ${stt.interimText}` : "") || props.t.listening : `“${heard}”`}
@@ -124,7 +124,7 @@ export function VoiceDock(props: {
             lang={speechLang(props.lang)}
             data-testid="say-input"
           />
-          <button type="submit" data-testid="say-submit">↵</button>
+          <button type="submit" data-testid="say-submit" aria-label={props.lang === "en" ? "Send" : "भेजें"}>↵</button>
         </form>
       ) : null}
     </div>

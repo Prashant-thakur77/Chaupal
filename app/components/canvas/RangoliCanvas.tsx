@@ -139,6 +139,11 @@ export function RangoliCanvas({
     const host = hostRef.current;
     if (!host || !design) return;
     const fills = design.fills ?? {};
+    // Decorative lines drawn over a region (a motif, a ring outline) must not
+    // swallow her tap: only regions, and what is inside them, take pointer input.
+    host.querySelectorAll<SVGElement>("svg *").forEach((el) => {
+      if (!el.closest("[data-region-id]")) el.style.pointerEvents = "none";
+    });
     host.querySelectorAll<SVGElement>("[data-region-id]").forEach((el) => {
       const id = el.getAttribute("data-region-id") ?? "";
       if (!el.hasAttribute("data-orig-fill")) {

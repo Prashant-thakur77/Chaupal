@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import * as THREE from "three";
-import { C, FONT } from "../theme";
+import { FONT, T } from "../theme";
 import { interp, OUT, INOUT } from "../lib/anim";
 
 /** A shatranj board in the app's own look: clay squares, round discs labelled in Devanagari.
@@ -21,11 +21,11 @@ const discTex = (label: string, mine: boolean) => {
   const c = document.createElement("canvas");
   c.width = c.height = 256;
   const g = c.getContext("2d")!;
-  g.fillStyle = mine ? C.chalk100 : "#26245E";
+  g.fillStyle = mine ? T.herDisc : T.otherDisc;
   g.beginPath(); g.arc(128, 128, 128, 0, Math.PI * 2); g.fill();
-  g.strokeStyle = mine ? C.clay600 : C.marigold300; g.lineWidth = 12;
+  g.strokeStyle = mine ? T.herInk : T.otherInk; g.lineWidth = 12;
   g.beginPath(); g.arc(128, 128, 112, 0, Math.PI * 2); g.stroke();
-  g.fillStyle = mine ? C.clay600 : C.marigold300;
+  g.fillStyle = mine ? T.herInk : T.otherInk;
   g.font = `700 ${label.length > 4 ? 66 : 80}px ${FONT.sans}`;
   g.textAlign = "center"; g.textBaseline = "middle";
   g.fillText(label, 128, 138);
@@ -41,7 +41,7 @@ const Disc: React.FC<{ label: string; mine: boolean; pos: [number, number, numbe
   <group position={pos} rotation={[tilt, 0, tilt * 0.4]} scale={scale}>
     <mesh castShadow>
       <cylinderGeometry args={[0.42, 0.44, 0.16, 48]} />
-      <meshStandardMaterial color={mine ? C.chalk100 : "#26245E"} roughness={0.55} />
+      <meshStandardMaterial color={mine ? T.herDisc : T.otherDisc} roughness={0.55} />
     </mesh>
     <mesh position={[0, 0.081, 0]} rotation={[-Math.PI / 2, 0, 0]}>
       <circleGeometry args={[0.42, 48]} />
@@ -63,14 +63,14 @@ export const Board3D: React.FC<{ move: number; fly?: number; reveal?: number }> 
     <group>
       <mesh position={[0, -0.12, 0]} receiveShadow>
         <boxGeometry args={[8.8, 0.24, 8.8]} />
-        <meshStandardMaterial color="#4a2312" roughness={0.7} />
+        <meshStandardMaterial color={T.boardFrame} roughness={0.7} />
       </mesh>
       {squares.map(({ c, r }) => {
         const show = interp(reveal * 64 - (c + r * 1.3), [0, 3], [0, 1]);
         return (
           <mesh key={`${c}-${r}`} position={[c - 3.5, 0.005, r - 3.5]} receiveShadow scale={[show, 1, show]}>
             <boxGeometry args={[1, 0.03, 1]} />
-            <meshStandardMaterial color={(c + r) % 2 ? C.clay500 : C.clay300} roughness={0.85} />
+            <meshStandardMaterial color={(c + r) % 2 ? T.boardDark : T.boardLight} roughness={0.85} />
           </mesh>
         );
       })}

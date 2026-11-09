@@ -1,6 +1,6 @@
 import React from "react";
 import { AbsoluteFill, OffthreadVideo, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
-import { C } from "../theme";
+import { T } from "../theme";
 import { interp, ramp, OUT, INOUT } from "../lib/anim";
 import { Band, Chip, Note, Sky } from "../components/World";
 import { Pending } from "./TwoCities";
@@ -49,15 +49,15 @@ export const Screen: React.FC<any> = (p) => {
   const blur = Math.min(2.5, speed * 30);
   const enter = ramp(f, 0, 14);
   return (
-    <AbsoluteFill style={{ background: C.night950, overflow: "hidden" }}>
+    <AbsoluteFill style={{ background: T.bg, overflow: "hidden" }}>
       <Sky glow={{ x: 960, y: 980, r: 1200, i: 0.5 }} floor={0.12} />
       <AbsoluteFill style={{ transformOrigin: "0 0", transform: `translate(${W / 2 - S * FX}px, ${H / 2 - S * FY}px) scale(${S})`, filter: blur > 0.25 ? `blur(${blur}px)` : undefined }}>
-        <div style={{ position: "absolute", left: PANEL.x, top: PANEL.y, width: PANEL.w, height: PANEL.h, borderRadius: 24, overflow: "hidden", opacity: enter, boxShadow: "0 30px 90px rgba(0,0,0,.6), 0 0 0 8px #0b0a18, 0 0 160px rgba(244,169,60,.22)" }}>
+        <div style={{ position: "absolute", left: PANEL.x, top: PANEL.y, width: PANEL.w, height: PANEL.h, borderRadius: 24, overflow: "hidden", opacity: enter, boxShadow: `0 30px 90px ${T.shadow}, 0 0 0 8px ${T.frame}, 0 0 160px rgba(${T.glow},.22)` }}>
           {p.src ? <ClipSeq src={p.src} segs={p.segments} from={p.from} w={PANEL.w} h={PANEL.h} /> : <Pending what={p.what ?? "screen capture"} />}
         </div>
       </AbsoluteFill>
       {p.pip && f >= at(p.pip.at) && (
-        <div style={{ position: "absolute", right: 56, bottom: 120, width: 300, height: 650, borderRadius: 34, overflow: "hidden", boxShadow: "0 24px 70px rgba(0,0,0,.6), 0 0 0 8px #0b0a18",
+        <div style={{ position: "absolute", right: 56, bottom: 120, width: 300, height: 650, borderRadius: 34, overflow: "hidden", boxShadow: `0 24px 70px ${T.shadow}, 0 0 0 8px ${T.frame}`,
           opacity: ramp(f, at(p.pip.at), 10) * (p.pip.until ? 1 - ramp(f, at(p.pip.until), 10) : 1), transform: `translateY(${(1 - interp(f, [at(p.pip.at), at(p.pip.at) + 14], [0, 1], OUT)) * 40}px)` }}>
           <OffthreadVideo src={staticFile(p.pip.src)} trimBefore={Math.round((p.pip.from ?? 0) * fps)} muted style={{ width: 300, height: 650 }} />
         </div>

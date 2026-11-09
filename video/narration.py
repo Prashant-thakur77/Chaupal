@@ -68,21 +68,21 @@ line("turn", "t1", "So we rebuilt the square as an app, and called it Chaupal.",
 line("turn", "t2", "She speaks Hindi. An agent writes, draws and plays with her, and her family joins at the same board.", None, STORY)
 
 # 4. the hero: two devices, one board
-line("hero", "h1", "This is the live app in two sessions: her tablet view, and her grandson's phone view.")
+line("hero", "h1", "The live app, in two sessions: her tablet, and her grandson's phone.")
 line("hero", "h2", "She asks in Hindi: take his rook with the knight.")
 if SYNC.get("p50") is not None and SYNC.get("where") == "deployed":
     p50 = SYNC["p50"]
-    line("hero", "h3", f"Her words are resolved on the real board, and the move reaches his phone in a median of {p50} seconds.",
-         f"Her words are resolved on the real board, and the move reaches his phone in a median of {words(float(p50))} seconds.", pauseBefore=0.8)
+    line("hero", "h3", f"Her agent plays her words on the real board, and the move reaches his phone in a median of {p50} seconds.",
+         f"Her agent plays her words on the real board, and the move reaches his phone in a median of {words(float(p50))} seconds.", pauseBefore=0.8)
 else:
-    line("hero", "h3", "Her words are resolved on the real board, and the move reaches his phone.",
-         "Her words are resolved on the real board, and the move reaches his phone.", pauseBefore=0.8)
+    line("hero", "h3", "Her agent plays her words on the real board, and the move reaches his phone.",
+         "Her agent plays her words on the real board, and the move reaches his phone.", pauseBefore=0.8)
 line("hero", "h4", "He takes back with a pawn, and his move comes home the same way.")
 
 # 5. sulekh
 line("sulekh", "k1", "For Diwali, she wants to show him a greeting.")
-line("sulekh", "k2", "Her words become the reference. HarfBuzz shapes the text, so every conjunct and vowel sign is exactly right.",
-     "Her words become the reference. Harf Buzz shapes the text, so every conjunct and vowel sign is exactly right.")
+line("sulekh", "k2", "Her agent puts the phrase on screen. HarfBuzz shapes the text, so every conjunct and vowel sign is exactly right.",
+     "Her agent puts the phrase on screen. Harf Buzz shapes the text, so every conjunct and vowel sign is exactly right.")
 line("sulekh", "k3", "She traces it with her finger. Her lines stay on their own layer, and only hers can be erased.")
 
 # 6. rangoli
@@ -91,7 +91,8 @@ line("reveal", "r1", "For the doorstep, a rangoli. A generator draws it; the age
 line("rangoli", "r2", "She says: yellow in the middle, red outside. Exactly those regions fill.")
 
 # 7. the guard
-line("guard", "g1", "Nothing leaves the house until she says yes. When she says don't send, nothing is sent.")
+line("telegram", "tg1", "Say haan, and the picture reaches the family's Telegram.", "Say hahn, and the picture reaches the family's Telegram.")
+line("guard", "g1", "Say mat bhejo, and nothing leaves the house.", "Say mutt bay-joe, and nothing leaves the house.")
 line("guard", "g2", "And if Rahul moves first, the agent's stale move is refused, and she sees why.")
 
 # 8. under the hood

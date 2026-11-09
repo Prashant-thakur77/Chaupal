@@ -58,8 +58,8 @@
  {
   "scene": "hero",
   "id": "h1",
-  "caption": "This is the live app in two sessions: her tablet view, and her grandson's phone view.",
-  "spoken": "This is the live app in two sessions: her tablet view, and her grandson's phone view.",
+  "caption": "The live app, in two sessions: her tablet, and her grandson's phone.",
+  "spoken": "The live app, in two sessions: her tablet, and her grandson's phone.",
   "exaggeration": 0.62,
   "cfg": 0.4
  },
@@ -74,8 +74,8 @@
  {
   "scene": "hero",
   "id": "h3",
-  "caption": "Her words are resolved on the real board, and the move reaches his phone in a median of 3.94 seconds.",
-  "spoken": "Her words are resolved on the real board, and the move reaches his phone in a median of three point nine four seconds.",
+  "caption": "Her agent plays her words on the real board, and the move reaches his phone in a median of 3.94 seconds.",
+  "spoken": "Her agent plays her words on the real board, and the move reaches his phone in a median of three point nine four seconds.",
   "exaggeration": 0.62,
   "cfg": 0.4,
   "pauseBefore": 0.8
@@ -99,8 +99,8 @@
  {
   "scene": "sulekh",
   "id": "k2",
-  "caption": "Her words become the reference. HarfBuzz shapes the text, so every conjunct and vowel sign is exactly right.",
-  "spoken": "Her words become the reference. Harf Buzz shapes the text, so every conjunct and vowel sign is exactly right.",
+  "caption": "Her agent puts the phrase on screen. HarfBuzz shapes the text, so every conjunct and vowel sign is exactly right.",
+  "spoken": "Her agent puts the phrase on screen. Harf Buzz shapes the text, so every conjunct and vowel sign is exactly right.",
   "exaggeration": 0.62,
   "cfg": 0.4
  },
@@ -129,10 +129,18 @@
   "cfg": 0.4
  },
  {
+  "scene": "telegram",
+  "id": "tg1",
+  "caption": "Say haan, and the picture reaches the family's Telegram.",
+  "spoken": "Say hahn, and the picture reaches the family's Telegram.",
+  "exaggeration": 0.62,
+  "cfg": 0.4
+ },
+ {
   "scene": "guard",
   "id": "g1",
-  "caption": "Nothing leaves the house until she says yes. When she says don't send, nothing is sent.",
-  "spoken": "Nothing leaves the house until she says yes. When she says don't send, nothing is sent.",
+  "caption": "Say mat bhejo, and nothing leaves the house.",
+  "spoken": "Say mutt bay-joe, and nothing leaves the house.",
   "exaggeration": 0.62,
   "cfg": 0.4
  },

@@ -1,5 +1,5 @@
 {
- "duration": 168.934,
+ "duration": 174.401,
  "dir": "/home/prashant/projects/.chaupal-work/film/audio/sfx",
  "cues": [
   {
@@ -57,301 +57,313 @@
    "align": "peak"
   },
   {
-   "t": 46.784,
+   "t": 46.814,
    "sfx": "clack",
    "db": -12,
    "align": "peak"
   },
   {
-   "t": 47.084,
+   "t": 47.114,
    "sfx": "hit",
    "db": -16,
    "align": "peak"
   },
   {
-   "t": 53.584,
+   "t": 53.554,
    "sfx": "clack",
    "db": -13,
    "align": "peak"
   },
   {
-   "t": 55.236,
+   "t": 54.403,
    "sfx": "chalk",
    "db": -15,
    "align": "start"
   },
   {
-   "t": 56.188,
+   "t": 55.355,
    "sfx": "santoor",
    "db": -13,
    "align": "peak"
   },
   {
-   "t": 56.434,
+   "t": 55.601,
    "sfx": "chalk",
    "db": -22,
    "align": "start"
   },
   {
-   "t": 59.584,
+   "t": 55.701,
    "sfx": "ink",
    "db": -20,
    "align": "peak"
   },
   {
-   "t": 61.804,
+   "t": 58.751,
    "sfx": "ink",
    "db": -20,
    "align": "peak"
   },
   {
-   "t": 62.004,
+   "t": 64.661,
    "sfx": "chalk",
    "db": -22,
    "align": "start"
   },
   {
-   "t": 69.867,
+   "t": 69.334,
    "sfx": "chalk",
    "db": -18,
    "align": "start"
   },
   {
-   "t": 69.917,
+   "t": 69.384,
    "sfx": "whoosh",
    "db": -22,
    "align": "peak"
   },
   {
-   "t": 73.242,
+   "t": 72.709,
    "sfx": "puff",
    "db": -16,
    "align": "peak"
   },
   {
-   "t": 76.417,
+   "t": 75.884,
    "sfx": "whoosh",
    "db": -22,
    "align": "peak"
   },
   {
-   "t": 78.917,
+   "t": 78.424,
    "sfx": "puff",
    "db": -13,
    "align": "peak"
   },
   {
-   "t": 79.417,
+   "t": 78.924,
    "sfx": "puff",
    "db": -15,
    "align": "peak"
   },
   {
-   "t": 83.417,
+   "t": 82.884,
    "sfx": "whoosh",
    "db": -22,
    "align": "peak"
   },
   {
-   "t": 87.447,
+   "t": 84.634,
    "sfx": "tick",
    "db": -16,
    "align": "peak"
   },
   {
-   "t": 90.037,
+   "t": 86.434,
+   "sfx": "chime",
+   "db": -17,
+   "align": "peak"
+  },
+  {
+   "t": 90.834,
+   "sfx": "whoosh",
+   "db": -22,
+   "align": "peak"
+  },
+  {
+   "t": 95.084,
+   "sfx": "tick",
+   "db": -16,
+   "align": "peak"
+  },
+  {
+   "t": 95.744,
    "sfx": "refuse",
    "db": -15,
    "align": "peak"
   },
   {
-   "t": 94.269,
+   "t": 99.736,
    "sfx": "chalk",
    "db": -15,
    "align": "start"
   },
   {
-   "t": 94.867,
+   "t": 100.334,
    "sfx": "thud",
    "db": -14,
    "align": "peak"
   },
   {
-   "t": 95.221,
+   "t": 100.688,
    "sfx": "santoor",
    "db": -13,
    "align": "peak"
   },
   {
-   "t": 97.437,
+   "t": 102.924,
    "sfx": "thud",
    "db": -14,
    "align": "peak"
   },
   {
-   "t": 104.577,
+   "t": 110.184,
    "sfx": "chime",
    "db": -16,
    "align": "peak"
   },
   {
-   "t": 107.817,
+   "t": 113.324,
    "sfx": "thud",
    "db": -14,
    "align": "peak"
   },
   {
-   "t": 108.517,
+   "t": 114.024,
    "sfx": "refuse",
    "db": -14,
    "align": "peak"
   },
   {
-   "t": 112.417,
+   "t": 118.044,
    "sfx": "thud",
    "db": -14,
    "align": "peak"
   },
   {
-   "t": 118.45,
+   "t": 124.017,
    "sfx": "whoosh",
    "db": -22,
    "align": "peak"
   },
   {
-   "t": 129.41,
+   "t": 134.897,
    "sfx": "hit",
    "db": -12,
    "align": "peak"
   },
   {
-   "t": 136.06,
+   "t": 141.597,
    "sfx": "tick",
    "db": -18,
    "align": "peak"
   },
   {
-   "t": 147.267,
+   "t": 152.834,
    "sfx": "riser",
    "db": -16,
    "align": "end"
   },
   {
-   "t": 147.369,
+   "t": 152.936,
    "sfx": "chalk",
    "db": -15,
    "align": "start"
   },
   {
-   "t": 148.267,
+   "t": 153.834,
    "sfx": "flash",
    "db": -26,
    "align": "peak"
   },
   {
-   "t": 148.321,
+   "t": 153.888,
    "sfx": "santoor",
    "db": -13,
    "align": "peak"
   },
   {
-   "t": 148.367,
+   "t": 153.934,
    "sfx": "hit",
    "db": -22,
    "align": "peak"
   },
   {
-   "t": 149.267,
+   "t": 154.834,
    "sfx": "flash",
    "db": -26,
    "align": "peak"
   },
   {
-   "t": 150.267,
+   "t": 155.834,
    "sfx": "flash",
    "db": -26,
    "align": "peak"
   },
   {
-   "t": 151.017,
+   "t": 156.504,
    "sfx": "hit",
    "db": -22,
    "align": "peak"
   },
   {
-   "t": 151.267,
+   "t": 156.834,
    "sfx": "flash",
    "db": -26,
    "align": "peak"
   },
   {
-   "t": 152.267,
+   "t": 157.834,
    "sfx": "flash",
    "db": -26,
    "align": "peak"
   },
   {
-   "t": 152.617,
+   "t": 158.834,
+   "sfx": "flash",
+   "db": -26,
+   "align": "peak"
+  },
+  {
+   "t": 158.844,
    "sfx": "hit",
    "db": -22,
    "align": "peak"
   },
   {
-   "t": 153.227,
+   "t": 159.834,
+   "sfx": "flash",
+   "db": -26,
+   "align": "peak"
+  },
+  {
+   "t": 160.834,
+   "sfx": "flash",
+   "db": -26,
+   "align": "peak"
+  },
+  {
+   "t": 161.294,
    "sfx": "hit",
    "db": -22,
    "align": "peak"
   },
   {
-   "t": 153.267,
+   "t": 161.834,
    "sfx": "flash",
    "db": -26,
    "align": "peak"
   },
   {
-   "t": 154.267,
+   "t": 162.834,
    "sfx": "flash",
    "db": -26,
    "align": "peak"
   },
   {
-   "t": 155.267,
+   "t": 163.834,
    "sfx": "flash",
    "db": -26,
    "align": "peak"
   },
   {
-   "t": 155.757,
-   "sfx": "hit",
-   "db": -22,
-   "align": "peak"
-  },
-  {
-   "t": 156.267,
-   "sfx": "flash",
-   "db": -26,
-   "align": "peak"
-  },
-  {
-   "t": 157.267,
-   "sfx": "flash",
-   "db": -26,
-   "align": "peak"
-  },
-  {
-   "t": 158.267,
-   "sfx": "flash",
-   "db": -26,
-   "align": "peak"
-  },
-  {
-   "t": 160.334,
+   "t": 165.801,
    "sfx": "whoosh",
    "db": -22,
    "align": "peak"
   },
   {
-   "t": 160.634,
+   "t": 166.101,
    "sfx": "chime",
    "db": -16,
    "align": "peak"

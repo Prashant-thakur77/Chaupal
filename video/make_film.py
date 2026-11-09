@@ -13,6 +13,7 @@
 Anything missing becomes a visible, labelled placeholder in the picture and is listed at the end.
 """
 import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -21,6 +22,8 @@ HERE = Path(__file__).resolve().parent
 PUB = HERE / "film" / "public"
 FILM = HERE / "film" / "film.json"
 FPS = 30
+# the film's palette (film/src/theme.ts): "dusk" (first cut) or "light" (softer, calmer; matches the app's light theme)
+PALETTE = os.environ.get("FILM_PALETTE", "light")
 missing: list[str] = []
 
 
@@ -44,7 +47,8 @@ SKELETON = [
     ("sulekh", "screen", {"type": "fade", "dur": 0.5}, 1.1, 14),
     ("reveal", "rangoli", {"type": "fade", "dur": 0.5}, 0.4, 6.5),
     ("rangoli", "screen", {"type": "fade", "dur": 0.5}, 0.3, 7),
-    ("guard", "screen", {"type": "kolam", "dur": 1.7}, 0.3, 11),
+    ("telegram", "telegram", {"type": "fade", "dur": 0.4}, 1.3, 8.0),
+    ("guard", "screen", {"type": "kolam", "dur": 1.7}, 0.3, 9),
     ("hood", "chabutra", {"type": "fade", "dur": 0.5}, 1.1, 18),
     ("proof", "proof", {"type": "kolam", "dur": 1.7}, 0.4, 12),
     ("recap", "recap", {"type": "fade", "dur": 0.8}, 1.1, 9),
@@ -141,7 +145,7 @@ def build(skeleton_only=False):
         d = {s["id"]: s["duration"] for s in TL["scenes"]}
         for s in scenes:
             s["duration"] = d.get(s["id"], s["duration"])
-    film = {"title": "Chaupal", "fps": FPS, "width": 1920, "height": 1080, "kolam": kolam(), "facts": F, "scenes": scenes}
+    film = {"title": "Chaupal", "fps": FPS, "width": 1920, "height": 1080, "palette": PALETTE, "kolam": kolam(), "facts": F, "scenes": scenes}
     if skeleton_only:
         return film
     S = {s["id"]: s for s in scenes}
@@ -161,7 +165,7 @@ def build(skeleton_only=False):
         o["shots"] = [{"src": None, "dur": o["duration"] / 3 + 0.5, "what": w} for w in ("dusk over a village", "lamps and hands", "a city at night")]
     la = P.get("livingAlone", {})
     o["pins"] = [{"at": (rel("o3", "open") or 9.5) + 0.6, "text": f"{la.get('value')}% of Indians over 60 live alone", "sub": la.get("source"), "x": 1180, "y": 120}]
-    o["notes"] = [{"at": 0.4, "until": 4.5, "text": "Footage: India at dusk (stock, not our users)"}]
+    o["notes"] = [{"at": 0.4, "until": 4.5, "text": "Footage: stock, not our users"}]
 
     # 2 stakes
     st = S["stakes"]
@@ -189,9 +193,27 @@ def build(skeleton_only=False):
     reply_at = (rel("h4", "hero", default=13.0) or 13.0) + 1.2
     if hl:
         ev = hl["events"]
-        segs, to_scene = align([(h["requestAt"], ev["request"], "her request"), (land_at, ev["land"], "waiting for the move"),
-                                (reply_at, ev.get("replyPhone", ev["reply"]), "pause"), (reply_at + 1.0, ev.get("replyTablet", ev["reply"]), "his move on its way")], hl["duration"])
-        h.update({"tablet": hl["tablet"], "phone": hl["phone"], "segments": segs, "landAt": to_scene(ev["land"]), "replyAt": to_scene(ev.get("replyTablet", ev["reply"])),
+        # her board, then his phone: both landings shown, each wait cut with its real length on screen
+        t1 = (rel("h3", "hero", default=9.0) or 9.0) + 0.9           # her board takes the rook
+        gap = ev["land"] - ev.get("landTablet", ev["land"])           # how long his phone took in this take
+        t2 = t1 + min(gap, 2.4)                                       # his phone, the rest of that wait cut
+        agent = hl.get("mode") == "agent"
+        segs = [{"at": 0, "from": round(max(0.0, ev["request"] - h["requestAt"]), 2)}]
+        segs.append({"at": round(t1 - 1.2, 2), "from": round(ev.get("landTablet", ev["land"]) - 1.2, 2),
+                     "note": f"{'her agent at work' if agent else 'waiting for the move'} · {round((ev.get('landTablet', ev['land']) - 1.2) - (segs[0]['from'] + t1 - 1.2), 1):g} s later"})
+        if gap > 2.4:
+            segs.append({"at": round(t2 - 0.6, 2), "from": round(ev["land"] - 0.6, 2), "note": f"this take: his phone updated {gap:.1f} s after her board"})
+        segs.append({"at": round(reply_at - 0.8, 2), "from": round(ev.get("replyPhone", ev["reply"]) - 0.8, 2)})
+
+        def to_scene(c):
+            best = None
+            for g in segs:
+                if c >= g["from"]:
+                    best = g
+            return round(best["at"] + (c - best["from"]), 2)
+
+        h["lineAt"], h["lineDur"] = round(t1, 2), round(t2 - t1, 2)
+        h.update({"tablet": hl["tablet"], "phone": hl["phone"], "segments": segs, "landAt": round(t2, 2), "replyAt": to_scene(ev.get("replyTablet", ev["reply"])),
                   "tabletBoard": hl["boards"]["tablet"], "phoneBoard": hl["boards"]["phone"], "squares": hl.get("squares")})
     else:
         missing.append("hero capture (two sessions)")
@@ -210,7 +232,7 @@ def build(skeleton_only=False):
     if sl:
         ev, bx = sl["events"], sl["boxes"]
         # her tracing took far longer in the recording than the line it sits under: it plays sped up, and says so
-        segs, to_scene0 = align([(req_at, ev["request"], "her request"), (ref_at, ev["reference"], "waiting for the reference")], sl["duration"])
+        segs, to_scene0 = align([(req_at, ev["request"], "her request"), (ref_at, ev["reference"], "her agent at work" if sl.get("mode") == "agent" else "waiting for the reference")], sl["duration"])
         avail = max(1.5, (erase_at - 0.8) - trace_at)
         rate = max(1.0, float(round((ev["traceEnd"] - ev["traceStart"]) / avail)))
         segs.append({"at": round(trace_at, 2), "from": round(ev["traceStart"], 2), "rate": rate, "note": f"her tracing, sped up ×{rate:g}" if rate > 1.05 else None})
@@ -257,11 +279,47 @@ def build(skeleton_only=False):
         missing.append("rangoli capture")
         rg["what"] = "rangoli: “बीच में पीला, बाहर लाल” fills"
 
+    # 7b telegram: her "हाँ" and the real delivery (proof chip from the API reply; a phone recording drops in if supplied)
+    tgs = S["telegram"]
+    tl = LOG.get("telegram")
+    say_t = rel("tg1", "telegram", default=0.3)
+    phone_rec = PUB / "footage" / "telegram-phone.mp4"   # made by make_footage.py from video/footage/telegram-phone.mp4
+    if phone_rec.exists():
+        tgs["phoneRec"] = "footage/telegram-phone.mp4"   # the user's own recording of the Telegram chat
+    if tl:
+        ev, t = tl["events"], tl.get("telegram") or {}
+        tap_t = (word_time("telegram", "haan", after=0, default=None) or (say_t or 1.3) + 0.5) + 0.45  # the card is on screen ~2 s before her tap
+        segs, to_scene = align([(tap_t, ev["approve"], "pause"), (tap_t + 1.5, ev["result"], "delivering to Telegram")], tl["duration"])
+        sent = t.get("status") == "sent"
+        when = ""
+        if t.get("decidedAt"):
+            from datetime import datetime, timedelta, timezone
+            d = datetime.fromisoformat(t["decidedAt"].replace("Z", "+00:00")).astimezone(timezone(timedelta(hours=5, minutes=30)))
+            when = d.strftime("%-d %b, %H:%M IST")
+        tgs.update({"src": tl["src"], "segments": segs, "approveAt": to_scene(ev["approve"]), "resultAt": to_scene(ev["result"]),
+                    "picture": t.get("picture"), "captionHi": t.get("captionHi"), "captionEn": t.get("captionEn"),
+                    "proof": (f"Telegram · delivered to the family chat · message #{t['messageId']} · {when}" if sent and t.get("messageId")
+                              else f"Telegram · status: {t.get('status')}"),
+                    "notes": [{"at": max(0.2, to_scene(ev["approve"]) - 0.6), "until": to_scene(ev["approve"]) + 2.2, "text": "her tap on हाँ, by the recording script"}]})
+        if tgs.get("phoneRec"):
+            # the phone clip may show a different send than the one captured here: describe only what the clip shows.
+            # video/footage/telegram-phone.json {"messageId": 4, "time": "10 Nov, 00:01 IST", "captionHi": "..."} when known
+            meta = load(HERE / "footage" / "telegram-phone.json", {})
+            if not meta.get("showsCapturedSend"):
+                num = f" · message #{meta['messageId']}" if meta.get("messageId") else ""
+                tgs["proof"] = f"Telegram · delivered to the family chat{num} · {meta.get('time') or when}"
+            tgs["phoneLabel"] = meta.get("label") or "the family's Telegram, recorded on a phone"
+            if meta.get("showsCapturedSend") and t.get("captionHi"):
+                tgs["proofSub"] = f"the send above is the first picture in the clip (“{t['captionHi']}”) · from the Telegram Bot API reply"
+    else:
+        missing.append("telegram capture")
+        tgs["what"] = "approval card → हाँ → sent to Telegram"
+
     # 8 guard: approval card refused, then the conflict card
     gd = S["guard"]
     gl = LOG.get("guard")
     card_at = rel("g1", "guard", default=0.3)
-    no_at = word_time("guard", "don't", after=0, default=(card_at or 0.3) + 2.6)
+    no_at = word_time("guard", "mat", after=0, default=(card_at or 0.3) + 1.2)
     conf_at = rel("g2", "guard", default=6)
     if gl:
         ev, bx = gl["events"], gl["boxes"]

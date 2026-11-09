@@ -1,6 +1,6 @@
 import React from "react";
 import { AbsoluteFill, OffthreadVideo, Sequence, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
-import { C, FONT } from "../theme";
+import { FONT, T, LIGHT_MODE } from "../theme";
 import { interp, ramp, rise } from "../lib/anim";
 import { Band, Chip, Note, Sky } from "../components/World";
 
@@ -16,7 +16,7 @@ export const Open: React.FC<any> = (p) => {
   let t = 0;
   const X = 12;
   return (
-    <AbsoluteFill style={{ background: C.night950 }}>
+    <AbsoluteFill style={{ background: T.bg }}>
       {shots.map((s, i) => {
         const a = Math.round(t * fps);
         const d = Math.round(s.dur * fps);
@@ -33,29 +33,29 @@ export const Open: React.FC<any> = (p) => {
               <Sequence from={a - X} layout="none">
                 <AbsoluteFill style={{ transform: `translateX(${tx}px) scale(${sc})` }}>
                   <OffthreadVideo src={staticFile(s.src)} trimBefore={Math.round((s.from ?? 0) * fps)} playbackRate={s.rate ?? 1} muted
-                    style={{ width: 1920, height: 1080, objectFit: "cover", filter: "sepia(.22) saturate(.82) contrast(1.06) brightness(.92)" }} />
+                    style={{ width: 1920, height: 1080, objectFit: "cover", filter: LIGHT_MODE ? "sepia(.1) saturate(.86) contrast(.95) brightness(1.05)" : "sepia(.22) saturate(.82) contrast(1.06) brightness(.92)" }} />
                 </AbsoluteFill>
               </Sequence>
             ) : (
               <AbsoluteFill>
                 <Sky glow={{ x: 960, y: 820, r: 900, i: 0.4 }} />
-                <div style={{ position: "absolute", top: 120, width: "100%", textAlign: "center", fontFamily: FONT.sans, fontSize: 34, color: C.marigold400 }}>FOOTAGE PENDING: {s.what}</div>
+                <div style={{ position: "absolute", top: 120, width: "100%", textAlign: "center", fontFamily: FONT.sans, fontSize: 34, color: T.accentText }}>FOOTAGE PENDING: {s.what}</div>
               </AbsoluteFill>
             )}
           </AbsoluteFill>
         );
       })}
       {/* the grade: indigo in the shadows, lamplight in the highlights */}
-      <AbsoluteFill style={{ background: `linear-gradient(180deg, rgba(21,19,43,.42), rgba(21,19,43,.08) 45%, rgba(58,26,12,.25))`, mixBlendMode: "multiply" }} />
-      <AbsoluteFill style={{ background: "radial-gradient(ellipse at 50% 55%, rgba(0,0,0,0) 45%, rgba(14,12,32,.65) 100%)" }} />
+      <AbsoluteFill style={{ background: `linear-gradient(180deg, rgba(${T.footageWash},.42), rgba(${T.footageWash},.08) 45%, rgba(${T.footageWash},.2))`, mixBlendMode: T.grainBlend === "multiply" ? "screen" : "multiply" }} />
+      <AbsoluteFill style={{ background: `radial-gradient(ellipse at 50% 55%, rgba(0,0,0,0) 55%, rgba(${T.vignette},${LIGHT_MODE ? 0.3 : 0.6}) 100%)` }} />
       {(p.pins ?? []).map((pin: Pin, i: number) => {
         const at = Math.round(pin.at * fps);
         return (
           <React.Fragment key={i}>
             {pin.dot && f >= at && (
               <svg width={1920} height={1080} style={{ position: "absolute", inset: 0 }}>
-                <circle cx={pin.dot[0]} cy={pin.dot[1]} r={9} fill={C.marigold} opacity={ramp(f, at, 8)} />
-                <line x1={pin.dot[0]} y1={pin.dot[1]} x2={pin.x} y2={pin.y + 30} stroke={C.chalk} strokeWidth={3} strokeDasharray="1000" strokeDashoffset={1000 * (1 - ramp(f, at, 14))} filter="url(#chalk)" />
+                <circle cx={pin.dot[0]} cy={pin.dot[1]} r={9} fill={T.accent} opacity={ramp(f, at, 8)} />
+                <line x1={pin.dot[0]} y1={pin.dot[1]} x2={pin.x} y2={pin.y + 30} stroke={T.line} strokeWidth={3} strokeDasharray="1000" strokeDashoffset={1000 * (1 - ramp(f, at, 14))} filter="url(#chalk)" />
               </svg>
             )}
             <div style={{ position: "absolute", left: pin.x, top: pin.y }}><Chip at={at + 6} text={pin.text} sub={pin.sub} tone="accent" /></div>

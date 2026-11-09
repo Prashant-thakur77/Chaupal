@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { AbsoluteFill, continueRender, delayRender, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
-import { C, FONT } from "../theme";
+import { FONT, T } from "../theme";
 
 type W = { text: string; startMs: number; endMs: number };
 
@@ -37,11 +37,11 @@ export const Captions: React.FC<{ file: string; off?: [number, number][] }> = ({
   if (!page) return null;
   return (
     <AbsoluteFill style={{ justifyContent: "flex-end", alignItems: "center", paddingBottom: 64, pointerEvents: "none" }}>
-      <div style={{ maxWidth: 1500, textAlign: "center", fontFamily: FONT.sans, fontWeight: 600, fontSize: 46, lineHeight: 1.2, whiteSpace: "pre-wrap", textShadow: "0 0 14px rgba(14,12,32,.95), 0 2px 6px rgba(14,12,32,.9)" }}>
+      <div style={{ maxWidth: 1500, textAlign: "center", fontFamily: FONT.sans, fontWeight: 600, fontSize: 46, lineHeight: 1.2, whiteSpace: "pre-wrap", textShadow: `0 0 14px rgba(${T.textShadow},.95), 0 2px 6px rgba(${T.textShadow},.9)` }}>
         {page.map((k, i) => {
           const now = ms >= k.startMs && ms < k.endMs + 60;
           return (
-            <span key={i} style={{ color: now ? C.marigold400 : ms >= k.startMs ? C.chalk : "#b4a99a", display: "inline-block", transform: now ? "scale(1.06)" : undefined }}>
+            <span key={i} style={{ color: now ? T.accentText : ms >= k.startMs ? T.ink : T.inkFaint, display: "inline-block", transform: now ? "scale(1.06)" : undefined }}>
               {i === 0 ? k.text.trimStart() : k.text}
             </span>
           );
