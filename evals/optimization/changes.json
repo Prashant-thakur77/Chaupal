@@ -1,0 +1,28 @@
+{
+  "note": "One bounded change to the agent-facing surface per candidate iteration. The suite, grader and runner are unchanged across iterations (same evalSetHash and fixtureHash).",
+  "iterations": {
+    "iteration-001": {
+      "configuration": "browser-control",
+      "change": "Control: the four browser tools only."
+    },
+    "iteration-002": {
+      "configuration": "chaupal-actions",
+      "change": "First candidate: Chaupal's MCP action catalog as built (26 actions after excluding framework tools) plus the four browser tools."
+    },
+    "iteration-003": {
+      "configuration": "chaupal-actions",
+      "change": "Description only, actions/move-chess-piece.ts: the sentence 'actor \"agent\" plays your own reply (from/to) only when it is your turn.' became 'actor \"agent\" plays your own reply (from/to) only when it is your turn AND she asked you to play against her or to answer her move (e.g. \"phir aap chalna\"); after making her move, do not add a reply on your own: tell her it is the other side's turn and let her decide.'",
+      "why": "In #002, 8 of 9 failing sessions were shatranj sessions where the agent played an unrequested reply move right after her move."
+    },
+    "iteration-004": {
+      "configuration": "chaupal-actions",
+      "change": "Description only, actions/set-input-mode.ts: 'Use this whenever she wants to trace on the screen, or says the camera feels uncomfortable; it also turns air-writing off if it was on.' became 'Placing a Sulekh reference, rangoli or kolam already does this (inputMode touch, camera never asked), so it is not needed right after those; use it when inputMode is none or air-writing is on and she wants to draw by hand or says the camera feels uncomfortable (it turns air-writing off).'",
+      "why": "In #003 both sulekh-without-camera sessions made a redundant set-input-mode call after the reference was already touch-ready and narrated it in English, failing the conversation judge."
+    },
+    "iteration-005": {
+      "configuration": "chaupal-actions",
+      "change": "App-fix iteration (more than one change, run at the owner's request; the computed gate decides). Versus #004: (1) server/chaupal/chess.ts playMove calls the framework's recordChange right after the move commits, so open screens draw the move while the call waits, and waits at most 3 s (was 4.5 s) for her board's ack; (2) server/chaupal/valid-actions.ts validNextActions lists only real actions: removed change-colours, offer-takeback, resign, answer-family-update; adds draft-family-update and list-album outside home; send-family-update and cancel-family-update only while an approval is pending; (3) server/chaupal/raster.ts and sulekh-runtime.ts load wasm/fonts in a serverless-safe way (no agent-facing change). Action descriptions and schemas unchanged from #004.",
+      "why": "Fixes app bugs #2 (every move held ~4.5 s, her board lagged) and #3 (validNextActions named non-existent actions) found during #001-#004."
+    }
+  }
+}

@@ -1,0 +1,298 @@
+{
+  "generatedAt": "2026-11-09T14:34:35.325Z",
+  "configurations": {
+    "browser-control": {
+      "runs": 42,
+      "passed": 8,
+      "passRate": 0.19047619047619047,
+      "criticalPassRate": 0.19047619047619047,
+      "firstPassValidRate": 0.19047619047619047,
+      "failedToolCalls": 0,
+      "expectedGuardRejections": 0,
+      "retries": 0,
+      "totalTokens": 1494408,
+      "meanTokensPerRun": 35581.142857142855,
+      "meanInputTokensPerRun": 34931.28571428572,
+      "meanOutputTokensPerRun": 649.8571428571429,
+      "meanWallTimeMs": 11703.694438999999,
+      "meanModelLatencyMs": 9538.968732333326,
+      "tokensPerSuccessfulOutcome": 186801,
+      "meanTimeToVisibleSuccessMs": 12420.482392375003
+    }
+  },
+  "categories": {
+    "sulekh": {
+      "browser-control": {
+        "runs": 16,
+        "passed": 0,
+        "passRate": 0,
+        "criticalPassRate": 0,
+        "firstPassValidRate": 0,
+        "failedToolCalls": 0,
+        "expectedGuardRejections": 0,
+        "retries": 0,
+        "totalTokens": 257527,
+        "meanTokensPerRun": 16095.4375,
+        "meanInputTokensPerRun": 15439.25,
+        "meanOutputTokensPerRun": 656.1875,
+        "meanWallTimeMs": 9892.148256875,
+        "meanModelLatencyMs": 8460.284246125,
+        "tokensPerSuccessfulOutcome": null,
+        "meanTimeToVisibleSuccessMs": null
+      }
+    },
+    "shatranj": {
+      "browser-control": {
+        "runs": 10,
+        "passed": 6,
+        "passRate": 0.6,
+        "criticalPassRate": 0.6,
+        "firstPassValidRate": 0.6,
+        "failedToolCalls": 0,
+        "expectedGuardRejections": 0,
+        "retries": 0,
+        "totalTokens": 772242,
+        "meanTokensPerRun": 77224.2,
+        "meanInputTokensPerRun": 76638.7,
+        "meanOutputTokensPerRun": 585.5,
+        "meanWallTimeMs": 15757.106706600005,
+        "meanModelLatencyMs": 11486.420318700002,
+        "tokensPerSuccessfulOutcome": 128707,
+        "meanTimeToVisibleSuccessMs": 14478.39837433334
+      }
+    },
+    "interface": {
+      "browser-control": {
+        "runs": 4,
+        "passed": 2,
+        "passRate": 0.5,
+        "criticalPassRate": 0.5,
+        "firstPassValidRate": 0.5,
+        "failedToolCalls": 0,
+        "expectedGuardRejections": 0,
+        "retries": 0,
+        "totalTokens": 133272,
+        "meanTokensPerRun": 33318,
+        "meanInputTokensPerRun": 32706.75,
+        "meanOutputTokensPerRun": 611.25,
+        "meanWallTimeMs": 10483.518646999997,
+        "meanModelLatencyMs": 8672.66844249997,
+        "tokensPerSuccessfulOutcome": 66636,
+        "meanTimeToVisibleSuccessMs": 6246.7344464999915
+      }
+    },
+    "rangoli": {
+      "browser-control": {
+        "runs": 8,
+        "passed": 0,
+        "passRate": 0,
+        "criticalPassRate": 0,
+        "firstPassValidRate": 0,
+        "failedToolCalls": 0,
+        "expectedGuardRejections": 0,
+        "retries": 0,
+        "totalTokens": 175965,
+        "meanTokensPerRun": 21995.625,
+        "meanInputTokensPerRun": 21258.75,
+        "meanOutputTokensPerRun": 736.875,
+        "meanWallTimeMs": 11291.003815749998,
+        "meanModelLatencyMs": 9900.13877287499,
+        "tokensPerSuccessfulOutcome": null,
+        "meanTimeToVisibleSuccessMs": null
+      }
+    },
+    "family": {
+      "browser-control": {
+        "runs": 4,
+        "passed": 0,
+        "passRate": 0,
+        "criticalPassRate": 0,
+        "firstPassValidRate": 0,
+        "failedToolCalls": 0,
+        "expectedGuardRejections": 0,
+        "retries": 0,
+        "totalTokens": 155402,
+        "meanTokensPerRun": 38850.5,
+        "meanInputTokensPerRun": 38200.5,
+        "meanOutputTokensPerRun": 650,
+        "meanWallTimeMs": 10861.905536999999,
+        "meanModelLatencyMs": 9129.037919999988,
+        "tokensPerSuccessfulOutcome": null,
+        "meanTimeToVisibleSuccessMs": null
+      }
+    }
+  },
+  "cases": {
+    "sulekh-recommend-then-choose": {
+      "passed": 0,
+      "runs": 2,
+      "failedAssertions": [
+        "SULEKH-RECOMMEND-AND-CHOOSE-001",
+        "PERSON-CHOICE-001",
+        "CONVERSATION-QUALITY-001"
+      ]
+    },
+    "sulekh-diwali-for-family": {
+      "passed": 0,
+      "runs": 2,
+      "failedAssertions": [
+        "SULEKH-DIWALI-001",
+        "SULEKH-ASSET-001",
+        "CONVERSATION-QUALITY-001"
+      ]
+    },
+    "sulekh-change-the-word": {
+      "passed": 0,
+      "runs": 2,
+      "failedAssertions": [
+        "SULEKH-CORRECTION-001",
+        "PERSON-CHANGED-MIND-001",
+        "CONVERSATION-QUALITY-001"
+      ]
+    },
+    "sulekh-air-writing": {
+      "passed": 0,
+      "runs": 2,
+      "failedAssertions": [
+        "SULEKH-AIR-WRITING-001",
+        "CAMERA-PERMISSION-BOUNDARY-001",
+        "CONVERSATION-QUALITY-001"
+      ]
+    },
+    "sulekh-without-camera": {
+      "passed": 0,
+      "runs": 2,
+      "failedAssertions": [
+        "SULEKH-DIRECT-WRITING-001",
+        "CONVERSATION-QUALITY-001"
+      ]
+    },
+    "sulekh-bad-render-repair": {
+      "passed": 0,
+      "runs": 2,
+      "failedAssertions": [
+        "SULEKH-SHAPING-REPAIR-001",
+        "RECOVERY-BURDEN-001",
+        "CONVERSATION-QUALITY-001"
+      ]
+    },
+    "sulekh-fit-repair": {
+      "passed": 0,
+      "runs": 2,
+      "failedAssertions": [
+        "SULEKH-RATIO-REPAIR-001",
+        "SULEKH-FIT-001",
+        "CONVERSATION-QUALITY-001"
+      ]
+    },
+    "sulekh-clear-only-my-strokes": {
+      "passed": 0,
+      "runs": 2,
+      "failedAssertions": [
+        "SULEKH-OWNERSHIP-001",
+        "DESTRUCTIVE-SCOPE-001",
+        "CONVERSATION-QUALITY-001"
+      ]
+    },
+    "chess-natural-move": {
+      "passed": 2,
+      "runs": 2,
+      "failedAssertions": []
+    },
+    "chess-colloquial-move": {
+      "passed": 2,
+      "runs": 2,
+      "failedAssertions": []
+    },
+    "chess-preview-then-choose": {
+      "passed": 0,
+      "runs": 2,
+      "failedAssertions": [
+        "SHATRANJ-PREVIEW-THEN-MOVE-001",
+        "AGENT-TRUTH-001"
+      ]
+    },
+    "chess-shared-turn": {
+      "passed": 0,
+      "runs": 2,
+      "failedAssertions": [
+        "AGENT-SHATRANJ-REPLY-001",
+        "SHATRANJ-AUTHORITY-001",
+        "CONVERSATION-QUALITY-001"
+      ]
+    },
+    "chess-illegal-then-legal": {
+      "passed": 2,
+      "runs": 2,
+      "failedAssertions": []
+    },
+    "interface-switch": {
+      "passed": 0,
+      "runs": 2,
+      "failedAssertions": [
+        "INTERFACE-CREATIVE-SWITCH-001",
+        "PERSON-CHANGED-ACTIVITY-001",
+        "CONVERSATION-QUALITY-001"
+      ]
+    },
+    "interface-language-history": {
+      "passed": 2,
+      "runs": 2,
+      "failedAssertions": []
+    },
+    "rangoli-diwali": {
+      "passed": 0,
+      "runs": 2,
+      "failedAssertions": [
+        "RANGOLI-DIWALI-001",
+        "RANGOLI-ASSET-001",
+        "CONVERSATION-QUALITY-001"
+      ]
+    },
+    "kolam-pulli": {
+      "passed": 0,
+      "runs": 2,
+      "failedAssertions": [
+        "KOLAM-GRID-001",
+        "KOLAM-VALIDITY-001",
+        "CONVERSATION-QUALITY-001",
+        "AGENT-TRUTH-001"
+      ]
+    },
+    "rangoli-recolour": {
+      "passed": 0,
+      "runs": 2,
+      "failedAssertions": [
+        "RANGOLI-RECOLOUR-001",
+        "DESTRUCTIVE-SCOPE-001",
+        "CONVERSATION-QUALITY-001"
+      ]
+    },
+    "rangoli-clear-only-my-strokes": {
+      "passed": 0,
+      "runs": 2,
+      "failedAssertions": [
+        "RANGOLI-OWNERSHIP-001",
+        "DESTRUCTIVE-SCOPE-001",
+        "CONVERSATION-QUALITY-001"
+      ]
+    },
+    "family-second-player": {
+      "passed": 0,
+      "runs": 2,
+      "failedAssertions": [
+        "FAMILY-SECOND-PLAYER-001",
+        "FAMILY-AUTHORITY-001",
+        "CONVERSATION-QUALITY-001"
+      ]
+    },
+    "family-send-needs-approval": {
+      "passed": 0,
+      "runs": 2,
+      "failedAssertions": [
+        "FAMILY-APPROVAL-001",
+        "CONVERSATION-QUALITY-001"
+      ]
+    }
+  }
+}

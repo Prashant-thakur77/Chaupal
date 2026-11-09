@@ -1,6 +1,6 @@
 import { AgentPanel } from "@agent-native/toolkit/app/chat";
 import { BookImage, History, Users, X } from "lucide-react";
-import { Suspense, lazy, useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 
 import { LivingDiya, useDiyaPhaseFromAgent } from "@/components/diya/LivingDiya";
 
@@ -10,9 +10,11 @@ import { HomeScene } from "./scenes/HomeScene";
 import { LANG_LABELS, speechLang, type Lang } from "./strings";
 import { VoiceDock } from "./VoiceDock";
 
-const SulekhScene = lazy(() => import("./scenes/SulekhScene"));
-const RangoliScene = lazy(() => import("./scenes/RangoliScene"));
-const ShatranjScene = lazy(() => import("./scenes/ShatranjScene"));
+// Scenes load with the stage, so an activity is on her screen the moment it
+// opens (a lazily loaded board appeared only after the first move).
+import RangoliScene from "./scenes/RangoliScene";
+import ShatranjScene from "./scenes/ShatranjScene";
+import SulekhScene from "./scenes/SulekhScene";
 
 /**
  * The elder's stage. One action per screen: the activity fills the space,

@@ -1,7 +1,7 @@
-export type EvaluationConfiguration = "no_webmcp" | "candidate";
+export type EvaluationConfiguration = "browser-control" | "chaupal-actions";
 
 export type IterationPlan = {
-  firstOfficialIteration: "no_webmcp";
+  firstOfficialIteration: "browser-control";
   candidateStartsAt: number;
 };
 
@@ -14,13 +14,12 @@ export function configurationForOfficialIteration(
     throw new Error("OFFICIAL_ITERATION_NUMBER_INVALID");
   }
   if (
-    plan.firstOfficialIteration !== "no_webmcp" ||
+    plan.firstOfficialIteration !== "browser-control" ||
     plan.candidateStartsAt !== 2
   ) {
     throw new Error("OFFICIAL_ITERATION_PLAN_INVALID");
   }
   return iterationNumber < plan.candidateStartsAt
     ? plan.firstOfficialIteration
-    : "candidate";
+    : "chaupal-actions";
 }
-

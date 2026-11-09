@@ -1,0 +1,173 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatedFrom": "immutable official iteration artifacts",
+  "xAxis": "official iterations, in order",
+  "yAxis": "verified task success rate",
+  "attempts": [
+    {
+      "order": 1,
+      "iteration": "iteration-001",
+      "createdAt": "2026-11-09T14:34:35.326Z",
+      "configuration": "browser-control",
+      "decision": "control",
+      "evalSetHash": "sha256:a428d74abe03a5738b8cff83fed0408c273389cdac5906c3a6ceed26473c2592",
+      "metric": {
+        "runs": 42,
+        "passed": 8,
+        "passRate": 0.19047619047619047,
+        "criticalPassRate": 0.19047619047619047,
+        "firstPassValidRate": 0.19047619047619047,
+        "failedToolCalls": 0,
+        "expectedGuardRejections": 0,
+        "retries": 0,
+        "totalTokens": 1494408,
+        "meanTokensPerRun": 35581.142857142855,
+        "meanInputTokensPerRun": 34931.28571428572,
+        "meanOutputTokensPerRun": 649.8571428571429,
+        "meanWallTimeMs": 11703.694438999999,
+        "meanModelLatencyMs": 9538.968732333326,
+        "tokensPerSuccessfulOutcome": 186801,
+        "meanTimeToVisibleSuccessMs": 12420.482392375003
+      },
+      "categories": {
+        "sulekh": 0,
+        "shatranj": 0.6,
+        "interface": 0.5,
+        "rangoli": 0,
+        "family": 0
+      }
+    },
+    {
+      "order": 2,
+      "iteration": "iteration-002",
+      "createdAt": "2026-11-09T14:40:40.599Z",
+      "configuration": "chaupal-actions",
+      "decision": "accepted",
+      "evalSetHash": "sha256:a428d74abe03a5738b8cff83fed0408c273389cdac5906c3a6ceed26473c2592",
+      "metric": {
+        "runs": 42,
+        "passed": 33,
+        "passRate": 0.7857142857142857,
+        "criticalPassRate": 0.8095238095238095,
+        "firstPassValidRate": 0.7619047619047619,
+        "failedToolCalls": 1,
+        "expectedGuardRejections": 6,
+        "retries": 8,
+        "totalTokens": 2299877,
+        "meanTokensPerRun": 54758.97619047619,
+        "meanInputTokensPerRun": 54263.97619047619,
+        "meanOutputTokensPerRun": 495,
+        "meanWallTimeMs": 10726.568051166667,
+        "meanModelLatencyMs": 6629.55376109524,
+        "tokensPerSuccessfulOutcome": 69693.24242424243,
+        "meanTimeToVisibleSuccessMs": 7417.969906424243
+      },
+      "categories": {
+        "sulekh": 1,
+        "shatranj": 0.2,
+        "interface": 0.75,
+        "rangoli": 1,
+        "family": 1
+      }
+    },
+    {
+      "order": 3,
+      "iteration": "iteration-003",
+      "createdAt": "2026-11-09T14:55:29.209Z",
+      "configuration": "chaupal-actions",
+      "decision": "accepted",
+      "evalSetHash": "sha256:a428d74abe03a5738b8cff83fed0408c273389cdac5906c3a6ceed26473c2592",
+      "metric": {
+        "runs": 42,
+        "passed": 35,
+        "passRate": 0.8333333333333334,
+        "criticalPassRate": 0.9285714285714286,
+        "firstPassValidRate": 0.8333333333333334,
+        "failedToolCalls": 1,
+        "expectedGuardRejections": 6,
+        "retries": 6,
+        "totalTokens": 2236522,
+        "meanTokensPerRun": 53250.52380952381,
+        "meanInputTokensPerRun": 52777.54761904762,
+        "meanOutputTokensPerRun": 472.9761904761905,
+        "meanWallTimeMs": 11645.51014497619,
+        "meanModelLatencyMs": 8179.476510714285,
+        "tokensPerSuccessfulOutcome": 63900.62857142857,
+        "meanTimeToVisibleSuccessMs": 10567.046369342857
+      },
+      "categories": {
+        "sulekh": 0.875,
+        "shatranj": 0.6,
+        "interface": 1,
+        "rangoli": 0.875,
+        "family": 1
+      }
+    },
+    {
+      "order": 4,
+      "iteration": "iteration-004",
+      "createdAt": "2026-11-09T15:02:45.811Z",
+      "configuration": "chaupal-actions",
+      "decision": "accepted",
+      "evalSetHash": "sha256:a428d74abe03a5738b8cff83fed0408c273389cdac5906c3a6ceed26473c2592",
+      "metric": {
+        "runs": 42,
+        "passed": 38,
+        "passRate": 0.9047619047619048,
+        "criticalPassRate": 0.9523809523809523,
+        "firstPassValidRate": 0.8809523809523809,
+        "failedToolCalls": 1,
+        "expectedGuardRejections": 6,
+        "retries": 6,
+        "totalTokens": 1946062,
+        "meanTokensPerRun": 46334.80952380953,
+        "meanInputTokensPerRun": 45902.78571428572,
+        "meanOutputTokensPerRun": 432.0238095238095,
+        "meanWallTimeMs": 10944.884139690475,
+        "meanModelLatencyMs": 7043.490134571428,
+        "tokensPerSuccessfulOutcome": 51212.15789473684,
+        "meanTimeToVisibleSuccessMs": 9645.68611863158
+      },
+      "categories": {
+        "sulekh": 1,
+        "shatranj": 0.7,
+        "interface": 1,
+        "rangoli": 0.875,
+        "family": 1
+      }
+    },
+    {
+      "order": 5,
+      "iteration": "iteration-005",
+      "createdAt": "2026-11-09T15:09:27.514Z",
+      "configuration": "chaupal-actions",
+      "decision": "rejected",
+      "evalSetHash": "sha256:a428d74abe03a5738b8cff83fed0408c273389cdac5906c3a6ceed26473c2592",
+      "metric": {
+        "runs": 42,
+        "passed": 36,
+        "passRate": 0.8571428571428571,
+        "criticalPassRate": 0.8809523809523809,
+        "firstPassValidRate": 0.8571428571428571,
+        "failedToolCalls": 1,
+        "expectedGuardRejections": 6,
+        "retries": 6,
+        "totalTokens": 1995202,
+        "meanTokensPerRun": 47504.80952380953,
+        "meanInputTokensPerRun": 47057.69047619047,
+        "meanOutputTokensPerRun": 447.1190476190476,
+        "meanWallTimeMs": 9250.447899761906,
+        "meanModelLatencyMs": 6660.510774000002,
+        "tokensPerSuccessfulOutcome": 55422.27777777778,
+        "meanTimeToVisibleSuccessMs": 7704.485211305557
+      },
+      "categories": {
+        "sulekh": 1,
+        "shatranj": 0.4,
+        "interface": 1,
+        "rangoli": 1,
+        "family": 1
+      }
+    }
+  ]
+}

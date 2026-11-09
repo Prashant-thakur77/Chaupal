@@ -1,216 +1,292 @@
-import type { Page } from "@playwright/test";
+import { readFileSync } from "node:fs";
+import { join, resolve } from "node:path";
+
+/**
+ * The eval host for Chaupal: one fresh household per session, its live
+ * server state, and an MCP client that calls Chaupal's actions as that
+ * household. Every session is isolated by its own signed guest identity, so
+ * sessions can run in parallel against one server.
+ */
+
+export type Household = {
+  baseUrl: string;
+  cookieName: string;
+  cookieValue: string;
+  cookieHeader: string;
+  /** The household's guest identity; used only to scope MCP calls. */
+  email: string;
+};
 
 export type EvalToolDescriptor = {
   name: string;
   description: string;
   inputSchema: Record<string, unknown>;
-  annotations?: Record<string, boolean>;
+  annotations?: Record<string, unknown>;
 };
 
-type EvalHost = {
-  list: () => EvalToolDescriptor[];
-  history: () => Array<Record<string, unknown>>;
-  execute: (
-    name: string,
-    input: Record<string, unknown>,
-  ) => Promise<Record<string, unknown>>;
-};
+/**
+ * Framework tools in the MCP catalog that are not Chaupal actions (cross-app
+ * routing, org admin, catalog search). Excluded identically from every
+ * candidate session; every Chaupal action in the catalog is kept.
+ */
+export const NON_CHAUPAL_MCP_TOOLS = new Set([
+  "ask_app",
+  "ask_app_status",
+  "list_apps",
+  "open_app",
+  "tool-search",
+  "invite-organization-member",
+  "list-organization-members",
+]);
 
-type EvalWindow = typeof window & {
-  __CHAUPAL_WEBMCP_EVAL_HOST__?: EvalHost;
-  __CHAUPAL_PENDING_EVAL_TOOL__?: Promise<Record<string, unknown>>;
-  __CHAUPAL_PENDING_EVAL_TOOL_SETTLED__?: boolean;
-};
+const DEFAULT_TOKEN_FILE = resolve(import.meta.dirname, "../../../.chaupal-work/eval-mcp-token");
 
-const EVAL_HOST_INIT_SCRIPT = `
-(() => {
-  const tools = new Map();
-  const history = [];
-  let sequence = 0;
-  const host = {
-    list: () => [...tools.values()].map(({ name, description, inputSchema, annotations }) => ({
-      name, description, inputSchema, annotations,
-    })),
-    history: () => history.slice(),
-    execute: async (name, input) => {
-      const tool = tools.get(name);
-      if (!tool) throw new Error("EVAL_TOOL_NOT_REGISTERED:" + name);
-      const startedAt = new Date().toISOString();
-      const started = performance.now();
-      sequence += 1;
-      try {
-        const result = await tool.execute(input);
-        history.push({
-          sequence,
-          tool: name,
-          startedAt,
-          completedAt: new Date().toISOString(),
-          durationMs: Math.max(0, performance.now() - started),
-          success: true,
-          errorCode: null,
-          structuredContent: result && result.structuredContent ? result.structuredContent : null,
-        });
-        return result;
-      } catch (error) {
-        const message = error instanceof Error ? error.message : String(error);
-        history.push({
-          sequence,
-          tool: name,
-          startedAt,
-          completedAt: new Date().toISOString(),
-          durationMs: Math.max(0, performance.now() - started),
-          success: false,
-          errorCode: message.split(":", 1)[0] || "UNKNOWN_ERROR",
-          structuredContent: null,
-        });
-        throw error;
-      }
-    },
+export function readMcpToken() {
+  const path = process.env.CHAUPAL_EVAL_MCP_TOKEN_FILE ?? DEFAULT_TOKEN_FILE;
+  const token = readFileSync(path, "utf8").trim();
+  if (!token) throw new Error("EVAL_MCP_TOKEN_MISSING");
+  return token;
+}
+
+export async function startHousehold(baseUrl: string): Promise<Household> {
+  const response = await fetch(`${baseUrl}/api/household/start`, { redirect: "manual" });
+  const setCookie = response.headers.get("set-cookie") ?? "";
+  const match = /(chaupal_guest)=([^;]+)/.exec(setCookie);
+  if (!match) throw new Error(`EVAL_HOUSEHOLD_START_FAILED:${response.status}`);
+  const [, cookieName, cookieValue] = match;
+  const payload = JSON.parse(
+    Buffer.from(cookieValue!.split(".")[0]!, "base64url").toString("utf8"),
+  ) as { viewerEmail?: string };
+  if (!payload.viewerEmail) throw new Error("EVAL_HOUSEHOLD_IDENTITY_MISSING");
+  return {
+    baseUrl,
+    cookieName: cookieName!,
+    cookieValue: cookieValue!,
+    cookieHeader: `${cookieName}=${cookieValue}`,
+    email: payload.viewerEmail,
   };
-  Object.defineProperty(document, "modelContext", {
-    configurable: true,
-    value: {
-      registerTool: (tool) => tools.set(tool.name, tool),
-      unregisterTool: (name) => tools.delete(name),
-    },
-  });
-  Object.defineProperty(window, "__CHAUPAL_WEBMCP_EVAL_HOST__", {
-    configurable: true,
-    value: host,
-  });
-})();
-`;
-
-export async function installEvalHost(page: Page) {
-  await page.addInitScript({ content: EVAL_HOST_INIT_SCRIPT });
 }
 
-export async function waitForEvalTools(page: Page, minimum = 1) {
-  await page.waitForFunction(
-    (expected) =>
-      ((window as EvalWindow).__CHAUPAL_WEBMCP_EVAL_HOST__?.list().length ?? 0) >=
-      expected,
-    minimum,
-  );
-}
-
-export async function listEvalTools(page: Page) {
-  return page.evaluate(() => {
-    const host = (window as EvalWindow).__CHAUPAL_WEBMCP_EVAL_HOST__;
-    if (!host) throw new Error("EVAL_HOST_NOT_INSTALLED");
-    return host.list();
+export async function readLiveSession(household: Household) {
+  const response = await fetch(`${household.baseUrl}/_agent-native/actions/get-live-session`, {
+    headers: { cookie: household.cookieHeader },
   });
+  if (!response.ok) throw new Error(`EVAL_LIVE_SESSION_${response.status}`);
+  return (await response.json()) as Record<string, any>;
 }
 
-export async function getEvalHostHistory(page: Page) {
-  return page.evaluate(() => {
-    const host = (window as EvalWindow).__CHAUPAL_WEBMCP_EVAL_HOST__;
-    if (!host) throw new Error("EVAL_HOST_NOT_INSTALLED");
-    return host.history();
-  });
-}
-
-export async function executeEvalTool(
-  page: Page,
-  name: string,
-  input: Record<string, unknown>,
+/** Arm the one-time faulty Sulekh render for a recovery case (CHAUPAL_EVAL=1 only). */
+export async function armProviderFixture(
+  household: Household,
+  firstResult: "broken-shaping" | "wrong-ratio",
 ) {
-  return page.evaluate(
-    async ({ toolName, toolInput }) => {
-      const host = (window as EvalWindow).__CHAUPAL_WEBMCP_EVAL_HOST__;
-      if (!host) throw new Error("EVAL_HOST_NOT_INSTALLED");
-      return host.execute(toolName, toolInput);
-    },
-    { toolName: name, toolInput: input },
-  );
-}
-
-export async function startPendingEvalTool(
-  page: Page,
-  name: string,
-  input: Record<string, unknown>,
-) {
-  await page.evaluate(
-    ({ toolName, toolInput }) => {
-      const target = window as EvalWindow;
-      const host = target.__CHAUPAL_WEBMCP_EVAL_HOST__;
-      if (!host) throw new Error("EVAL_HOST_NOT_INSTALLED");
-      if (target.__CHAUPAL_PENDING_EVAL_TOOL__) {
-        throw new Error("EVAL_PENDING_TOOL_ALREADY_EXISTS");
-      }
-      target.__CHAUPAL_PENDING_EVAL_TOOL_SETTLED__ = false;
-      target.__CHAUPAL_PENDING_EVAL_TOOL__ = host
-        .execute(toolName, toolInput)
-        .finally(() => {
-          target.__CHAUPAL_PENDING_EVAL_TOOL_SETTLED__ = true;
-        });
-    },
-    { toolName: name, toolInput: input },
-  );
-}
-
-export async function awaitPendingEvalTool(page: Page) {
-  return page.evaluate(async () => {
-    const target = window as EvalWindow;
-    const pending = target.__CHAUPAL_PENDING_EVAL_TOOL__;
-    if (!pending) throw new Error("EVAL_PENDING_TOOL_NOT_FOUND");
-    try {
-      return await pending;
-    } finally {
-      delete target.__CHAUPAL_PENDING_EVAL_TOOL__;
-      delete target.__CHAUPAL_PENDING_EVAL_TOOL_SETTLED__;
-    }
+  const response = await fetch(`${household.baseUrl}/_agent-native/actions/set-eval-fixture`, {
+    method: "POST",
+    headers: { cookie: household.cookieHeader, "content-type": "application/json" },
+    body: JSON.stringify({ sulekh: firstResult }),
   });
+  if (!response.ok) throw new Error(`EVAL_FIXTURE_ARM_FAILED:${response.status}`);
 }
 
-export async function getPendingEvalToolState(page: Page) {
-  return page.evaluate(() => {
-    const target = window as EvalWindow;
+/**
+ * The server truth the grader reads, without SVG bodies or stroke points:
+ * scene, revision, calligraphy, kolam regions and fills, stroke counts,
+ * chess, family, approval and recent events.
+ */
+export function compactLiveSession(snapshot: Record<string, any>) {
+  const svgViewBox = (svg: unknown) =>
+    typeof svg === "string" ? (/viewBox="([^"]+)"/.exec(svg)?.[1] ?? null) : null;
+  return {
+    sessionId: snapshot.sessionId,
+    revision: snapshot.revision,
+    scene: snapshot.scene,
+    language: snapshot.language,
+    inputMode: snapshot.inputMode,
+    historyOpen: snapshot.historyOpen,
+    pending: snapshot.pending ?? null,
+    approval: snapshot.approval
+      ? { id: snapshot.approval.id, status: snapshot.approval.status, kind: snapshot.approval.kind }
+      : null,
+    calligraphy: snapshot.calligraphy
+      ? {
+          id: snapshot.calligraphy.id,
+          text: snapshot.calligraphy.text,
+          script: snapshot.calligraphy.script,
+          style: snapshot.calligraphy.style,
+          size: snapshot.calligraphy.size,
+          status: snapshot.calligraphy.status,
+          validation: snapshot.calligraphy.validation ?? null,
+          viewBox: svgViewBox(snapshot.calligraphy.svg),
+        }
+      : null,
+    kolam: snapshot.kolam
+      ? {
+          id: snapshot.kolam.id,
+          kind: snapshot.kolam.kind,
+          params: snapshot.kolam.params,
+          validation: snapshot.kolam.validation
+            ? {
+                valid: snapshot.kolam.validation.valid,
+                failed: (snapshot.kolam.validation.checks ?? [])
+                  .filter((check: { ok: boolean }) => !check.ok)
+                  .map((check: { id: string }) => check.id),
+                checks: (snapshot.kolam.validation.checks ?? []).map((check: { id: string }) => check.id),
+              }
+            : null,
+          regionCount: (snapshot.kolam.regions ?? []).length,
+          fills: Object.fromEntries(
+            Object.entries(snapshot.kolam.fills ?? {}).map(([id, fill]) => [id, (fill as { colour: string }).colour]),
+          ),
+        }
+      : null,
+    strokes: snapshot.strokes?.counts ?? {},
+    chess: snapshot.chess
+      ? {
+          id: snapshot.chess.id,
+          fen: snapshot.chess.fen,
+          elderColor: snapshot.chess.elderColor,
+          opponent: snapshot.chess.opponent,
+          opponentName: snapshot.chess.opponentName,
+          turnOwner: snapshot.chess.turnOwner,
+          preview: snapshot.chess.preview ?? null,
+          moves: (snapshot.chess.moves ?? []).map(
+            (move: { ply: number; from: string; to: string; san: string; actor: string; via: string }) => ({
+              ply: move.ply,
+              from: move.from,
+              to: move.to,
+              san: move.san,
+              actor: move.actor,
+              via: move.via,
+            }),
+          ),
+        }
+      : null,
+    family: (snapshot.family ?? []).map((member: { name: string; role: string; joinPath?: string }) => ({
+      name: member.name,
+      role: member.role,
+      hasJoinPath: Boolean(member.joinPath),
+    })),
+    events: (snapshot.events ?? []).map(
+      (event: { type: string; actor: string; caller: string; ok: boolean; errorCode: string | null; at: string }) => ({
+        type: event.type,
+        actor: event.actor,
+        caller: event.caller,
+        ok: event.ok,
+        errorCode: event.errorCode,
+        at: event.at,
+      }),
+    ),
+  };
+}
+
+export type CompactLiveSession = ReturnType<typeof compactLiveSession>;
+
+/** The family join path for the first linked family member, if any. */
+export function familyJoinPath(snapshot: Record<string, any>): string | null {
+  return (snapshot.family ?? []).find((member: { joinPath?: string }) => member.joinPath)?.joinPath ?? null;
+}
+
+type JsonRpcResponse = {
+  result?: Record<string, any>;
+  error?: { code: number; message: string };
+};
+
+/**
+ * A Streamable HTTP MCP client scoped to one household. The static bearer
+ * authenticates the runner; the owner header names this session's household,
+ * so every call acts as that elder and nobody else.
+ */
+export class HouseholdMcpClient {
+  private nextId = 1;
+  private sessionId: string | null = null;
+
+  constructor(
+    private readonly household: Household,
+    private readonly token: string,
+  ) {}
+
+  private headers() {
     return {
-      exists: Boolean(target.__CHAUPAL_PENDING_EVAL_TOOL__),
-      settled: target.__CHAUPAL_PENDING_EVAL_TOOL_SETTLED__ === true,
+      "content-type": "application/json",
+      accept: "application/json, text/event-stream",
+      authorization: `Bearer ${this.token}`,
+      "x-agent-native-owner-email": this.household.email,
+      ...(this.sessionId ? { "mcp-session-id": this.sessionId } : {}),
     };
-  });
+  }
+
+  private async rpc(method: string, params: Record<string, unknown>, signal?: AbortSignal, notify = false) {
+    const id = notify ? undefined : this.nextId++;
+    const response = await fetch(`${this.household.baseUrl}/mcp`, {
+      method: "POST",
+      headers: this.headers(),
+      body: JSON.stringify({ jsonrpc: "2.0", ...(id ? { id } : {}), method, params }),
+      signal,
+    });
+    this.sessionId = response.headers.get("mcp-session-id") ?? this.sessionId;
+    const text = await response.text();
+    if (notify) return null;
+    if (!response.ok && !text) throw new Error(`EVAL_MCP_HTTP_${response.status}`);
+    const lines = text.match(/^data: (.*)$/gm);
+    const body = (lines?.length
+      ? JSON.parse(lines[lines.length - 1]!.slice(6))
+      : JSON.parse(text)) as JsonRpcResponse;
+    if (body.error) throw new Error(`EVAL_MCP_RPC_ERROR:${body.error.code}:${body.error.message}`);
+    return body.result ?? null;
+  }
+
+  async initialize() {
+    await this.rpc("initialize", {
+      protocolVersion: "2025-06-18",
+      capabilities: {},
+      clientInfo: { name: "chaupal-eval-runner", version: "1.0.0" },
+    });
+    await this.rpc("notifications/initialized", {}, undefined, true);
+  }
+
+  async listTools(): Promise<EvalToolDescriptor[]> {
+    const result = await this.rpc("tools/list", {});
+    return ((result?.tools ?? []) as EvalToolDescriptor[]).map((tool) => ({
+      name: tool.name,
+      description: tool.description ?? "",
+      inputSchema: tool.inputSchema ?? { type: "object", properties: {} },
+      annotations: tool.annotations ?? {},
+    }));
+  }
+
+  /** Returns the text the MCP host would show, plus whether it was an error. */
+  async callTool(name: string, args: Record<string, unknown>, signal?: AbortSignal) {
+    const result = await this.rpc("tools/call", { name, arguments: args }, signal);
+    const text = ((result?.content ?? []) as Array<{ type: string; text?: string }>)
+      .filter((part) => part.type === "text")
+      .map((part) => part.text ?? "")
+      .join("\n");
+    const isError = result?.isError === true;
+    const errorCode = isError
+      ? (/\(errorCode: ([A-Za-z0-9_]+)\)/.exec(text)?.[1] ??
+        (result?.structuredContent?.error?.errorCode as string | undefined) ??
+        "TOOL_ERROR")
+      : null;
+    let structured: Record<string, unknown> | null = null;
+    if (!isError) {
+      try {
+        structured = JSON.parse(text) as Record<string, unknown>;
+      } catch {
+        structured = (result?.structuredContent as Record<string, unknown>) ?? null;
+      }
+    }
+    return { text, isError, errorCode, structured };
+  }
 }
 
-export type EvalReferenceVariant = "valid" | "opaque" | "wrong-ratio";
+export function repoRoot() {
+  return resolve(import.meta.dirname, "../..");
+}
 
-export async function createReferenceDataUrl(
-  page: Page,
-  text: string,
-  variant: EvalReferenceVariant = "valid",
-) {
-  return page.evaluate(({ referenceText, referenceVariant }) => {
-    const canvas = document.createElement("canvas");
-    canvas.width = 1536;
-    canvas.height = referenceVariant === "wrong-ratio" ? 900 : 1024;
-    const context = canvas.getContext("2d");
-    if (!context) throw new Error("EVAL_FIXTURE_CANVAS_UNAVAILABLE");
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    if (referenceVariant === "opaque") {
-      context.fillStyle = "#ffffff";
-      context.fillRect(0, 0, canvas.width, canvas.height);
-    }
-    context.fillStyle = "#111111";
-    context.textAlign = "center";
-    context.textBaseline = "middle";
-    const characterCount = Math.max(
-      1,
-      Array.from(referenceText.replace(/\s/gu, "")).length,
-    );
-    const fontSize = 720;
-    context.font =
-      `600 ${fontSize}px "Noto Serif CJK KR", "Noto Serif CJK SC", "Songti SC", "AppleMyungjo", serif`;
-    const targetWidthRatio = [0, 0.4, 0.58, 0.72, 0.8][
-      Math.min(4, characterCount)
-    ];
-    const measuredWidth = Math.max(1, context.measureText(referenceText).width);
-    const horizontalScale = (canvas.width * targetWidthRatio) / measuredWidth;
-    context.save();
-    context.translate(canvas.width / 2, canvas.height / 2 + 26);
-    context.scale(horizontalScale, 1);
-    context.fillText(referenceText, 0, 0);
-    context.restore();
-    return canvas.toDataURL("image/png");
-  }, { referenceText: text, referenceVariant: variant });
+export function chaupalSourceFiles() {
+  const root = repoRoot();
+  return {
+    actions: join(root, "actions"),
+    server: join(root, "server/chaupal"),
+  };
 }

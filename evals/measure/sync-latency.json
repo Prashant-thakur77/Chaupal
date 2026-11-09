@@ -1,0 +1,506 @@
+{
+  "p50Ms": 3,
+  "p95Ms": 4,
+  "n": 25,
+  "where": "http://127.0.0.1:4194",
+  "headline": "elder → family phone, from the mover's action response",
+  "caveat": "The move call returns only after her board acknowledges the move (~1 s with the fix), and the family phone usually shows the move before that, so the from-response numbers are near zero. End-to-end from the request: see fromRequestP50Ms / fromRequestP95Ms.",
+  "fromRequestP50Ms": 1031,
+  "fromRequestP95Ms": 1038,
+  "build": "working tree after the board-ack fix (iteration-005 build)",
+  "preFixMeasurement": "sync-latency.pre-fix.json",
+  "measuredAt": "2026-11-09T15:10:59.630Z",
+  "baseUrl": "http://127.0.0.1:4194",
+  "method": "Two browser contexts on one household (elder /chaupal, family /family), family plays the other side. Moves alternate through the actions API (elder: board-move, family: family-move). Primary latency = time from the mover's action HTTP response to the other client's DOM [data-testid=shatranj-board] data-move-count reaching the new ply (polled every 25 ms; timeout 30 s). Because a move action holds its response until the elder's board acknowledges the move (up to 4.5 s before the fix, 3 s after), the other screen can already show the move before the response arrives; the time from the action REQUEST to the other screen is the honest end-to-end bound and is reported too.",
+  "all": {
+    "fromRequestP50Ms": 1031.586123000001,
+    "fromRequestP95Ms": 1037.2471249999999,
+    "fromRequestMaxMs": 1049.6255519999977,
+    "actionP50Ms": 1029.157361000005,
+    "moves": 50,
+    "observed": 50,
+    "timeouts": 0,
+    "p50Ms": 2.4721540000027744,
+    "p95Ms": 3.7611350000006496,
+    "maxMs": 5.83867199999986,
+    "meanMs": 2.620376100000649
+  },
+  "elderToFamily": {
+    "fromRequestP50Ms": 1031.4815190000008,
+    "fromRequestP95Ms": 1037.8549440000006,
+    "fromRequestMaxMs": 1049.6255519999977,
+    "actionP50Ms": 1029.0941940000002,
+    "moves": 25,
+    "observed": 25,
+    "timeouts": 0,
+    "p50Ms": 2.502758000002359,
+    "p95Ms": 3.6232920000038575,
+    "maxMs": 5.83867199999986,
+    "meanMs": 2.6871008399998755
+  },
+  "familyToElder": {
+    "fromRequestP50Ms": 1031.8331070000022,
+    "fromRequestP95Ms": 1035.5872880000024,
+    "fromRequestMaxMs": 1036.0010610000027,
+    "actionP50Ms": 1029.37802,
+    "moves": 25,
+    "observed": 25,
+    "timeouts": 0,
+    "p50Ms": 2.4279899999964982,
+    "p95Ms": 3.7611350000006496,
+    "maxMs": 4.062783000001218,
+    "meanMs": 2.5536513600014223
+  },
+  "moves": [
+    {
+      "ply": 1,
+      "mover": "elder",
+      "san": "d4",
+      "observer": "family",
+      "latencyMs": 6,
+      "fromRequestMs": 1037,
+      "actionMs": 1031
+    },
+    {
+      "ply": 2,
+      "mover": "family",
+      "san": "f6",
+      "observer": "elder",
+      "latencyMs": 2,
+      "fromRequestMs": 1034,
+      "actionMs": 1032
+    },
+    {
+      "ply": 3,
+      "mover": "elder",
+      "san": "Bg5",
+      "observer": "family",
+      "latencyMs": 3,
+      "fromRequestMs": 1032,
+      "actionMs": 1029
+    },
+    {
+      "ply": 4,
+      "mover": "family",
+      "san": "d6",
+      "observer": "elder",
+      "latencyMs": 3,
+      "fromRequestMs": 1033,
+      "actionMs": 1030
+    },
+    {
+      "ply": 5,
+      "mover": "elder",
+      "san": "Bc1",
+      "observer": "family",
+      "latencyMs": 3,
+      "fromRequestMs": 1037,
+      "actionMs": 1034
+    },
+    {
+      "ply": 6,
+      "mover": "family",
+      "san": "c6",
+      "observer": "elder",
+      "latencyMs": 2,
+      "fromRequestMs": 1034,
+      "actionMs": 1031
+    },
+    {
+      "ply": 7,
+      "mover": "elder",
+      "san": "Bg5",
+      "observer": "family",
+      "latencyMs": 3,
+      "fromRequestMs": 1038,
+      "actionMs": 1035
+    },
+    {
+      "ply": 8,
+      "mover": "family",
+      "san": "Bf5",
+      "observer": "elder",
+      "latencyMs": 2,
+      "fromRequestMs": 1032,
+      "actionMs": 1030
+    },
+    {
+      "ply": 9,
+      "mover": "elder",
+      "san": "Be3",
+      "observer": "family",
+      "latencyMs": 2,
+      "fromRequestMs": 1034,
+      "actionMs": 1032
+    },
+    {
+      "ply": 10,
+      "mover": "family",
+      "san": "a6",
+      "observer": "elder",
+      "latencyMs": 2,
+      "fromRequestMs": 1032,
+      "actionMs": 1029
+    },
+    {
+      "ply": 11,
+      "mover": "elder",
+      "san": "Qc1",
+      "observer": "family",
+      "latencyMs": 3,
+      "fromRequestMs": 1027,
+      "actionMs": 1025
+    },
+    {
+      "ply": 12,
+      "mover": "family",
+      "san": "Bh3",
+      "observer": "elder",
+      "latencyMs": 3,
+      "fromRequestMs": 1029,
+      "actionMs": 1026
+    },
+    {
+      "ply": 13,
+      "mover": "elder",
+      "san": "Nf3",
+      "observer": "family",
+      "latencyMs": 2,
+      "fromRequestMs": 1033,
+      "actionMs": 1030
+    },
+    {
+      "ply": 14,
+      "mover": "family",
+      "san": "h5",
+      "observer": "elder",
+      "latencyMs": 3,
+      "fromRequestMs": 1033,
+      "actionMs": 1031
+    },
+    {
+      "ply": 15,
+      "mover": "elder",
+      "san": "Bf4",
+      "observer": "family",
+      "latencyMs": 3,
+      "fromRequestMs": 1036,
+      "actionMs": 1033
+    },
+    {
+      "ply": 16,
+      "mover": "family",
+      "san": "Ra7",
+      "observer": "elder",
+      "latencyMs": 2,
+      "fromRequestMs": 1032,
+      "actionMs": 1030
+    },
+    {
+      "ply": 17,
+      "mover": "elder",
+      "san": "Qe3",
+      "observer": "family",
+      "latencyMs": 3,
+      "fromRequestMs": 1050,
+      "actionMs": 1047
+    },
+    {
+      "ply": 18,
+      "mover": "family",
+      "san": "e6",
+      "observer": "elder",
+      "latencyMs": 2,
+      "fromRequestMs": 1028,
+      "actionMs": 1026
+    },
+    {
+      "ply": 19,
+      "mover": "elder",
+      "san": "Qe4",
+      "observer": "family",
+      "latencyMs": 2,
+      "fromRequestMs": 1030,
+      "actionMs": 1028
+    },
+    {
+      "ply": 20,
+      "mover": "family",
+      "san": "Nd7",
+      "observer": "elder",
+      "latencyMs": 3,
+      "fromRequestMs": 1034,
+      "actionMs": 1031
+    },
+    {
+      "ply": 21,
+      "mover": "elder",
+      "san": "Qd3",
+      "observer": "family",
+      "latencyMs": 3,
+      "fromRequestMs": 1029,
+      "actionMs": 1027
+    },
+    {
+      "ply": 22,
+      "mover": "family",
+      "san": "Bf5",
+      "observer": "elder",
+      "latencyMs": 2,
+      "fromRequestMs": 1032,
+      "actionMs": 1029
+    },
+    {
+      "ply": 23,
+      "mover": "elder",
+      "san": "Be5",
+      "observer": "family",
+      "latencyMs": 2,
+      "fromRequestMs": 1031,
+      "actionMs": 1030
+    },
+    {
+      "ply": 24,
+      "mover": "family",
+      "san": "Rh6",
+      "observer": "elder",
+      "latencyMs": 2,
+      "fromRequestMs": 1028,
+      "actionMs": 1026
+    },
+    {
+      "ply": 25,
+      "mover": "elder",
+      "san": "Qe4",
+      "observer": "family",
+      "latencyMs": 3,
+      "fromRequestMs": 1028,
+      "actionMs": 1025
+    },
+    {
+      "ply": 26,
+      "mover": "family",
+      "san": "Qb6",
+      "observer": "elder",
+      "latencyMs": 2,
+      "fromRequestMs": 1027,
+      "actionMs": 1025
+    },
+    {
+      "ply": 27,
+      "mover": "elder",
+      "san": "Ng5",
+      "observer": "family",
+      "latencyMs": 2,
+      "fromRequestMs": 1033,
+      "actionMs": 1031
+    },
+    {
+      "ply": 28,
+      "mover": "family",
+      "san": "Qb3",
+      "observer": "elder",
+      "latencyMs": 4,
+      "fromRequestMs": 1032,
+      "actionMs": 1028
+    },
+    {
+      "ply": 29,
+      "mover": "elder",
+      "san": "c4",
+      "observer": "family",
+      "latencyMs": 4,
+      "fromRequestMs": 1030,
+      "actionMs": 1026
+    },
+    {
+      "ply": 30,
+      "mover": "family",
+      "san": "Ke7",
+      "observer": "elder",
+      "latencyMs": 4,
+      "fromRequestMs": 1035,
+      "actionMs": 1031
+    },
+    {
+      "ply": 31,
+      "mover": "elder",
+      "san": "d5",
+      "observer": "family",
+      "latencyMs": 2,
+      "fromRequestMs": 1025,
+      "actionMs": 1023
+    },
+    {
+      "ply": 32,
+      "mover": "family",
+      "san": "Ra8",
+      "observer": "elder",
+      "latencyMs": 2,
+      "fromRequestMs": 1036,
+      "actionMs": 1033
+    },
+    {
+      "ply": 33,
+      "mover": "elder",
+      "san": "Qd3",
+      "observer": "family",
+      "latencyMs": 2,
+      "fromRequestMs": 1033,
+      "actionMs": 1031
+    },
+    {
+      "ply": 34,
+      "mover": "family",
+      "san": "c5",
+      "observer": "elder",
+      "latencyMs": 2,
+      "fromRequestMs": 1026,
+      "actionMs": 1025
+    },
+    {
+      "ply": 35,
+      "mover": "elder",
+      "san": "Nf3",
+      "observer": "family",
+      "latencyMs": 2,
+      "fromRequestMs": 1030,
+      "actionMs": 1027
+    },
+    {
+      "ply": 36,
+      "mover": "family",
+      "san": "Qc3+",
+      "observer": "elder",
+      "latencyMs": 3,
+      "fromRequestMs": 1031,
+      "actionMs": 1028
+    },
+    {
+      "ply": 37,
+      "mover": "elder",
+      "san": "Kd1",
+      "observer": "family",
+      "latencyMs": 2,
+      "fromRequestMs": 1026,
+      "actionMs": 1023
+    },
+    {
+      "ply": 38,
+      "mover": "family",
+      "san": "Rd8",
+      "observer": "elder",
+      "latencyMs": 4,
+      "fromRequestMs": 1033,
+      "actionMs": 1029
+    },
+    {
+      "ply": 39,
+      "mover": "elder",
+      "san": "Qd4",
+      "observer": "family",
+      "latencyMs": 3,
+      "fromRequestMs": 1025,
+      "actionMs": 1022
+    },
+    {
+      "ply": 40,
+      "mover": "family",
+      "san": "Ke8",
+      "observer": "elder",
+      "latencyMs": 3,
+      "fromRequestMs": 1026,
+      "actionMs": 1023
+    },
+    {
+      "ply": 41,
+      "mover": "elder",
+      "san": "b4",
+      "observer": "family",
+      "latencyMs": 3,
+      "fromRequestMs": 1030,
+      "actionMs": 1027
+    },
+    {
+      "ply": 42,
+      "mover": "family",
+      "san": "Bd3",
+      "observer": "elder",
+      "latencyMs": 2,
+      "fromRequestMs": 1028,
+      "actionMs": 1025
+    },
+    {
+      "ply": 43,
+      "mover": "elder",
+      "san": "a3",
+      "observer": "family",
+      "latencyMs": 2,
+      "fromRequestMs": 1027,
+      "actionMs": 1025
+    },
+    {
+      "ply": 44,
+      "mover": "family",
+      "san": "b5",
+      "observer": "elder",
+      "latencyMs": 2,
+      "fromRequestMs": 1028,
+      "actionMs": 1025
+    },
+    {
+      "ply": 45,
+      "mover": "elder",
+      "san": "a4",
+      "observer": "family",
+      "latencyMs": 3,
+      "fromRequestMs": 1032,
+      "actionMs": 1029
+    },
+    {
+      "ply": 46,
+      "mover": "family",
+      "san": "Kf7",
+      "observer": "elder",
+      "latencyMs": 2,
+      "fromRequestMs": 1036,
+      "actionMs": 1034
+    },
+    {
+      "ply": 47,
+      "mover": "elder",
+      "san": "h3",
+      "observer": "family",
+      "latencyMs": 3,
+      "fromRequestMs": 1034,
+      "actionMs": 1031
+    },
+    {
+      "ply": 48,
+      "mover": "family",
+      "san": "Be4",
+      "observer": "elder",
+      "latencyMs": 2,
+      "fromRequestMs": 1026,
+      "actionMs": 1023
+    },
+    {
+      "ply": 49,
+      "mover": "elder",
+      "san": "Rh2",
+      "observer": "family",
+      "latencyMs": 2,
+      "fromRequestMs": 1028,
+      "actionMs": 1026
+    },
+    {
+      "ply": 50,
+      "mover": "family",
+      "san": "Bg6",
+      "observer": "elder",
+      "latencyMs": 2,
+      "fromRequestMs": 1035,
+      "actionMs": 1033
+    }
+  ]
+}

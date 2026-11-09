@@ -19,14 +19,14 @@ type Benchmark = {
 type Manifest = {
   createdAt: string;
   evalSetHash: string;
-  configuration: "no_webmcp" | "candidate";
+  configuration: "browser-control" | "chaupal-actions";
 };
 
 type Attempt = {
   order: number;
   iteration: string;
   createdAt: string;
-  configuration: "no_webmcp" | "candidate";
+  configuration: "browser-control" | "chaupal-actions";
   decision: "control" | "accepted" | "rejected";
   evalSetHash: string;
   metric: ConfigurationMetric;
@@ -41,11 +41,12 @@ export type OptimizationTrajectory = {
   attempts: Attempt[];
 };
 
-const TERRACOTTA = "#b65f49";
-const CHARCOAL = "#171513";
-const MUTED = "#77736d";
-const PALE = "#d7d2ca";
-const PAPER = "#f7f4ed";
+// Chaupal palette: marigold accent and indigo ink on a warm paper that also sits well beside the dusk theme.
+const TERRACOTTA = "#e08a1e"; // marigold
+const CHARCOAL = "#1f1b4b"; // indigo ink
+const MUTED = "#5d5880"; // dusk violet
+const PALE = "#d9d3e6"; // pale dusk grid
+const PAPER = "#fbf6ec"; // warm paper
 
 function readJson<T>(path: string): T {
   return JSON.parse(readFileSync(path, "utf8")) as T;
@@ -77,7 +78,7 @@ function bestObservedTrajectoryPath(
   let frontier: number | null = null;
   const commands: string[] = [];
   attempts.forEach((attempt, index) => {
-    if (attempt.configuration === "candidate") {
+    if (attempt.configuration === "chaupal-actions") {
       const value = valueFor(attempt);
       frontier =
         frontier === null
@@ -138,7 +139,7 @@ function pointMark(
   y: number,
   radius = 6,
 ) {
-  if (attempt.configuration === "no_webmcp") {
+  if (attempt.configuration === "browser-control") {
     return `<rect x="${x - radius}" y="${y - radius}" width="${radius * 2}" height="${radius * 2}" fill="${PAPER}" stroke="${PALE}" stroke-width="1.4"/>`;
   }
   if (attempt.decision === "rejected") {
@@ -147,7 +148,7 @@ function pointMark(
   return `<circle cx="${x}" cy="${y}" r="${radius}" fill="${MUTED}"/>`;
 }
 
-function passesOptimizationGate(
+export function passesOptimizationGate(
   metric: ConfigurationMetric,
   control: ConfigurationMetric,
   previousAccepted?: ConfigurationMetric,
@@ -204,10 +205,10 @@ export function readOptimizationTrajectory(
   });
 
   const control = measurements.find(
-    ({ configuration }) => configuration === "no_webmcp",
+    ({ configuration }) => configuration === "browser-control",
   );
   if (!control) {
-    throw new Error("Optimization trajectory requires a no-WebMCP control.");
+    throw new Error("Optimization trajectory requires a browser-control control.");
   }
 
   let previousAccepted: ConfigurationMetric | undefined;
@@ -224,7 +225,7 @@ export function readOptimizationTrajectory(
       metric: attempt.metric,
       categories: attempt.categories,
     });
-    if (attempt.configuration === "no_webmcp") {
+    if (attempt.configuration === "browser-control") {
       return withDecision("control");
     }
     const accepted = passesOptimizationGate(
@@ -274,7 +275,7 @@ export function renderOptimizationTrajectory(data: OptimizationTrajectory) {
       )
     : -1;
   const controlAttempt = attempts.find(
-    ({ configuration }) => configuration === "no_webmcp",
+    ({ configuration }) => configuration === "browser-control",
   );
   const plotDefinitions = [
     {
@@ -315,13 +316,13 @@ export function renderOptimizationTrajectory(data: OptimizationTrajectory) {
 
   const svg: string[] = [
     `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="title description">`,
-    `<title id="title">CHAUPAL WebMCP optimization trajectory</title>`,
-    `<desc id="description">Three vertically aligned plots show task success, tokens per try, and seconds per try from the no-WebMCP first iteration through later WebMCP candidates.</desc>`,
+    `<title id="title">Chaupal agent-native optimization trajectory</title>`,
+    `<desc id="description">Three vertically aligned plots show task success, tokens per try, and seconds per try from the browser-control first iteration through later Chaupal action candidates.</desc>`,
     `<rect width="${width}" height="${height}" fill="${PAPER}"/>`,
-    `<style>text{font-family:Pretendard,Inter,Arial,sans-serif;fill:${CHARCOAL};font-weight:350;text-rendering:geometricPrecision} .muted{fill:${MUTED};font-weight:350} .accent{fill:${TERRACOTTA}} .axis{stroke:${MUTED};stroke-width:.9} .grid{stroke:${PALE};stroke-width:.7}</style>`,
-    `<text x="90" y="64" font-size="30" font-weight="450" letter-spacing=".05">CHAUPAL WebMCP optimization trajectory</text>`,
-    `<text x="92" y="116" font-size="15" class="muted">${attempts.length} official tries · ${escaped(firstTry)}–${escaped(lastTry)} retained · ${escaped(firstTry)} no-WebMCP control${retainedBest ? ` · ${escaped(retainedBest)} retained best candidate` : ""}</text>`,
-    `<g transform="translate(92 178)"><line x1="0" y1="0" x2="34" y2="0" stroke="${TERRACOTTA}" stroke-width="1.7" opacity=".62"/><text x="47" y="5" font-size="13.5" font-weight="400">Best observed frontier</text><polygon points="${starPoints(226, 0, 6.5, 2.8)}" fill="${TERRACOTTA}" stroke="${PAPER}" stroke-width="1"/><text x="242" y="5" font-size="13.5" font-weight="400">Selected ${escaped(retainedBest ?? "—")}</text><line x1="366" y1="0" x2="400" y2="0" stroke="${MUTED}" stroke-width="1.6" stroke-dasharray="6 7"/><rect x="377.5" y="-5.5" width="11" height="11" fill="${PAPER}" stroke="${PALE}" stroke-width="1.3"/><text x="413" y="5" font-size="13.5" font-weight="400">No WebMCP · #001</text><g transform="translate(591 0)" stroke="${MUTED}" stroke-width="1.35"><line x1="-4.8" y1="-4.8" x2="4.8" y2="4.8"/><line x1="4.8" y1="-4.8" x2="-4.8" y2="4.8"/></g><text x="609" y="5" font-size="13.5" font-weight="400">Rejected</text></g>`,
+    `<style>text{font-family:Inter,"Noto Sans",Arial,sans-serif;fill:${CHARCOAL};font-weight:350;text-rendering:geometricPrecision} .muted{fill:${MUTED};font-weight:350} .accent{fill:${TERRACOTTA}} .axis{stroke:${MUTED};stroke-width:.9} .grid{stroke:${PALE};stroke-width:.7}</style>`,
+    `<text x="90" y="64" font-size="30" font-weight="450" letter-spacing=".05">Chaupal: browser control vs Chaupal actions</text>`,
+    `<text x="92" y="116" font-size="15" class="muted">${attempts.length} official tries · ${escaped(firstTry)}–${escaped(lastTry)} retained · ${escaped(firstTry)} browser-control control${retainedBest ? ` · ${escaped(retainedBest)} retained best candidate` : ""}</text>`,
+    `<g transform="translate(92 178)"><line x1="0" y1="0" x2="34" y2="0" stroke="${TERRACOTTA}" stroke-width="1.7" opacity=".62"/><text x="47" y="5" font-size="13.5" font-weight="400">Best observed frontier</text><polygon points="${starPoints(226, 0, 6.5, 2.8)}" fill="${TERRACOTTA}" stroke="${PAPER}" stroke-width="1"/><text x="242" y="5" font-size="13.5" font-weight="400">Selected ${escaped(retainedBest ?? "—")}</text><line x1="366" y1="0" x2="400" y2="0" stroke="${MUTED}" stroke-width="1.6" stroke-dasharray="6 7"/><rect x="377.5" y="-5.5" width="11" height="11" fill="${PAPER}" stroke="${PALE}" stroke-width="1.3"/><text x="413" y="5" font-size="13.5" font-weight="400">Browser control · #001</text><g transform="translate(611 0)" stroke="${MUTED}" stroke-width="1.35"><line x1="-4.8" y1="-4.8" x2="4.8" y2="4.8"/><line x1="4.8" y1="-4.8" x2="-4.8" y2="4.8"/></g><text x="629" y="5" font-size="13.5" font-weight="400">Rejected</text></g>`,
   ];
 
   plotDefinitions.forEach((plot, plotIndex) => {

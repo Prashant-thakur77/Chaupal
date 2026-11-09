@@ -1,0 +1,901 @@
+[
+  {
+    "name": "cancel-family-update",
+    "description": "Cancel the waiting family update when she says not to send it (\"ruko, mat bhejo\"). Nothing is sent.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {}
+    },
+    "annotations": {
+      "title": "Cancel family update",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "clear-my-strokes",
+    "description": "Erase only her own drawn lines on the open canvas (\"sirf meri lakeerein mitao\"). The calligraphy reference, rangoli design and colours stay exactly as they are. Use only when she asks to erase her lines.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "personConfirmed": {
+          "type": "boolean",
+          "description": "true only when she asked to erase her own lines"
+        },
+        "expectedRevision": {
+          "description": "The `revision` from your last read (any Chaupal result). If someone else changed the session since, the call fails with errorCode save_conflict and nothing changes: re-read with get-session-state and decide again.",
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "personConfirmed"
+      ]
+    },
+    "annotations": {
+      "title": "Clear my strokes",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "draft-family-update",
+    "description": "When she asks to send what she made to her family (\"bachchon ko bhej do\"), draft the update: a picture of exactly what is on her screen plus a short message you write in her voice and language. It appears as a large card on her screen asking \"क्या यह परिवार को भेज दूँ?\" and waits up to 20 s for her own answer (her tap or her voice in her UI). You cannot approve it for her. Returns status sent, declined, failed or pending. Never say it was sent unless status is sent.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "messageHi": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 300,
+          "description": "The message in her language, short and warm, e.g. \"दिवाली की शुभकामनाएँ, आपकी दादी की रंगोली\""
+        },
+        "messageEn": {
+          "description": "Same message in English for the family card",
+          "type": "string",
+          "maxLength": 300
+        }
+      },
+      "required": [
+        "messageHi"
+      ]
+    },
+    "annotations": {
+      "title": "Draft family update",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "family-move",
+    "description": "The invited family member plays their own side of the shared board (from their phone link). Only callable by that family member; the elder's agent never moves for them.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "from": {
+          "type": "string",
+          "pattern": "^[a-h][1-8]$",
+          "description": "From square, e.g. e7"
+        },
+        "to": {
+          "type": "string",
+          "pattern": "^[a-h][1-8]$",
+          "description": "To square, e.g. e5"
+        },
+        "promotion": {
+          "type": "string",
+          "enum": [
+            "q",
+            "r",
+            "b",
+            "n"
+          ]
+        },
+        "expectedRevision": {
+          "description": "The `revision` from your last read (any Chaupal result). If someone else changed the session since, the call fails with errorCode save_conflict and nothing changes: re-read with get-session-state and decide again.",
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "from",
+        "to"
+      ]
+    },
+    "annotations": {
+      "title": "Family move",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "fill-region",
+    "description": "Colour parts of her rangoli or kolam, or change colours. Pass her own words as `phrase` (e.g. \"beech mein peela, bahar laal\" = yellow in the middle, red outside; Hindi, Hinglish, Tamil, Punjabi) and Chaupal maps them to exact regions, or pass fills by zone (center, ring-1…, outer, border, petal) or region id. Only those regions change; her traced lines and every other region stay. Parts it cannot place come back as unresolved: ask her, do not guess.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "phrase": {
+          "description": "Her words about colours",
+          "type": "string",
+          "maxLength": 200
+        },
+        "fills": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "zone": {
+                "type": "string"
+              },
+              "regionId": {
+                "type": "string"
+              },
+              "colour": {
+                "type": "string",
+                "description": "laal | peela | hara | neela | gulabi | kesariya | safed | jamuni | bhura"
+              }
+            },
+            "required": [
+              "colour"
+            ]
+          },
+          "description": "At most 40 items."
+        },
+        "by": {
+          "default": "agent",
+          "description": "Who asked: agent (on her spoken request) by default",
+          "type": "string",
+          "enum": [
+            "agent",
+            "elder-voice",
+            "elder-tap"
+          ]
+        },
+        "expectedRevision": {
+          "description": "The `revision` from your last read (any Chaupal result). If someone else changed the session since, the call fails with errorCode save_conflict and nothing changes: re-read with get-session-state and decide again.",
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        }
+      }
+    },
+    "annotations": {
+      "title": "Fill region",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "get-capabilities",
+    "description": "Describe what Chaupal can do and its rules (activities, scripts and styles, rangoli colours, chess conventions, family sharing and privacy boundaries). Use only for capability questions or an unfamiliar request, not before a request that already matches an action.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {}
+    },
+    "annotations": {
+      "title": "Get capabilities",
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "get-chess-state",
+    "description": "Read the live shatranj board: FEN, whose turn it is (elder, agent or family), every legal move for the side to move with Hindi piece names and descriptions, all pieces, check/mate status, and the revision. Read this before resolving a spoken move; never invent a position.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {}
+    },
+    "annotations": {
+      "title": "Get chess state",
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "get-session-state",
+    "description": "Read the elder's live Chaupal session: which activity is open (sulekh calligraphy, rangoli, kolam, shatranj chess or home), the current calligraphy text, rangoli regions and colours, her stroke counts, the chess position and whose turn it is, family members linked, any pending choice or approval, the revision, and validNextActions. Read this before acting when you are unsure what is on her screen.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {}
+    },
+    "annotations": {
+      "title": "Get session state",
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "go-home",
+    "description": "Return her screen to the home view with the diya. Her saved works stay in the album; only do this when she asks to stop or go back.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "personConfirmed": {
+          "type": "boolean",
+          "description": "true only when she asked to go back home"
+        }
+      },
+      "required": [
+        "personConfirmed"
+      ]
+    },
+    "annotations": {
+      "title": "Go home",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "invite-family",
+    "description": "Invite a family member (e.g. her grandson Rahul) to her live Chaupal with a private link they open on their phone. They see the same live activity. With playsOtherSide:true and shatranj open, they take the other side of the board and you stop moving for that side. Only their link sees her activity; camera, audio and chat are never shared.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40,
+          "description": "Family member's name as she says it, e.g. Rahul"
+        },
+        "relation": {
+          "description": "Relation in her words, e.g. pota (grandson)",
+          "type": "string",
+          "maxLength": 40
+        },
+        "playsOtherSide": {
+          "default": false,
+          "description": "true when she wants them to play the other side of the chess board",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "annotations": {
+      "title": "Invite family",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "list-album",
+    "description": "List the works kept in her album (newest first): what kind, its title, when, and whether it was shared with family.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "limit": {
+          "default": 30,
+          "description": "How many, newest first; defaults to 30",
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 60
+        }
+      }
+    },
+    "annotations": {
+      "title": "List album",
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "move-chess-piece",
+    "description": "Make one chess move on her live board. For HER move (actor \"elder\"), pass her own words as `phrase` (Hindi, Hinglish, Punjabi or Tamil, e.g. \"raja ke saamne waala pyada do ghar aage\") and Chaupal resolves them against the live position, or pass from/to squares. Submit what she asked even if it looks illegal: Chaupal rejects an illegal move with a reason (CHESS_ILLEGAL_MOVE), asks back when her words fit two moves (CHESS_AMBIGUOUS with a question to ask her), and leaves the board unchanged; never substitute another move. actor \"agent\" plays your own reply (from/to) only when it is your turn AND she asked you to play against her or to answer her move (e.g. \"phir aap chalna\"); after making her move, do not add a reply on your own: tell her it is the other side's turn and let her decide. The move animates on her screen before this returns.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "phrase": {
+          "description": "Her words for the move; resolved by Chaupal (use instead of from/to for her move)",
+          "type": "string",
+          "maxLength": 200
+        },
+        "from": {
+          "description": "From square, e.g. e2 (with to)",
+          "type": "string",
+          "pattern": "^[a-h][1-8]$"
+        },
+        "to": {
+          "description": "To square, e.g. e4 (with from)",
+          "type": "string",
+          "pattern": "^[a-h][1-8]$"
+        },
+        "actor": {
+          "type": "string",
+          "enum": [
+            "elder",
+            "agent"
+          ],
+          "description": "\"elder\" for her own move, \"agent\" for your reply"
+        },
+        "spokenMove": {
+          "description": "Her words for this move, as she said them",
+          "type": "string",
+          "maxLength": 200
+        },
+        "promotion": {
+          "description": "Promotion piece if a pawn reaches the last rank; defaults to q",
+          "type": "string",
+          "enum": [
+            "q",
+            "r",
+            "b",
+            "n"
+          ]
+        },
+        "personConfirmed": {
+          "type": "boolean",
+          "description": "true when she asked for this move (required for actor elder)"
+        },
+        "expectedRevision": {
+          "description": "The `revision` from your last read (any Chaupal result). If someone else changed the session since, the call fails with errorCode save_conflict and nothing changes: re-read with get-session-state and decide again.",
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "actor",
+        "personConfirmed"
+      ]
+    },
+    "annotations": {
+      "title": "Move chess piece",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "open-activity",
+    "description": "Open an activity on her screen: sulekh (calligraphy to trace), rangoli (radial rangoli or pookalam to trace and colour), kolam (pulli kolam on a dot grid) or shatranj (chess with Hindi piece names). Opening shatranj starts a fresh board unless a game is already in progress (pass newGame:true to restart only if she asked). Open first, then act inside it. Her saved works are kept.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "activity": {
+          "type": "string",
+          "enum": [
+            "sulekh",
+            "rangoli",
+            "kolam",
+            "shatranj"
+          ],
+          "description": "sulekh | rangoli | kolam | shatranj"
+        },
+        "elderColor": {
+          "description": "Shatranj only: the side she plays, \"w\" (safed/white, moves first) or \"b\" (kaala/black). Defaults to \"w\".",
+          "type": "string",
+          "enum": [
+            "w",
+            "b"
+          ]
+        },
+        "newGame": {
+          "description": "Shatranj only: true to start a new game even if one is in progress",
+          "type": "boolean"
+        },
+        "caption": {
+          "description": "Optional short line under the diya, in her language",
+          "type": "string",
+          "maxLength": 180
+        },
+        "expectedRevision": {
+          "description": "The `revision` from your last read (any Chaupal result). If someone else changed the session since, the call fails with errorCode save_conflict and nothing changes: re-read with get-session-state and decide again.",
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "activity"
+      ]
+    },
+    "annotations": {
+      "title": "Open activity",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "preview-moves",
+    "description": "Show her on the board where a piece can go, without moving anything (\"pehle dikhao ghoda kahan ja sakta hai\"). Pass her words as `phrase`, or the piece's square. Listing squares in chat is not a preview; this highlights them on her screen. The turn and position stay unchanged.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "phrase": {
+          "description": "Her words, e.g. \"ghoda kahan ja sakta hai\"",
+          "type": "string",
+          "maxLength": 200
+        },
+        "square": {
+          "description": "Square of the piece to preview, e.g. b1",
+          "type": "string",
+          "pattern": "^[a-h][1-8]$"
+        }
+      }
+    },
+    "annotations": {
+      "title": "Preview moves",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "project-presence",
+    "description": "Set the living diya's phase on her screen: ready, listening, creating, speaking or awaiting (waiting for her). The page never receives audio or transcripts, only this coarse phase and an optional short caption.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "phase": {
+          "type": "string",
+          "enum": [
+            "ready",
+            "listening",
+            "receiving",
+            "creating",
+            "speaking",
+            "awaiting"
+          ],
+          "description": "Diya phase: ready | listening | receiving | creating | speaking | awaiting"
+        },
+        "caption": {
+          "description": "Optional short line shown under the diya, in her language",
+          "type": "string",
+          "maxLength": 180
+        }
+      },
+      "required": [
+        "phase"
+      ]
+    },
+    "annotations": {
+      "title": "Project presence",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "save-artwork",
+    "description": "Keep what is on her screen in her album: the calligraphy with her own strokes, her rangoli or kolam with its colours, or the chess board. Only when she asks to keep or save it. Nothing is shared.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {}
+    },
+    "annotations": {
+      "title": "Save artwork",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "send-family-update",
+    "description": "Send the drafted family update (from draft-family-update) to the family's Telegram chat. It needs her approval: if she has not said yes on her screen, the call pauses for approval and nothing leaves. If she declined, nothing is ever sent. Returns status.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {}
+    },
+    "annotations": {
+      "title": "Send family update",
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "set-calligraphy-reference",
+    "description": "Put a Sulekh calligraphy reference on her screen for her to trace. Give the exact phrase in its own script as she wants it (e.g. शुभ दीपावली, शांति, ਸਤ ਸ੍ਰੀ ਅਕਾਲ, வணக்கம், শুভ বিজয়া, محبت, or a grandchild's name); keep her wording and script exactly. Chaupal shapes the text itself with HarfBuzz and an OFL font (exact conjuncts and matras), renders black ink on a transparent 3:2 canvas with safe margins, and validates it. If validation rejects a render (REFERENCE_* errorCode), simply call again with the same text: Chaupal re-renders, and you should not mention technical details to her. Opens Sulekh if needed. A new reference never erases her strokes; her finger drawing is ready by default (no camera).",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 60,
+          "description": "Exact phrase in its own script"
+        },
+        "writingScript": {
+          "description": "devanagari (Hindi, Marathi, Sanskrit) | gurmukhi (Punjabi) | tamil | bengali | urdu; detected from the text if omitted",
+          "type": "string",
+          "enum": [
+            "devanagari",
+            "gurmukhi",
+            "tamil",
+            "bengali",
+            "urdu"
+          ]
+        },
+        "style": {
+          "default": "kalam",
+          "description": "kalam (reed pen, shirorekha) | brush | modern; defaults to kalam",
+          "type": "string",
+          "enum": [
+            "kalam",
+            "brush",
+            "modern"
+          ]
+        },
+        "size": {
+          "default": "large",
+          "description": "How much of the canvas it fills; defaults to large",
+          "type": "string",
+          "enum": [
+            "small",
+            "medium",
+            "large"
+          ]
+        },
+        "expectedRevision": {
+          "description": "The `revision` from your last read (any Chaupal result). If someone else changed the session since, the call fails with errorCode save_conflict and nothing changes: re-read with get-session-state and decide again.",
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "text"
+      ]
+    },
+    "annotations": {
+      "title": "Set calligraphy reference",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "set-input-mode",
+    "description": "Get her canvas ready for drawing with a finger or mouse (mode touch), with no camera at all. Placing a Sulekh reference, rangoli or kolam already does this (inputMode touch, camera never asked), so it is not needed right after those; use it when inputMode is none or air-writing is on and she wants to draw by hand or says the camera feels uncomfortable (it turns air-writing off). Mode none hides the drawing tools.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": [
+            "touch",
+            "none"
+          ],
+          "description": "touch (direct finger drawing, no camera) | none"
+        }
+      },
+      "required": [
+        "mode"
+      ]
+    },
+    "annotations": {
+      "title": "Set input mode",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "set-kolam-reference",
+    "description": "Draw a pulli kolam for her to trace: an N×N dot grid (3 to 9) with sikku loops weaving around every dot, generated and validated by Chaupal (closed curves, symmetry). 2-fold or 4-fold on an odd grid gives one continuous line; even grids need at least 2 loops and 8-fold needs at least N. Opens Kolam. Her traced lines stay on her own layer.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "grid": {
+          "type": "integer",
+          "minimum": 3,
+          "maximum": 9,
+          "description": "Dots per side, 3 to 9 (5 means 5×5)"
+        },
+        "symmetry": {
+          "default": "4-fold",
+          "description": "2-fold | 4-fold | 8-fold; defaults to 4-fold",
+          "type": "string",
+          "enum": [
+            "2-fold",
+            "4-fold",
+            "8-fold"
+          ]
+        },
+        "seed": {
+          "description": "Variation number for a different pattern with the same grid",
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9999
+        },
+        "expectedRevision": {
+          "description": "The `revision` from your last read (any Chaupal result). If someone else changed the session since, the call fails with errorCode save_conflict and nothing changes: re-read with get-session-state and decide again.",
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        }
+      },
+      "required": [
+        "grid"
+      ]
+    },
+    "annotations": {
+      "title": "Set kolam reference",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "set-language",
+    "description": "Switch the screen language: hi (Hindi), en (English), pa (Punjabi), ta (Tamil), mr (Marathi) or bn (Bengali). It never changes her calligraphy text, rangoli or board.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "language": {
+          "type": "string",
+          "enum": [
+            "hi",
+            "en",
+            "pa",
+            "ta",
+            "mr",
+            "bn"
+          ],
+          "description": "hi | en | pa | ta | mr | bn"
+        }
+      },
+      "required": [
+        "language"
+      ]
+    },
+    "annotations": {
+      "title": "Set language",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "set-rangoli-reference",
+    "description": "Draw a rangoli (radial motif rings) or pookalam (concentric flower rings) for her to trace and colour, generated and validated by Chaupal. Motifs: lotus, diya, peacock-feather, mango-leaf, geometric (no religious symbols). Named colours: laal, peela, hara, neela, gulabi, kesariya, safed, jamuni, bhura. Pass a festival preset (diwali, pongal, onam, lohri, navratri) only when she named the festival; otherwise ask or leave it plain. Without a palette the design is uncoloured so she can fill it. Opens Rangoli.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "default": "rangoli",
+          "description": "rangoli | pookalam; defaults to rangoli",
+          "type": "string",
+          "enum": [
+            "rangoli",
+            "pookalam"
+          ]
+        },
+        "festival": {
+          "description": "Only when she named the festival",
+          "type": "string",
+          "enum": [
+            "diwali",
+            "pongal",
+            "onam",
+            "lohri",
+            "navratri"
+          ]
+        },
+        "rings": {
+          "description": "Rings: rangoli 2–5, pookalam 3–7; small ≈ 2–3",
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 7
+        },
+        "motifs": {
+          "description": "Rangoli motif rings, inner to outer At most 4 items.",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "lotus",
+              "diya",
+              "peacock-feather",
+              "mango-leaf",
+              "geometric"
+            ]
+          }
+        },
+        "petals": {
+          "description": "Rangoli petal count, 6–16",
+          "type": "integer",
+          "minimum": 6,
+          "maximum": 16
+        },
+        "palette": {
+          "description": "Starting colours, centre outwards; omit for uncoloured At most 6 items.",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "laal",
+              "peela",
+              "hara",
+              "neela",
+              "gulabi",
+              "kesariya",
+              "safed",
+              "jamuni",
+              "bhura"
+            ]
+          }
+        },
+        "expectedRevision": {
+          "description": "The `revision` from your last read (any Chaupal result). If someone else changed the session since, the call fails with errorCode save_conflict and nothing changes: re-read with get-session-state and decide again.",
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+        }
+      }
+    },
+    "annotations": {
+      "title": "Set rangoli reference",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "show-history",
+    "description": "Open or close the visible history panel beside the activity: past chess moves (who moved, in Hindi piece names) and recent works. It does not change the activity.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "open": {
+          "default": true,
+          "description": "true opens the history panel, false closes it; defaults to true",
+          "type": "boolean"
+        }
+      }
+    },
+    "annotations": {
+      "title": "Show history",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "show-live-board",
+    "description": "Show the household's live Chaupal activity (the shatranj board, the Sulekh reference or the rangoli) as an inline card inside the chat host (an MCP App). It updates live as moves and strokes happen. Read-only. After calling, surface the returned \"Open in … →\" link to the user.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {}
+    },
+    "annotations": {
+      "title": "Show live board",
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false,
+      "agent-native/producesOpenLink": true
+    }
+  },
+  {
+    "name": "start-air-writing",
+    "description": "Turn on air-writing (tracing in the air with her hand, seen by the camera) only after she explicitly asked to write in the air. Her screen then shows a large button she taps herself to start the camera; her browser asks her for permission, which only she can grant. If she declines or the camera fails, touch drawing stays available. Never claim the camera is on or permitted.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "personExplicitlyAsked": {
+          "type": "boolean",
+          "description": "true only if she asked to write in the air / with the camera"
+        }
+      },
+      "required": [
+        "personExplicitlyAsked"
+      ]
+    },
+    "annotations": {
+      "title": "Start air writing",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "suggest-designs",
+    "description": "Show her 2–3 rangoli or kolam choices on screen (only when she asks for ideas). Pass festival only if she named it; never assume one. Returns the options with their parameters; wait for her choice, then call set-kolam-reference or set-rangoli-reference with that option's parameters.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "festival": {
+          "type": "string",
+          "enum": [
+            "diwali",
+            "pongal",
+            "onam",
+            "lohri",
+            "navratri"
+          ]
+        },
+        "small": {
+          "description": "true for a small design (e.g. for the doorstep)",
+          "type": "boolean"
+        }
+      }
+    },
+    "annotations": {
+      "title": "Suggest designs",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "suggest-phrases",
+    "description": "Show her 1 to 3 phrase choices for Sulekh calligraphy (only when she asks for ideas or has not named a phrase) and wait up to 10 seconds for her tap. A suggestion is not a choice: if she has not tapped, the choices stay visible and you must wait for her to say or tap one. Never pick for her. Opens Sulekh if needed.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {
+        "suggestions": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "text": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 40,
+                "description": "Exact phrase in its own script, e.g. शांति"
+              },
+              "meaningHi": {
+                "description": "Short meaning in Hindi",
+                "type": "string",
+                "maxLength": 60
+              },
+              "meaningEn": {
+                "description": "Short meaning in English",
+                "type": "string",
+                "maxLength": 60
+              }
+            },
+            "required": [
+              "text"
+            ]
+          },
+          "description": "1 to 3 phrases you suggest, secular by default At most 3 items."
+        },
+        "question": {
+          "description": "Short question shown above the choices, in her language",
+          "type": "string",
+          "maxLength": 160
+        }
+      },
+      "required": [
+        "suggestions"
+      ]
+    },
+    "annotations": {
+      "title": "Suggest phrases",
+      "readOnlyHint": false,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  },
+  {
+    "name": "wait-for-person-move",
+    "description": "Use only when she said she will move by hand on the board and it is her turn: waits (up to 45 s) for her drag or tap, then returns her move and whether you should reply. It never waits for future speech; if she has not moved, it returns timedOut and you simply wait for her.",
+    "inputSchema": {
+      "type": "object",
+      "properties": {}
+    },
+    "annotations": {
+      "title": "Wait for person move",
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  }
+]

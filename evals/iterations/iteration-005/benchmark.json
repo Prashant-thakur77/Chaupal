@@ -1,0 +1,240 @@
+{
+  "generatedAt": "2026-11-09T15:09:27.511Z",
+  "configurations": {
+    "chaupal-actions": {
+      "runs": 42,
+      "passed": 36,
+      "passRate": 0.8571428571428571,
+      "criticalPassRate": 0.8809523809523809,
+      "firstPassValidRate": 0.8571428571428571,
+      "failedToolCalls": 1,
+      "expectedGuardRejections": 6,
+      "retries": 6,
+      "totalTokens": 1995202,
+      "meanTokensPerRun": 47504.80952380953,
+      "meanInputTokensPerRun": 47057.69047619047,
+      "meanOutputTokensPerRun": 447.1190476190476,
+      "meanWallTimeMs": 9250.447899761906,
+      "meanModelLatencyMs": 6660.510774000002,
+      "tokensPerSuccessfulOutcome": 55422.27777777778,
+      "meanTimeToVisibleSuccessMs": 7704.485211305557
+    }
+  },
+  "categories": {
+    "sulekh": {
+      "chaupal-actions": {
+        "runs": 16,
+        "passed": 16,
+        "passRate": 1,
+        "criticalPassRate": 1,
+        "firstPassValidRate": 1,
+        "failedToolCalls": 0,
+        "expectedGuardRejections": 4,
+        "retries": 4,
+        "totalTokens": 664064,
+        "meanTokensPerRun": 41504,
+        "meanInputTokensPerRun": 41089.5625,
+        "meanOutputTokensPerRun": 414.4375,
+        "meanWallTimeMs": 8205.4952394375,
+        "meanModelLatencyMs": 5971.984772312501,
+        "tokensPerSuccessfulOutcome": 41504,
+        "meanTimeToVisibleSuccessMs": 6600.23395675
+      }
+    },
+    "shatranj": {
+      "chaupal-actions": {
+        "runs": 10,
+        "passed": 4,
+        "passRate": 0.4,
+        "criticalPassRate": 0.5,
+        "firstPassValidRate": 0.4,
+        "failedToolCalls": 1,
+        "expectedGuardRejections": 2,
+        "retries": 2,
+        "totalTokens": 437340,
+        "meanTokensPerRun": 43734,
+        "meanInputTokensPerRun": 43193.2,
+        "meanOutputTokensPerRun": 540.8,
+        "meanWallTimeMs": 9893.801929099998,
+        "meanModelLatencyMs": 7811.370120899995,
+        "tokensPerSuccessfulOutcome": 109335,
+        "meanTimeToVisibleSuccessMs": 10814.806663749994
+      }
+    },
+    "interface": {
+      "chaupal-actions": {
+        "runs": 4,
+        "passed": 4,
+        "passRate": 1,
+        "criticalPassRate": 1,
+        "firstPassValidRate": 1,
+        "failedToolCalls": 0,
+        "expectedGuardRejections": 0,
+        "retries": 0,
+        "totalTokens": 178637,
+        "meanTokensPerRun": 44659.25,
+        "meanInputTokensPerRun": 44324.25,
+        "meanOutputTokensPerRun": 335,
+        "meanWallTimeMs": 6956.586330000006,
+        "meanModelLatencyMs": 5865.295647250001,
+        "tokensPerSuccessfulOutcome": 44659.25,
+        "meanTimeToVisibleSuccessMs": 6624.629728
+      }
+    },
+    "rangoli": {
+      "chaupal-actions": {
+        "runs": 8,
+        "passed": 8,
+        "passRate": 1,
+        "criticalPassRate": 1,
+        "firstPassValidRate": 1,
+        "failedToolCalls": 0,
+        "expectedGuardRejections": 0,
+        "retries": 0,
+        "totalTokens": 495615,
+        "meanTokensPerRun": 61951.875,
+        "meanInputTokensPerRun": 61511,
+        "meanOutputTokensPerRun": 440.875,
+        "meanWallTimeMs": 8486.791609125004,
+        "meanModelLatencyMs": 7152.7988664999975,
+        "tokensPerSuccessfulOutcome": 61951.875,
+        "meanTimeToVisibleSuccessMs": 6175.040485875004
+      }
+    },
+    "family": {
+      "chaupal-actions": {
+        "runs": 4,
+        "passed": 4,
+        "passRate": 1,
+        "criticalPassRate": 1,
+        "firstPassValidRate": 1,
+        "failedToolCalls": 0,
+        "expectedGuardRejections": 0,
+        "retries": 0,
+        "totalTokens": 219546,
+        "meanTokensPerRun": 54886.5,
+        "meanInputTokensPerRun": 54418.25,
+        "meanOutputTokensPerRun": 468.25,
+        "meanWallTimeMs": 15643.047618749995,
+        "meanModelLatencyMs": 6348.105355250023,
+        "tokensPerSuccessfulOutcome": 54886.5,
+        "meanTimeToVisibleSuccessMs": 13149.913711250003
+      }
+    }
+  },
+  "cases": {
+    "sulekh-recommend-then-choose": {
+      "passed": 2,
+      "runs": 2,
+      "failedAssertions": []
+    },
+    "sulekh-diwali-for-family": {
+      "passed": 2,
+      "runs": 2,
+      "failedAssertions": []
+    },
+    "sulekh-change-the-word": {
+      "passed": 2,
+      "runs": 2,
+      "failedAssertions": []
+    },
+    "sulekh-air-writing": {
+      "passed": 2,
+      "runs": 2,
+      "failedAssertions": []
+    },
+    "sulekh-without-camera": {
+      "passed": 2,
+      "runs": 2,
+      "failedAssertions": []
+    },
+    "sulekh-bad-render-repair": {
+      "passed": 2,
+      "runs": 2,
+      "failedAssertions": []
+    },
+    "sulekh-fit-repair": {
+      "passed": 2,
+      "runs": 2,
+      "failedAssertions": []
+    },
+    "sulekh-clear-only-my-strokes": {
+      "passed": 2,
+      "runs": 2,
+      "failedAssertions": []
+    },
+    "chess-natural-move": {
+      "passed": 0,
+      "runs": 2,
+      "failedAssertions": [
+        "SHATRANJ-GROUNDING-001"
+      ]
+    },
+    "chess-colloquial-move": {
+      "passed": 0,
+      "runs": 2,
+      "failedAssertions": [
+        "SHATRANJ-GROUNDING-001"
+      ]
+    },
+    "chess-preview-then-choose": {
+      "passed": 1,
+      "runs": 2,
+      "failedAssertions": [
+        "SHATRANJ-PREVIEW-THEN-MOVE-001"
+      ]
+    },
+    "chess-shared-turn": {
+      "passed": 1,
+      "runs": 2,
+      "failedAssertions": [
+        "CONVERSATION-QUALITY-001"
+      ]
+    },
+    "chess-illegal-then-legal": {
+      "passed": 2,
+      "runs": 2,
+      "failedAssertions": []
+    },
+    "interface-switch": {
+      "passed": 2,
+      "runs": 2,
+      "failedAssertions": []
+    },
+    "interface-language-history": {
+      "passed": 2,
+      "runs": 2,
+      "failedAssertions": []
+    },
+    "rangoli-diwali": {
+      "passed": 2,
+      "runs": 2,
+      "failedAssertions": []
+    },
+    "kolam-pulli": {
+      "passed": 2,
+      "runs": 2,
+      "failedAssertions": []
+    },
+    "rangoli-recolour": {
+      "passed": 2,
+      "runs": 2,
+      "failedAssertions": []
+    },
+    "rangoli-clear-only-my-strokes": {
+      "passed": 2,
+      "runs": 2,
+      "failedAssertions": []
+    },
+    "family-second-player": {
+      "passed": 2,
+      "runs": 2,
+      "failedAssertions": []
+    },
+    "family-send-needs-approval": {
+      "passed": 2,
+      "runs": 2,
+      "failedAssertions": []
+    }
+  }
+}

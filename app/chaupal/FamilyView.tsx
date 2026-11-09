@@ -1,4 +1,4 @@
-import { Suspense, lazy } from "react";
+import { Suspense } from "react";
 
 import { LivingDiya } from "@/components/diya/LivingDiya";
 
@@ -6,7 +6,7 @@ import { useLiveSession } from "./live";
 import { ConflictCard } from "./Overlays";
 import { speechLang } from "./strings";
 
-const ShatranjScene = lazy(() => import("./scenes/ShatranjScene"));
+import ShatranjScene from "./scenes/ShatranjScene";
 
 /**
  * The family member's phone. It shows the elder's live activity as it is (the
