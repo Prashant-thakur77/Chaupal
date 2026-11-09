@@ -1,6 +1,6 @@
 // Turns the evaluation artifacts into every number the project shows:
 // evals/results/summary.json (read by the /proof page), README.md and
-// SUBMISSION.md (rendered from docs/templates). Nothing here is typed by hand.
+// (rendered from docs/templates). Nothing here is typed by hand.
 //
 //   node scripts/build-results.mjs [--control iteration-001] [--candidate iteration-NNN]
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -94,7 +94,7 @@ const tokens = {
   OCR_SHAPED: ocr.shaped, OCR_UNSHAPED: ocr.unshaped, OCR_SHAPED_PLAIN: ocr.shapedPlain, OCR_UNSHAPED_PLAIN: ocr.unshapedPlain,
   FAILURE_ONE_LINE: failures[0] ? `${failures[0].reason}` : "see EVALUATION.md",
 };
-for (const name of ["README.md", "SUBMISSION.md"]) {
+for (const name of ["README.md"]) {
   let text = readFileSync(join(root, "docs/templates", name), "utf8");
   text = text.replace(/\{\{([A-Z0-9_]+)\}\}/g, (m, k) => (k in tokens ? String(tokens[k]) : m));
   const left = text.match(/\{\{[A-Z0-9_]+\}\}/g);

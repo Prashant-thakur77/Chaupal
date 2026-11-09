@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Writes DEMO_SCRIPT.md at the repo root: the film's final narration with its beats and real timestamps
+"""Writes DEMO_SCRIPT.md and youtube.md into the film work folder (outside the repo): the film's final narration with its beats and real timestamps
 (from narration/timeline.json when it exists, else the planned order). Run after vo_timeline.py.
 
   python3 video/demo_script.py
@@ -8,6 +8,7 @@ import json
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+WORK = Path("/home/prashant/projects/.chaupal-work/film/out")
 ROOT = HERE.parent
 N = json.loads((HERE / "narration.json").read_text())
 TLp = HERE / "narration" / "timeline.json"
@@ -67,8 +68,8 @@ def main():
             f"- Eval (control vs Chaupal actions): {F['eval'].get('source')}",
             f"- Sync latency: {(F.get('sync') or {}).get('source', 'pending')} ({(F.get('sync') or {}).get('where', '')})",
             f"- OCR exact match: {(F.get('ocr') or {}).get('source', 'pending')}", ""]
-    (ROOT / "DEMO_SCRIPT.md").write_text("\n".join(out))
-    print("->", ROOT / "DEMO_SCRIPT.md")
+    (WORK / "DEMO_SCRIPT.md").write_text("\n".join(out))
+    print("->", WORK / "DEMO_SCRIPT.md")
     youtube(starts)
 
 
@@ -117,8 +118,8 @@ def youtube(starts):
         "## Licences", "",
         "Nothing in the film requires attribution (CC0 / public-domain footage, OFL fonts, music and effects made for the film); see `video/LICENSES.md`.", "",
     ]
-    (HERE / "youtube.md").write_text("\n".join(md) + "\n")
-    print("->", HERE / "youtube.md")
+    (WORK / "youtube.md").write_text("\n".join(md) + "\n")
+    print("->", WORK / "youtube.md")
 
 
 if __name__ == "__main__":

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """The film's words, with every number filled from data/facts.json (run facts.py first).
 
-  python3 video/narration.py      -> video/narration.json (+ DEMO_SCRIPT.md at the repo root)
+  python3 video/narration.py      -> video/narration.json (+ DEMO_SCRIPT.md in the film work folder)
 
 caption = what the captions show (real spelling); spoken = respelled for the voice (numbers in words, acronyms
 spaced). Story lines are slower and warmer, product lines brisker, the recap lifted (references/audio.md).
