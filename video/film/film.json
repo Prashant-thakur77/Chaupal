@@ -1,0 +1,744 @@
+{
+ "title": "Chaupal",
+ "fps": 30,
+ "width": 1920,
+ "height": 1080,
+ "kolam": {
+  "d": "M156 95.8C202.19 95.8 217.66 116.74 242 156C270.2 201.48 282.52 213.8 328 242C367.26 266.34 388.2 281.81 388.2 328C388.2 374.19 367.26 389.66 328 414C288.74 438.34 267.8 453.81 267.8 500C267.8 537.46 290.54 560.2 328 560.2C374.19 560.2 389.66 539.26 414 500C442.2 454.52 454.52 442.2 500 414C545.48 385.8 557.8 373.48 586 328C610.34 288.74 625.81 267.8 672 267.8C718.19 267.8 733.66 288.74 758 328C786.2 373.48 798.52 385.8 844 414C883.26 438.34 904.2 453.81 904.2 500C904.2 546.19 883.26 561.66 844 586C804.74 610.34 783.8 625.81 783.8 672C783.8 709.46 806.54 732.2 844 732.2C881.46 732.2 904.2 709.46 904.2 672C904.2 625.81 883.26 610.34 844 586C804.74 561.66 783.8 546.19 783.8 500C783.8 453.81 804.74 438.34 844 414C883.26 389.66 904.2 374.19 904.2 328C904.2 281.81 883.26 266.34 844 242C804.74 217.66 783.8 202.19 783.8 156C783.8 118.54 806.54 95.8 844 95.8C881.46 95.8 904.2 118.54 904.2 156C904.2 202.19 883.26 217.66 844 242C798.52 270.2 786.2 282.52 758 328C733.66 367.26 718.19 388.2 672 388.2C625.81 388.2 610.34 367.26 586 328C561.66 288.74 546.19 267.8 500 267.8C462.54 267.8 439.8 290.54 439.8 328C439.8 374.19 460.74 389.66 500 414C545.48 442.2 557.8 454.52 586 500C614.2 545.48 626.52 557.8 672 586C711.26 610.34 732.2 625.81 732.2 672C732.2 718.19 711.26 733.66 672 758C626.52 786.2 614.2 798.52 586 844C561.66 883.26 546.19 904.2 500 904.2C453.81 904.2 438.34 883.26 414 844C389.66 804.74 374.19 783.8 328 783.8C290.54 783.8 267.8 806.54 267.8 844C267.8 881.46 290.54 904.2 328 904.2C374.19 904.2 389.66 883.26 414 844C438.34 804.74 453.81 783.8 500 783.8C546.19 783.8 561.66 804.74 586 844C610.34 883.26 625.81 904.2 672 904.2C718.19 904.2 733.66 883.26 758 844C782.34 804.74 797.81 783.8 844 783.8C881.46 783.8 904.2 806.54 904.2 844C904.2 881.46 881.46 904.2 844 904.2C797.81 904.2 782.34 883.26 758 844C729.8 798.52 717.48 786.2 672 758C632.74 733.66 611.8 718.19 611.8 672C611.8 625.81 632.74 610.34 672 586C711.26 561.66 732.2 546.19 732.2 500C732.2 462.54 709.46 439.8 672 439.8C625.81 439.8 610.34 460.74 586 500C557.8 545.48 545.48 557.8 500 586C454.52 614.2 442.2 626.52 414 672C389.66 711.26 374.19 732.2 328 732.2C281.81 732.2 266.34 711.26 242 672C213.8 626.52 201.48 614.2 156 586C116.74 561.66 95.8 546.19 95.8 500C95.8 453.81 116.74 438.34 156 414C195.26 389.66 216.2 374.19 216.2 328C216.2 290.54 193.46 267.8 156 267.8C118.54 267.8 95.8 290.54 95.8 328C95.8 374.19 116.74 389.66 156 414C195.26 438.34 216.2 453.81 216.2 500C216.2 546.19 195.26 561.66 156 586C116.74 610.34 95.8 625.81 95.8 672C95.8 718.19 116.74 733.66 156 758C195.26 782.34 216.2 797.81 216.2 844C216.2 881.46 193.46 904.2 156 904.2C118.54 904.2 95.8 881.46 95.8 844C95.8 797.81 116.74 782.34 156 758C201.48 729.8 213.8 717.48 242 672C266.34 632.74 281.81 611.8 328 611.8C374.19 611.8 389.66 632.74 414 672C438.34 711.26 453.81 732.2 500 732.2C537.46 732.2 560.2 709.46 560.2 672C560.2 625.81 539.26 610.34 500 586C454.52 557.8 442.2 545.48 414 500C385.8 454.52 373.48 442.2 328 414C288.74 389.66 267.8 374.19 267.8 328C267.8 281.81 288.74 266.34 328 242C373.48 213.8 385.8 201.48 414 156C438.34 116.74 453.81 95.8 500 95.8C546.19 95.8 561.66 116.74 586 156C610.34 195.26 625.81 216.2 672 216.2C709.46 216.2 732.2 193.46 732.2 156C732.2 118.54 709.46 95.8 672 95.8C625.81 95.8 610.34 116.74 586 156C561.66 195.26 546.19 216.2 500 216.2C453.81 216.2 438.34 195.26 414 156C389.66 116.74 374.19 95.8 328 95.8C281.81 95.8 266.34 116.74 242 156C217.66 195.26 202.19 216.2 156 216.2C118.54 216.2 95.8 193.46 95.8 156C95.8 118.54 118.54 95.8 156 95.8Z",
+  "dots": [
+   [
+    156.0,
+    156.0
+   ],
+   [
+    328.0,
+    156.0
+   ],
+   [
+    500.0,
+    156.0
+   ],
+   [
+    672.0,
+    156.0
+   ],
+   [
+    844.0,
+    156.0
+   ],
+   [
+    156.0,
+    328.0
+   ],
+   [
+    328.0,
+    328.0
+   ],
+   [
+    500.0,
+    328.0
+   ],
+   [
+    672.0,
+    328.0
+   ],
+   [
+    844.0,
+    328.0
+   ],
+   [
+    156.0,
+    500.0
+   ],
+   [
+    328.0,
+    500.0
+   ],
+   [
+    500.0,
+    500.0
+   ],
+   [
+    672.0,
+    500.0
+   ],
+   [
+    844.0,
+    500.0
+   ],
+   [
+    156.0,
+    672.0
+   ],
+   [
+    328.0,
+    672.0
+   ],
+   [
+    500.0,
+    672.0
+   ],
+   [
+    672.0,
+    672.0
+   ],
+   [
+    844.0,
+    672.0
+   ],
+   [
+    156.0,
+    844.0
+   ],
+   [
+    328.0,
+    844.0
+   ],
+   [
+    500.0,
+    844.0
+   ],
+   [
+    672.0,
+    844.0
+   ],
+   [
+    844.0,
+    844.0
+   ]
+  ],
+  "view": 1000.0
+ },
+ "facts": {
+  "public": {
+   "elderShare2022": {
+    "value": 10.5,
+    "unit": "%",
+    "source": "UNFPA India Ageing Report 2023"
+   },
+   "elderShare2050": {
+    "value": 20.8,
+    "unit": "%",
+    "source": "UNFPA India Ageing Report 2023"
+   },
+   "livingAlone": {
+    "value": 5.7,
+    "unit": "%",
+    "source": "LASI Wave 1 (2017-18), Table 5.3"
+   },
+   "digitalConfusing": {
+    "value": 66,
+    "unit": "%",
+    "source": "HelpAge India, June 2025 (10-city survey)"
+   }
+  },
+  "eval": {
+   "ready": true,
+   "cases": 21,
+   "reps": 2,
+   "model": "claude-sonnet-5-5",
+   "A": {
+    "passed": 8,
+    "runs": 42,
+    "rate": "19.0%",
+    "tokens": 35581,
+    "seconds": 11.7,
+    "label": "A. Browser control only"
+   },
+   "B": {
+    "passed": 40,
+    "runs": 42,
+    "rate": "95.2%",
+    "tokens": 49254,
+    "seconds": 10.2,
+    "label": "B. Chaupal actions"
+   },
+   "better": true,
+   "failures": [
+    {
+     "caseId": "chess-shared-turn",
+     "iteration": "iteration-006",
+     "reason": "Both repetitions: the board outcome was right (her hand move e2–e4, then exactly one agent reply e7–e5), but CONVERSATION-QUALITY-001 failed because the agent first wrote an English, third-person aside (\"She asked me to reply after her move\") before its Hindi reply; the judge counts that as process narration."
+    }
+   ],
+   "source": "evals/results/summary.json (iteration-001 vs iteration-006)"
+  },
+  "sync": {
+   "p50": 3.94,
+   "p95": 5.06,
+   "moves": 50,
+   "where": "deployed",
+   "what": "from the move request to the other screen",
+   "source": "evals/measure/sync-latency.deployed.json",
+   "measuredAt": "2026-11-09T16:09:49.413Z"
+  },
+  "ocr": {
+   "n": 50,
+   "shaped": 21,
+   "unshaped": 8,
+   "shapedPlain": 31,
+   "unshapedPlain": 13,
+   "cerShaped": 0.165,
+   "cerUnshaped": 0.3881,
+   "urduShaped": 1,
+   "urduN": 10,
+   "measuredAt": "2026-11-09T09:58:16.901Z",
+   "source": "evals/render-accuracy/results.json"
+  },
+  "pending": []
+ },
+ "scenes": [
+  {
+   "id": "open",
+   "type": "open",
+   "duration": 14.0,
+   "leadIn": 0.7,
+   "min": 14,
+   "transition": {
+    "type": "fade",
+    "dur": 0.6
+   },
+   "shots": [
+    {
+     "src": "footage/sunset.mp4",
+     "dur": 2.71,
+     "push": 0.05,
+     "pan": 0.0,
+     "what": "the sun going down over a river"
+    },
+    {
+     "src": "footage/path.mp4",
+     "dur": 3.4,
+     "push": 0.05,
+     "pan": 0.3,
+     "what": "a village path under trees"
+    },
+    {
+     "src": "footage/hand.mp4",
+     "dur": 2.6,
+     "push": 0.06,
+     "pan": 0.0,
+     "what": "an older woman's hand, steady"
+    },
+    {
+     "src": "footage/craft.mp4",
+     "dur": 2.6,
+     "push": 0.05,
+     "pan": -0.2,
+     "what": "hands at work"
+    },
+    {
+     "src": "footage/city.mp4",
+     "dur": 3.6900000000000013,
+     "push": 0.07,
+     "pan": 0.0,
+     "what": "a city at night"
+    }
+   ],
+   "pins": [
+    {
+     "at": 8.56,
+     "text": "5.7% of Indians over 60 live alone",
+     "sub": "LASI Wave 1 (2017-18), Table 5.3",
+     "x": 1180,
+     "y": 120
+    }
+   ],
+   "notes": [
+    {
+     "at": 0.4,
+     "until": 4.5,
+     "text": "Footage: India at dusk (stock, not our users)"
+    }
+   ]
+  },
+  {
+   "id": "stakes",
+   "type": "stakes",
+   "duration": 11.667,
+   "leadIn": 0.4,
+   "min": 10,
+   "transition": {
+    "type": "kolam",
+    "dur": 1.7
+   },
+   "at1": 0.4,
+   "at2": 6.24,
+   "share2022": 10.5,
+   "share2050": 20.8,
+   "digital": 66,
+   "src1": "UNFPA India Ageing Report 2023, p.20",
+   "src2": "HelpAge India, June 2025 (10-city survey), elderly respondents"
+  },
+  {
+   "id": "turn",
+   "type": "turn",
+   "duration": 10.467,
+   "leadIn": 1.1,
+   "min": 9,
+   "transition": {
+    "type": "fade",
+    "dur": 0.35
+   },
+   "wordsAt": 4.71,
+   "boardAt": 7.13
+  },
+  {
+   "id": "hero",
+   "type": "twocities",
+   "duration": 19.0,
+   "leadIn": 0.6,
+   "min": 18,
+   "transition": {
+    "type": "kolam",
+    "dur": 1.7
+   },
+   "square": "h6",
+   "replySquare": "h6",
+   "request": {
+    "hi": "घोड़े से उसका हाथी मार दो",
+    "en": "“Take his rook with the knight”"
+   },
+   "typedNote": "her exact words, sent straight to move-chess-piece (the action her agent calls)",
+   "requestAt": 5.86,
+   "syncLabel": "median 3.94 s",
+   "tablet": "captures/hero-tablet.mp4",
+   "phone": "captures/hero-phone.mp4",
+   "segments": [
+    {
+     "at": 0,
+     "from": 0.0
+    },
+    {
+     "at": 16.4,
+     "from": 21.81,
+     "note": "his move on its way · 5.4 s later"
+    }
+   ],
+   "landAt": 10.9,
+   "replyAt": 17.7,
+   "tabletBoard": {
+    "x": 446,
+    "y": 194,
+    "w": 764,
+    "h": 764
+   },
+   "phoneBoard": {
+    "x": 18,
+    "y": 343,
+    "w": 355,
+    "h": 355
+   },
+   "squares": {
+    "tablet": {
+     "a1": [
+      511.265625,
+      892.859375
+     ],
+     "h1": [
+      1145,
+      892.859375
+     ],
+     "a8": [
+      511.265625,
+      259.125
+     ]
+    },
+    "phone": {
+     "a1": [
+      342.03125,
+      373.546875
+     ],
+     "h1": [
+      47.953125,
+      373.546875
+     ],
+     "a8": [
+      342.03125,
+      667.625
+     ]
+    }
+   }
+  },
+  {
+   "id": "sulekh",
+   "type": "screen",
+   "duration": 14.533,
+   "leadIn": 1.1,
+   "min": 14,
+   "transition": {
+    "type": "fade",
+    "dur": 0.5
+   },
+   "chips": [
+    {
+     "at": 1.1,
+     "until": 4.15,
+     "text": "पोते को दिवाली पर ‘शुभ दीपावली’ दिखाना है",
+     "sub": "“I want to show my grandson ‘Happy Diwali’”",
+     "y": 840
+    }
+   ],
+   "src": "captures/sulekh-tablet.mp4",
+   "segments": [
+    {
+     "at": 0,
+     "from": 0.9
+    },
+    {
+     "at": 2.85,
+     "from": 7.56,
+     "note": "waiting for the reference · 3.8 s later"
+    },
+    {
+     "at": 9.88,
+     "from": 11.38,
+     "rate": 10.0,
+     "note": "her tracing, sped up ×10"
+    },
+    {
+     "at": 12.67,
+     "from": 40.94
+    }
+   ],
+   "zooms": [
+    {
+     "at": 4.45,
+     "dur": 3.2,
+     "box": {
+      "x": 447,
+      "y": 240,
+      "w": 876,
+      "h": 583
+     }
+    },
+    {
+     "at": 6.67,
+     "dur": 3.0,
+     "box": {
+      "x": 447,
+      "y": 240,
+      "w": 876,
+      "h": 583
+     },
+     "scale": 1.35
+    }
+   ],
+   "notes": [
+    {
+     "at": 1.1,
+     "until": 4.15,
+     "text": "sent straight to set-calligraphy-reference (the action her agent calls)"
+    },
+    {
+     "at": 6.67,
+     "until": 12.63,
+     "text": "her tracing: drawn by the recording script"
+    }
+   ],
+   "pip": {
+    "src": "captures/sulekh-phone.mp4",
+    "at": 5.65,
+    "from": 4.71,
+    "until": 7.17
+   }
+  },
+  {
+   "id": "reveal",
+   "type": "rangoli",
+   "duration": 6.5,
+   "leadIn": 0.4,
+   "min": 6.5,
+   "transition": {
+    "type": "fade",
+    "dur": 0.5
+   },
+   "outline": "svg/captured-rangoli.svg",
+   "filled": "svg/rangoli-filled.svg",
+   "caption": "8 petals · 4 rings · 8-fold symmetry"
+  },
+  {
+   "id": "rangoli",
+   "type": "screen",
+   "duration": 7.0,
+   "leadIn": 0.3,
+   "min": 7,
+   "transition": {
+    "type": "fade",
+    "dur": 0.5
+   },
+   "chips": [
+    {
+     "at": 0.3,
+     "until": 4.25,
+     "text": "बीच में पीला, बाहर लाल",
+     "sub": "“Yellow in the middle, red outside”",
+     "y": 840
+    }
+   ],
+   "src": "captures/rangoli-tablet.mp4",
+   "segments": [
+    {
+     "at": 0,
+     "from": 1.7
+    },
+    {
+     "at": 1.45,
+     "from": 7.09,
+     "note": "waiting for the fill · 3.9 s later"
+    }
+   ],
+   "zooms": [
+    {
+     "at": 2.35,
+     "dur": 3.0,
+     "box": {
+      "x": 446,
+      "y": 238,
+      "w": 878,
+      "h": 604
+     },
+     "scale": 1.25
+    }
+   ],
+   "notes": [
+    {
+     "at": 0.3,
+     "until": 4.25,
+     "text": "sent straight to fill-region (the action her agent calls)"
+    }
+   ]
+  },
+  {
+   "id": "guard",
+   "type": "screen",
+   "duration": 11.0,
+   "leadIn": 0.3,
+   "min": 11,
+   "transition": {
+    "type": "kolam",
+    "dur": 1.7
+   },
+   "src": "captures/guard-tablet.mp4",
+   "segments": [
+    {
+     "at": 0,
+     "from": 13.04
+    },
+    {
+     "at": 5.37,
+     "from": 68.43,
+     "note": "switching to the board · 50 s later"
+    }
+   ],
+   "zooms": [
+    {
+     "at": 0.5,
+     "dur": 3.4,
+     "box": {
+      "x": 563,
+      "y": 733,
+      "w": 640,
+      "h": 259
+     },
+     "scale": 1.35
+    },
+    {
+     "at": 6.87,
+     "dur": 2.6,
+     "box": {
+      "x": 563,
+      "y": 873,
+      "w": 640,
+      "h": 119
+     },
+     "scale": 1.5
+    }
+   ],
+   "chips": [
+    {
+     "at": 4.680000000000001,
+     "until": 7.28,
+     "text": "मत भेजो · nothing was sent",
+     "tone": "good",
+     "y": 840
+    }
+   ],
+   "notes": [
+    {
+     "at": 0.3,
+     "until": 2.8,
+     "text": "sent straight to draft-family-update (the action her agent calls)"
+    },
+    {
+     "at": 6.07,
+     "until": 9.17,
+     "text": "his move tapped on his phone; the agent's now-stale move sent to move-chess-piece"
+    }
+   ]
+  },
+  {
+   "id": "hood",
+   "type": "chabutra",
+   "duration": 24.033,
+   "leadIn": 1.1,
+   "min": 18,
+   "hold": 0.8,
+   "transition": {
+    "type": "fade",
+    "dur": 0.5
+   },
+   "cues": {
+    "actions": 2.97,
+    "surfaces": 0.4,
+    "gate": 8.61,
+    "sql": 13.35,
+    "stale": 14.35,
+    "engines": 17.95,
+    "yes": 10.41
+   }
+  },
+  {
+   "id": "proof",
+   "type": "proof",
+   "duration": 29.067,
+   "leadIn": 0.4,
+   "min": 12,
+   "hold": 1.2,
+   "transition": {
+    "type": "kolam",
+    "dur": 1.7
+   },
+   "eval": {
+    "ready": true,
+    "cases": 21,
+    "reps": 2,
+    "model": "claude-sonnet-5-5",
+    "A": {
+     "passed": 8,
+     "runs": 42,
+     "rate": "19.0%",
+     "tokens": 35581,
+     "seconds": 11.7,
+     "label": "A. Browser control only"
+    },
+    "B": {
+     "passed": 40,
+     "runs": 42,
+     "rate": "95.2%",
+     "tokens": 49254,
+     "seconds": 10.2,
+     "label": "B. Chaupal actions"
+    },
+    "better": true,
+    "failures": [
+     {
+      "caseId": "chess-shared-turn",
+      "iteration": "iteration-006",
+      "reason": "Both repetitions: the board outcome was right (her hand move e2–e4, then exactly one agent reply e7–e5), but CONVERSATION-QUALITY-001 failed because the agent first wrote an English, third-person aside (\"She asked me to reply after her move\") before its Hindi reply; the judge counts that as process narration."
+     }
+    ],
+    "source": "evals/results/summary.json (iteration-001 vs iteration-006)"
+   },
+   "ocr": {
+    "n": 50,
+    "shaped": 21,
+    "unshaped": 8,
+    "shapedPlain": 31,
+    "unshapedPlain": 13,
+    "cerShaped": 0.165,
+    "cerUnshaped": 0.3881,
+    "urduShaped": 1,
+    "urduN": 10,
+    "measuredAt": "2026-11-09T09:58:16.901Z",
+    "source": "evals/render-accuracy/results.json"
+   },
+   "atControl": 6.41,
+   "atOurs": 8.98,
+   "atBadge": 11.21,
+   "atOcr": 16.96,
+   "failure": "Still failing: 1 of 21 cases. Before its Hindi reply, the agent sometimes writes an English aside.",
+   "atFail": 23.56,
+   "footnote": "Same model and prompt in both arms; control = browser control only, no actions. Model claude-sonnet-5-5. OCR: tesseract exact match over 50 phrases in 5 scripts, calligraphic fonts; with plain fonts 31 vs 13. Unshaped text = the same font drawn code point by code point."
+  },
+  {
+   "id": "recap",
+   "type": "recap",
+   "duration": 12.667,
+   "leadIn": 1.1,
+   "min": 9,
+   "transition": {
+    "type": "fade",
+    "dur": 0.8
+   },
+   "lines": [
+    {
+     "at": 1.1,
+     "text": "Her language, not an app's."
+    },
+    {
+     "at": 3.75,
+     "text": "Her family, at the same board."
+    },
+    {
+     "at": 5.96,
+     "text": "Nothing leaves without her say."
+    },
+    {
+     "at": 8.49,
+     "text": "40/42 with actions · 8/42 without",
+     "strong": true
+    }
+   ],
+   "clips": [
+    {
+     "src": "captures/hero-tablet.mp4",
+     "from": 10.293000000000001
+    },
+    {
+     "src": "captures/hero-tablet.mp4",
+     "from": 22.707
+    },
+    {
+     "src": "captures/sulekh-tablet.mp4",
+     "from": 9.663
+    },
+    {
+     "src": "captures/sulekh-tablet.mp4",
+     "from": 37.909
+    },
+    {
+     "src": "captures/rangoli-tablet.mp4",
+     "from": 8.892
+    },
+    {
+     "src": "captures/guard-tablet.mp4",
+     "from": 13.940999999999999
+    },
+    {
+     "src": "captures/guard-tablet.mp4",
+     "from": 70.326
+    }
+   ],
+   "cut": 1.0
+  },
+  {
+   "id": "close",
+   "type": "close",
+   "duration": 9.0,
+   "leadIn": 0.5,
+   "min": 9,
+   "hold": 5.2,
+   "nameAt": 0.7,
+   "tagline": "She speaks. The board moves. The family is right there.",
+   "links": [
+    "chaupal.prashantthakur.dev",
+    "Agent-Native Hackathon 2026"
+   ]
+  }
+ ],
+ "thumb": {
+  "tablet": "captures/thumb-tablet.png",
+  "phone": "captures/thumb-phone.png"
+ }
+}

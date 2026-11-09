@@ -1,0 +1,10 @@
+# heavy files live in /home/prashant/projects/.chaupal-work/film (symlinked here)
+film/node_modules
+film/public
+film/out
+narration/
+node_modules/
+__pycache__/
+*.wav
+*.mp4
+narration

@@ -1,0 +1,260 @@
+[
+ {
+  "scene": "open",
+  "id": "o1",
+  "caption": "In an Indian village, the evening square is called the chaupal.",
+  "spoken": "In an Indian village, the evening square is called the chow-paal.",
+  "exaggeration": 0.55,
+  "cfg": 0.32
+ },
+ {
+  "scene": "open",
+  "id": "o2",
+  "caption": "A lamp, a board, and someone across it.",
+  "spoken": "A lamp, a board, and someone across it.",
+  "exaggeration": 0.55,
+  "cfg": 0.32
+ },
+ {
+  "scene": "open",
+  "id": "o3",
+  "caption": "For many elders now, the person across the board lives in another city.",
+  "spoken": "For many elders now, the person across the board lives in another city.",
+  "exaggeration": 0.55,
+  "cfg": 0.32
+ },
+ {
+  "scene": "stakes",
+  "id": "s1",
+  "caption": "By 2050, India's share of people over sixty doubles, to 20.8 percent.",
+  "spoken": "By twenty fifty, India's share of people over sixty doubles, to twenty point eight percent.",
+  "exaggeration": 0.55,
+  "cfg": 0.32
+ },
+ {
+  "scene": "stakes",
+  "id": "s2",
+  "caption": "And 66 percent of older people surveyed in ten cities find digital tools too confusing.",
+  "spoken": "And sixty-six percent of older people surveyed in ten cities find digital tools too confusing.",
+  "exaggeration": 0.55,
+  "cfg": 0.32
+ },
+ {
+  "scene": "turn",
+  "id": "t1",
+  "caption": "So we rebuilt the square as an app, and called it Chaupal.",
+  "spoken": "So we rebuilt the square as an app, and called it chow-paal.",
+  "exaggeration": 0.55,
+  "cfg": 0.32
+ },
+ {
+  "scene": "turn",
+  "id": "t2",
+  "caption": "She speaks Hindi. An agent writes, draws and plays with her, and her family joins at the same board.",
+  "spoken": "She speaks Hindi. An agent writes, draws and plays with her, and her family joins at the same board.",
+  "exaggeration": 0.55,
+  "cfg": 0.32
+ },
+ {
+  "scene": "hero",
+  "id": "h1",
+  "caption": "This is the live app in two sessions: her tablet view, and her grandson's phone view.",
+  "spoken": "This is the live app in two sessions: her tablet view, and her grandson's phone view.",
+  "exaggeration": 0.62,
+  "cfg": 0.4
+ },
+ {
+  "scene": "hero",
+  "id": "h2",
+  "caption": "She asks in Hindi: take his rook with the knight.",
+  "spoken": "She asks in Hindi: take his rook with the knight.",
+  "exaggeration": 0.62,
+  "cfg": 0.4
+ },
+ {
+  "scene": "hero",
+  "id": "h3",
+  "caption": "Her words are resolved on the real board, and the move reaches his phone in a median of 3.94 seconds.",
+  "spoken": "Her words are resolved on the real board, and the move reaches his phone in a median of three point nine four seconds.",
+  "exaggeration": 0.62,
+  "cfg": 0.4,
+  "pauseBefore": 0.8
+ },
+ {
+  "scene": "hero",
+  "id": "h4",
+  "caption": "He takes back with a pawn, and his move comes home the same way.",
+  "spoken": "He takes back with a pawn, and his move comes home the same way.",
+  "exaggeration": 0.62,
+  "cfg": 0.4
+ },
+ {
+  "scene": "sulekh",
+  "id": "k1",
+  "caption": "For Diwali, she wants to show him a greeting.",
+  "spoken": "For Diwali, she wants to show him a greeting.",
+  "exaggeration": 0.62,
+  "cfg": 0.4
+ },
+ {
+  "scene": "sulekh",
+  "id": "k2",
+  "caption": "Her words become the reference. HarfBuzz shapes the text, so every conjunct and vowel sign is exactly right.",
+  "spoken": "Her words become the reference. Harf Buzz shapes the text, so every conjunct and vowel sign is exactly right.",
+  "exaggeration": 0.62,
+  "cfg": 0.4
+ },
+ {
+  "scene": "sulekh",
+  "id": "k3",
+  "caption": "She traces it with her finger. Her lines stay on their own layer, and only hers can be erased.",
+  "spoken": "She traces it with her finger. Her lines stay on their own layer, and only hers can be erased.",
+  "exaggeration": 0.62,
+  "cfg": 0.4
+ },
+ {
+  "scene": "reveal",
+  "id": "r1",
+  "caption": "For the doorstep, a rangoli. A generator draws it; the agent only sets the design.",
+  "spoken": "For the doorstep, a rung-o-lee. A generator draws it; the agent only sets the design.",
+  "exaggeration": 0.62,
+  "cfg": 0.4
+ },
+ {
+  "scene": "rangoli",
+  "id": "r2",
+  "caption": "She says: yellow in the middle, red outside. Exactly those regions fill.",
+  "spoken": "She says: yellow in the middle, red outside. Exactly those regions fill.",
+  "exaggeration": 0.62,
+  "cfg": 0.4
+ },
+ {
+  "scene": "guard",
+  "id": "g1",
+  "caption": "Nothing leaves the house until she says yes. When she says don't send, nothing is sent.",
+  "spoken": "Nothing leaves the house until she says yes. When she says don't send, nothing is sent.",
+  "exaggeration": 0.62,
+  "cfg": 0.4
+ },
+ {
+  "scene": "guard",
+  "id": "g2",
+  "caption": "And if Rahul moves first, the agent's stale move is refused, and she sees why.",
+  "spoken": "And if Rahul moves first, the agent's stale move is refused, and she sees why.",
+  "exaggeration": 0.62,
+  "cfg": 0.4
+ },
+ {
+  "scene": "hood",
+  "id": "a1",
+  "caption": "Underneath, it's one set of Agent-Native actions.",
+  "spoken": "Underneath, it's one set of agent native actions.",
+  "exaggeration": 0.62,
+  "cfg": 0.4
+ },
+ {
+  "scene": "hood",
+  "id": "a2",
+  "caption": "Her voice, her touch, Rahul's phone, Claude through an MCP App card, and Telegram all call the same defineAction.",
+  "spoken": "Her voice, her touch, Rahul's phone, Claude through an M C P app card, and Telegram all call the same define action.",
+  "exaggeration": 0.62,
+  "cfg": 0.4
+ },
+ {
+  "scene": "hood",
+  "id": "a3",
+  "caption": "Every write is checked against the board's revision in shared SQL, and live sync carries it to both screens.",
+  "spoken": "Every write is checked against the board's revision in shared S Q L, and live sync carries it to both screens.",
+  "exaggeration": 0.62,
+  "cfg": 0.4
+ },
+ {
+  "scene": "hood",
+  "id": "a4",
+  "caption": "Engines own the truth: HarfBuzz for text, a rangoli generator, chess.js for the rules.",
+  "spoken": "Engines own the truth: Harfbuzz for text, a rangoli generator, chess J S for the rules.",
+  "exaggeration": 0.62,
+  "cfg": 0.4
+ },
+ {
+  "scene": "proof",
+  "id": "p1",
+  "caption": "We measured it: 21 cases written in an elder's voice, 2 runs each.",
+  "spoken": "We measured it: twenty-one cases written in an elder's voice, two runs each.",
+  "exaggeration": 0.62,
+  "cfg": 0.4
+ },
+ {
+  "scene": "proof",
+  "id": "p2",
+  "caption": "The same model with only browser control passed 8 of 42. With the app's actions, 40 of 42.",
+  "spoken": "The same model with only browser control passed eight of forty-two. With the app's actions, forty of forty-two.",
+  "exaggeration": 0.62,
+  "cfg": 0.4,
+  "pauseBefore": 0.5
+ },
+ {
+  "scene": "proof",
+  "id": "p2b",
+  "caption": "It does use more tokens per try: about 49,000, against 36,000.",
+  "spoken": "It does use more tokens per try: about forty-nine thousand, against thirty-six thousand.",
+  "exaggeration": 0.62,
+  "cfg": 0.4
+ },
+ {
+  "scene": "proof",
+  "id": "p3",
+  "caption": "And OCR reads 21 of 50 shaped phrases exactly, against 8 for unshaped text.",
+  "spoken": "And O C R reads twenty-one of fifty shaped phrases exactly, against eight for unshaped text.",
+  "exaggeration": 0.62,
+  "cfg": 0.4
+ },
+ {
+  "scene": "proof",
+  "id": "p4",
+  "caption": "One case still fails: before its Hindi reply, the agent sometimes writes an English aside.",
+  "spoken": "One case still fails: before its Hindi reply, the agent sometimes writes an English aside.",
+  "exaggeration": 0.62,
+  "cfg": 0.4
+ },
+ {
+  "scene": "recap",
+  "id": "c1",
+  "caption": "Her language, not an app's.",
+  "spoken": "Her language, not an app's.",
+  "exaggeration": 0.75,
+  "cfg": 0.34
+ },
+ {
+  "scene": "recap",
+  "id": "c2",
+  "caption": "Her family, at the same board.",
+  "spoken": "Her family, at the same board.",
+  "exaggeration": 0.75,
+  "cfg": 0.34
+ },
+ {
+  "scene": "recap",
+  "id": "c3",
+  "caption": "Nothing leaves without her say.",
+  "spoken": "Nothing leaves without her say.",
+  "exaggeration": 0.75,
+  "cfg": 0.34
+ },
+ {
+  "scene": "recap",
+  "id": "c4",
+  "caption": "And 40 of 42 where browser control alone managed 8.",
+  "spoken": "And forty of forty-two where browser control alone managed eight.",
+  "exaggeration": 0.75,
+  "cfg": 0.34
+ },
+ {
+  "scene": "close",
+  "id": "z1",
+  "caption": "The square is open again, wherever the family is.",
+  "spoken": "The square is open again, wherever the family is.",
+  "exaggeration": 0.55,
+  "cfg": 0.32
+ }
+]

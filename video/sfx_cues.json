@@ -1,0 +1,360 @@
+{
+ "duration": 168.934,
+ "dir": "/home/prashant/projects/.chaupal-work/film/audio/sfx",
+ "cues": [
+  {
+   "t": 14.3,
+   "sfx": "whoosh",
+   "db": -22,
+   "align": "peak"
+  },
+  {
+   "t": 15.3,
+   "sfx": "hit",
+   "db": -18,
+   "align": "peak"
+  },
+  {
+   "t": 21.34,
+   "sfx": "hit",
+   "db": -18,
+   "align": "peak"
+  },
+  {
+   "t": 25.769,
+   "sfx": "chalk",
+   "db": -15,
+   "align": "start"
+  },
+  {
+   "t": 25.967,
+   "sfx": "shimmer",
+   "db": -20,
+   "align": "peak"
+  },
+  {
+   "t": 26.721,
+   "sfx": "santoor",
+   "db": -13,
+   "align": "peak"
+  },
+  {
+   "t": 34.866,
+   "sfx": "clack",
+   "db": -14,
+   "align": "peak"
+  },
+  {
+   "t": 35.467,
+   "sfx": "whoosh",
+   "db": -18,
+   "align": "peak"
+  },
+  {
+   "t": 36.309,
+   "sfx": "whoosh",
+   "db": -22,
+   "align": "peak"
+  },
+  {
+   "t": 46.784,
+   "sfx": "clack",
+   "db": -12,
+   "align": "peak"
+  },
+  {
+   "t": 47.084,
+   "sfx": "hit",
+   "db": -16,
+   "align": "peak"
+  },
+  {
+   "t": 53.584,
+   "sfx": "clack",
+   "db": -13,
+   "align": "peak"
+  },
+  {
+   "t": 55.236,
+   "sfx": "chalk",
+   "db": -15,
+   "align": "start"
+  },
+  {
+   "t": 56.188,
+   "sfx": "santoor",
+   "db": -13,
+   "align": "peak"
+  },
+  {
+   "t": 56.434,
+   "sfx": "chalk",
+   "db": -22,
+   "align": "start"
+  },
+  {
+   "t": 59.584,
+   "sfx": "ink",
+   "db": -20,
+   "align": "peak"
+  },
+  {
+   "t": 61.804,
+   "sfx": "ink",
+   "db": -20,
+   "align": "peak"
+  },
+  {
+   "t": 62.004,
+   "sfx": "chalk",
+   "db": -22,
+   "align": "start"
+  },
+  {
+   "t": 69.867,
+   "sfx": "chalk",
+   "db": -18,
+   "align": "start"
+  },
+  {
+   "t": 69.917,
+   "sfx": "whoosh",
+   "db": -22,
+   "align": "peak"
+  },
+  {
+   "t": 73.242,
+   "sfx": "puff",
+   "db": -16,
+   "align": "peak"
+  },
+  {
+   "t": 76.417,
+   "sfx": "whoosh",
+   "db": -22,
+   "align": "peak"
+  },
+  {
+   "t": 78.917,
+   "sfx": "puff",
+   "db": -13,
+   "align": "peak"
+  },
+  {
+   "t": 79.417,
+   "sfx": "puff",
+   "db": -15,
+   "align": "peak"
+  },
+  {
+   "t": 83.417,
+   "sfx": "whoosh",
+   "db": -22,
+   "align": "peak"
+  },
+  {
+   "t": 87.447,
+   "sfx": "tick",
+   "db": -16,
+   "align": "peak"
+  },
+  {
+   "t": 90.037,
+   "sfx": "refuse",
+   "db": -15,
+   "align": "peak"
+  },
+  {
+   "t": 94.269,
+   "sfx": "chalk",
+   "db": -15,
+   "align": "start"
+  },
+  {
+   "t": 94.867,
+   "sfx": "thud",
+   "db": -14,
+   "align": "peak"
+  },
+  {
+   "t": 95.221,
+   "sfx": "santoor",
+   "db": -13,
+   "align": "peak"
+  },
+  {
+   "t": 97.437,
+   "sfx": "thud",
+   "db": -14,
+   "align": "peak"
+  },
+  {
+   "t": 104.577,
+   "sfx": "chime",
+   "db": -16,
+   "align": "peak"
+  },
+  {
+   "t": 107.817,
+   "sfx": "thud",
+   "db": -14,
+   "align": "peak"
+  },
+  {
+   "t": 108.517,
+   "sfx": "refuse",
+   "db": -14,
+   "align": "peak"
+  },
+  {
+   "t": 112.417,
+   "sfx": "thud",
+   "db": -14,
+   "align": "peak"
+  },
+  {
+   "t": 118.45,
+   "sfx": "whoosh",
+   "db": -22,
+   "align": "peak"
+  },
+  {
+   "t": 129.41,
+   "sfx": "hit",
+   "db": -12,
+   "align": "peak"
+  },
+  {
+   "t": 136.06,
+   "sfx": "tick",
+   "db": -18,
+   "align": "peak"
+  },
+  {
+   "t": 147.267,
+   "sfx": "riser",
+   "db": -16,
+   "align": "end"
+  },
+  {
+   "t": 147.369,
+   "sfx": "chalk",
+   "db": -15,
+   "align": "start"
+  },
+  {
+   "t": 148.267,
+   "sfx": "flash",
+   "db": -26,
+   "align": "peak"
+  },
+  {
+   "t": 148.321,
+   "sfx": "santoor",
+   "db": -13,
+   "align": "peak"
+  },
+  {
+   "t": 148.367,
+   "sfx": "hit",
+   "db": -22,
+   "align": "peak"
+  },
+  {
+   "t": 149.267,
+   "sfx": "flash",
+   "db": -26,
+   "align": "peak"
+  },
+  {
+   "t": 150.267,
+   "sfx": "flash",
+   "db": -26,
+   "align": "peak"
+  },
+  {
+   "t": 151.017,
+   "sfx": "hit",
+   "db": -22,
+   "align": "peak"
+  },
+  {
+   "t": 151.267,
+   "sfx": "flash",
+   "db": -26,
+   "align": "peak"
+  },
+  {
+   "t": 152.267,
+   "sfx": "flash",
+   "db": -26,
+   "align": "peak"
+  },
+  {
+   "t": 152.617,
+   "sfx": "hit",
+   "db": -22,
+   "align": "peak"
+  },
+  {
+   "t": 153.227,
+   "sfx": "hit",
+   "db": -22,
+   "align": "peak"
+  },
+  {
+   "t": 153.267,
+   "sfx": "flash",
+   "db": -26,
+   "align": "peak"
+  },
+  {
+   "t": 154.267,
+   "sfx": "flash",
+   "db": -26,
+   "align": "peak"
+  },
+  {
+   "t": 155.267,
+   "sfx": "flash",
+   "db": -26,
+   "align": "peak"
+  },
+  {
+   "t": 155.757,
+   "sfx": "hit",
+   "db": -22,
+   "align": "peak"
+  },
+  {
+   "t": 156.267,
+   "sfx": "flash",
+   "db": -26,
+   "align": "peak"
+  },
+  {
+   "t": 157.267,
+   "sfx": "flash",
+   "db": -26,
+   "align": "peak"
+  },
+  {
+   "t": 158.267,
+   "sfx": "flash",
+   "db": -26,
+   "align": "peak"
+  },
+  {
+   "t": 160.334,
+   "sfx": "whoosh",
+   "db": -22,
+   "align": "peak"
+  },
+  {
+   "t": 160.634,
+   "sfx": "chime",
+   "db": -16,
+   "align": "peak"
+  }
+ ]
+}

@@ -1,0 +1,7 @@
+{
+  "name": "chaupal-film-tools",
+  "private": true,
+  "type": "module",
+  "description": "Capture and build scripts for the Chaupal film (video/build.sh).",
+  "devDependencies": { "playwright": "^1.62.1" }
+}

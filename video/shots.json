@@ -1,0 +1,18 @@
+{
+ "note": "What capture_film.mjs records from the deployed app (the script is the source of truth; this is the shot list).",
+ "base": "https://chaupal.prashantthakur.dev",
+ "household": "one household for the whole film: POST /api/household/start (her tablet, 1366x1024, dpr 1.5), invite-family {name: Rahul, relation: pota, playsOtherSide: true}, his phone opens the join link (390x844, dpr 1.5)",
+ "shots": [
+  {"id": "hero", "pages": ["tablet", "phone"], "setup": "1. Nf3 h5 2. Nh4 Rh6 3. Nf5 a6 (her moves via move-chess-piece actor elder; his via family-move)",
+   "steps": ["hold 2.5 s", "type into the dock: घोड़े से उसका हाथी मार दो (the in-app agent resolves it)", "wait: move 7 on the tablet, then on the phone (logged: land)", "hold 2.6 s", "phone: tap piece-g7, dest-h6 (his reply)", "wait: move 8 on the tablet", "hold 3.5 s", "screenshots for the thumbnail"],
+   "film": "scene hero (TwoCities): the memorable moment"},
+  {"id": "sulekh", "pages": ["tablet", "phone"], "setup": "open-activity sulekh",
+   "steps": ["type: पोते को दिवाली पर 'शुभ दीपावली' दिखाना है", "wait: sulekh-reference = शुभ दीपावली", "touch-draw", "7 tracing strokes over the reference (labelled: drawn by the recording script)", "tap erase-mine (मेरी लकीरें मिटाएँ)"],
+   "film": "scene sulekh, phone as picture-in-picture"},
+  {"id": "rangoli", "pages": ["tablet"], "setup": "open-activity rangoli; set-rangoli-reference {festival: diwali}; the engine SVG saved for the reveal",
+   "steps": ["type: बीच में पीला, बाहर लाल", "wait: regions filled", "hold 4.5 s"], "film": "scenes reveal (the saved SVG) and rangoli"},
+  {"id": "guard", "pages": ["tablet"], "setup": "continues on the rangoli",
+   "steps": ["type: यह रंगोली बच्चों को भेज दो", "wait: approval-card", "tap decline-send (मत भेजो)", "open shatranj; her e4; his d5 tapped on the phone; the agent's d6 sent with the old revision -> conflict-card"],
+   "film": "scene guard"}
+ ]
+}

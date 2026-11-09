@@ -1,0 +1,21 @@
+{
+ "duration": 168,
+ "note": "Planned times from storyboard.md; music.py re-reads the real scene starts from narration/timeline.json when it exists.",
+ "beats": [
+  {"t": 0, "energy": 1, "name": "open: tanpura + bansuri alaap"},
+  {"t": 15, "energy": 2, "name": "stakes: bayan on each number"},
+  {"t": 27, "energy": 2, "name": "kolam loop"},
+  {"t": 30, "energy": 3, "name": "turn: santoor enters"},
+  {"t": 38, "energy": 3, "name": "hero: keherwa soft"},
+  {"t": 47, "energy": 1, "name": "silent beat before the move lands"},
+  {"t": 48, "energy": 4, "name": "the move lands on his phone"},
+  {"t": 60, "energy": 3, "name": "sulekh"},
+  {"t": 80, "energy": 3, "name": "rangoli"},
+  {"t": 95, "energy": 2, "name": "guard"},
+  {"t": 111, "energy": 2, "name": "under the hood: sparse theka"},
+  {"t": 133, "energy": 3, "name": "proof"},
+  {"t": 150, "energy": 5, "name": "recap lift"},
+  {"t": 164, "energy": 1, "name": "close: resolve on Sa"}
+ ],
+ "hits": {"turn": 30.0, "silence": 47.0, "landing": 48.0, "proofBadge": 142.0, "recap": 150.0, "end": 164.0}
+}

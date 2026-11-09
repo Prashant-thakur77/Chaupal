@@ -1,0 +1,29 @@
+{
+ "duration": 168.934,
+ "vo": "/home/prashant/projects/Chaupal/video/narration/vo_full.wav",
+ "music": [
+  {
+   "file": "/home/prashant/projects/.chaupal-work/film/audio/music.wav",
+   "start": 0,
+   "in": 0,
+   "gain_db": -9,
+   "fade_in": 0.3,
+   "fade_out": 2.5,
+   "end": 168.934
+  }
+ ],
+ "sfx": [
+  {
+   "file": "/home/prashant/projects/.chaupal-work/film/audio/sfx_track.wav",
+   "at": 0,
+   "gain_db": -2
+  }
+ ],
+ "duck": {
+  "threshold": 0.03,
+  "ratio": 7,
+  "attack": 20,
+  "release": 600
+ },
+ "target_lufs": -14
+}

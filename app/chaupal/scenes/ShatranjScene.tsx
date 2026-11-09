@@ -62,6 +62,7 @@ export default function ShatranjScene(props: {
         <ShatranjBoard
           fen={chess.fen}
           orientation={myColor ?? chess.elderColor}
+          herColor={chess.elderColor}
           lastMove={last ? { from: last.from, to: last.to, san: last.san, piece: last.piece, captured: last.captured, ply: last.ply, actor: last.actor } : null}
           preview={chess.preview ? { from: chess.preview.from, targets: chess.preview.targets } : null}
           interactive={myTurn}
