@@ -1,6 +1,6 @@
 import { sendToAgentChat } from "@agent-native/core/client/agent-chat";
 import { useLiveTranscription } from "@agent-native/core/client/transcription/use-live-transcription";
-import { Keyboard, Mic, Square } from "lucide-react";
+import { Keyboard, MessageCircle, Mic, Square } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 import { speechLang } from "./strings";
@@ -21,6 +21,8 @@ export function VoiceDock(props: {
   onApprove: () => void;
   onDecline: () => void;
   onListeningChange?: (listening: boolean) => void;
+  /** The conversation sheet toggle, shown in the dock on narrow screens. */
+  chat?: { label: string; open: boolean; onToggle: () => void };
 }) {
   const stt = useLiveTranscription({ lang: speechLang(props.lang) });
   const [typing, setTyping] = useState(false);
@@ -91,6 +93,18 @@ export function VoiceDock(props: {
         >
           <Keyboard aria-hidden size={26} />
         </button>
+        {props.chat ? (
+          <button
+            type="button"
+            className="ch-dock-type"
+            aria-label={props.chat.label}
+            aria-expanded={props.chat.open}
+            data-testid="chat-toggle"
+            onClick={props.chat.onToggle}
+          >
+            <MessageCircle aria-hidden size={26} />
+          </button>
+        ) : null}
       </div>
       {typing ? (
         <form

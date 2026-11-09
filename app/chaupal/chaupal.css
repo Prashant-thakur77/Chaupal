@@ -948,3 +948,22 @@
   font-size: var(--ch-text-body);
   color: var(--ch-text-soft);
 }
+
+/* Activities sit in the middle of the space between the top bar and the
+   dock, so tall tablets don't leave a dead band under the canvas. */
+.ch-body {
+  align-content: stretch;
+}
+.ch-scene {
+  align-content: center;
+  min-height: 0;
+}
+.ch-stage[data-scene="home"] .ch-scene {
+  align-content: start;
+}
+@media (orientation: portrait) and (min-width: 700px) {
+  .ch-activity {
+    padding-top: var(--ch-space-6);
+    padding-bottom: var(--ch-space-6);
+  }
+}

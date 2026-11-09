@@ -1,5 +1,5 @@
 import { AgentPanel } from "@agent-native/toolkit/app/chat";
-import { BookImage, History, MessageCircle, Users, X } from "lucide-react";
+import { BookImage, History, Users, X } from "lucide-react";
 import { Suspense, lazy, useEffect, useState } from "react";
 
 import { LivingDiya, useDiyaPhaseFromAgent } from "@/components/diya/LivingDiya";
@@ -224,12 +224,8 @@ export function Stage() {
           onApprove={() => data.approval && approve.mutate({ id: data.approval.id, decision: "approve" })}
           onDecline={() => data.approval && approve.mutate({ id: data.approval.id, decision: "decline" })}
           onListeningChange={setListening}
+          chat={{ label: t.chat, open: chatOpen, onToggle: () => setChatOpen((v) => !v) }}
         />
-      ) : null}
-      {!wide || scene === "home" ? (
-        <button type="button" className="ch-chat-fab ch-icon-btn" aria-label={t.chat} aria-expanded={chatOpen} onClick={() => setChatOpen((v) => !v)} data-testid="chat-toggle">
-          <MessageCircle size={24} />
-        </button>
       ) : null}
       <div
         className="ch-chat-host"
