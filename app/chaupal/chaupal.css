@@ -858,3 +858,33 @@
   font-size: var(--ch-text-body);
   line-height: 1.55;
 }
+
+/* ---------- Album ---------- */
+.ch-album-page {
+  display: grid;
+  gap: var(--ch-space-5);
+  justify-items: center;
+  padding: var(--ch-space-4) var(--ch-gutter) var(--ch-space-7);
+}
+.ch-album-art {
+  width: min(100%, 760px);
+  border-radius: var(--ch-radius-m);
+  overflow: hidden;
+  border: 1.5px solid var(--ch-hairline);
+  box-shadow: var(--ch-shadow-2);
+  background: var(--ch-bg-deep);
+}
+.ch-album-art img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.ch-album-meta {
+  text-align: center;
+}
+.ch-album-pager {
+  display: flex;
+  align-items: center;
+  gap: var(--ch-space-4);
+  font-size: var(--ch-text-lead);
+}
