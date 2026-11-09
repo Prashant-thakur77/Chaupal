@@ -185,4 +185,9 @@ ALTER TABLE chaupal_activity_state ADD COLUMN IF NOT EXISTS fixture TEXT;
     name: "chaupal-session-shares-notified",
     sql: `ALTER TABLE chaupal_session_shares ADD COLUMN IF NOT EXISTS notified_at TEXT;`,
   },
+  {
+    version: 4,
+    name: "chaupal-chess-resolve-context",
+    sql: `ALTER TABLE chaupal_chess_games ADD COLUMN IF NOT EXISTS resolve_context TEXT;`,
+  },
 ];

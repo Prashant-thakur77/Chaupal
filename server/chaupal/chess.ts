@@ -3,6 +3,7 @@ import { Chess, type Move } from "chess.js";
 import { and, desc, eq, gt } from "drizzle-orm";
 
 import { PIECES } from "../../app/engines/shatranj/pieces.js";
+import { resolvePhrase, type PhraseResult, type ResolveContext } from "../../app/engines/shatranj/resolve.js";
 import { getChessState } from "../../app/engines/shatranj/state.js";
 import { getDb, schema } from "../db/index.js";
 import { mutationOptions, respond, sleep, type Who } from "./kit.js";
@@ -264,6 +265,56 @@ export async function waitForPersonMove(who: Who, timeoutMs = 45_000) {
     timedOut: true,
     note: "She has not moved yet. Do not move for her; wait for her to speak or move.",
   };
+}
+
+/**
+ * Ground her words in the live position. The engine maps Hindi, Hinglish,
+ * Punjabi or Tamil phrases to a legal move, a question, a preview or a kind
+ * refusal; it never invents a move. What she was talking about is kept so a
+ * follow-up like "theek, beech waale ghar mein" resolves.
+ */
+export async function resolveWords(who: Who, phrase: string): Promise<PhraseResult & { fen: string }> {
+  const { game } = await requireGame(who);
+  let context: ResolveContext | undefined;
+  try {
+    context = game.resolveContext ? (JSON.parse(game.resolveContext) as ResolveContext) : undefined;
+  } catch {
+    context = undefined;
+  }
+  const result = resolvePhrase(game.fen, phrase, context);
+  await getDb()
+    .update(schema.chessGames)
+    .set({ resolveContext: JSON.stringify(result.context ?? {}) })
+    .where(eq(schema.chessGames.id, game.id));
+  return { ...result, fen: game.fen };
+}
+
+/** Turn a phrase result into a move, or a caller-readable refusal. */
+export function moveFromPhrase(r: PhraseResult) {
+  if (r.status === "resolved") return { from: r.move.from, to: r.move.to, promotion: r.move.promotion };
+  if (r.status === "ambiguous") {
+    fail(`Her words fit more than one move. Ask her: ${r.questionHi}`, {
+      errorCode: "CHESS_AMBIGUOUS",
+      details: { questionHi: r.questionHi, questionEn: r.questionEn, candidates: r.candidates.map((c) => ({ from: c.from, to: c.to, descriptionHi: c.descriptionHi })), boardUnchanged: true },
+    });
+  }
+  if (r.status === "illegal") {
+    fail(`That move is not allowed: ${r.reasonEn}`, {
+      errorCode: "CHESS_ILLEGAL_MOVE",
+      details: { reasonHi: r.reasonHi, reasonEn: r.reasonEn, code: r.code, boardUnchanged: true },
+    });
+  }
+  if (r.status === "preview") {
+    fail("She asked to see the options first, not to move. Use preview-moves.", {
+      errorCode: "CHESS_PREVIEW_REQUESTED",
+      details: { targets: r.targets, squares: r.squares },
+    });
+  }
+  fail(`Chaupal could not match her words to a piece or move: ${(r as { reasonEn?: string }).reasonEn ?? ""}`, {
+    errorCode: "CHESS_NOT_UNDERSTOOD",
+    details: { reasonHi: (r as { reasonHi?: string }).reasonHi },
+  });
+  throw new Error("unreachable");
 }
 
 export { respond };

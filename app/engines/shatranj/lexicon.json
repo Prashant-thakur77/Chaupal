@@ -1,0 +1,1611 @@
+{
+  "version": 1,
+  "languages": {
+    "hi": "Hindi, Devanagari",
+    "hiLatin": "Hindi / Hinglish, Latin script",
+    "pa": "Punjabi, Gurmukhi",
+    "paLatin": "Punjabi, romanized",
+    "ta": "Tamil, Tamil script (matched by prefix for case suffixes like -ஐ, -ஆல்)",
+    "taLatin": "Tamil, romanized",
+    "en": "English"
+  },
+  "pieces": {
+    "k": {
+      "hi": [
+        "राजा",
+        "राजे",
+        "बादशाह",
+        "शाह"
+      ],
+      "hiLatin": [
+        "raja",
+        "raaja",
+        "raje",
+        "badshah",
+        "baadshah",
+        "shah"
+      ],
+      "pa": [
+        "ਰਾਜਾ",
+        "ਰਾਜੇ",
+        "ਬਾਦਸ਼ਾਹ"
+      ],
+      "paLatin": [
+        "raja",
+        "raje",
+        "badshah"
+      ],
+      "ta": [
+        "ராஜா",
+        "அரசன்",
+        "அரசர்"
+      ],
+      "taLatin": [
+        "raaja",
+        "arasan",
+        "arasar"
+      ],
+      "en": [
+        "king"
+      ]
+    },
+    "q": {
+      "hi": [
+        "वज़ीर",
+        "वजीर",
+        "रानी"
+      ],
+      "hiLatin": [
+        "wazir",
+        "wazeer",
+        "vazir",
+        "vazeer",
+        "wajir",
+        "rani",
+        "raani"
+      ],
+      "pa": [
+        "ਵਜ਼ੀਰ",
+        "ਵਜੀਰ",
+        "ਰਾਣੀ",
+        "ਰਾਨੀ"
+      ],
+      "paLatin": [
+        "wazir",
+        "vajir",
+        "rani",
+        "raani"
+      ],
+      "ta": [
+        "ராணி",
+        "இராணி",
+        "அரசி"
+      ],
+      "taLatin": [
+        "raani",
+        "arasi"
+      ],
+      "en": [
+        "queen"
+      ]
+    },
+    "r": {
+      "hi": [
+        "हाथी",
+        "हाथियों",
+        "किश्ती"
+      ],
+      "hiLatin": [
+        "haathi",
+        "hathi",
+        "haathee",
+        "hati",
+        "kishti"
+      ],
+      "pa": [
+        "ਹਾਥੀ"
+      ],
+      "paLatin": [
+        "haathi",
+        "hathi"
+      ],
+      "ta": [
+        "யானை",
+        "கோட்டை"
+      ],
+      "taLatin": [
+        "yaanai",
+        "yanai",
+        "kottai"
+      ],
+      "en": [
+        "rook",
+        "rooks"
+      ]
+    },
+    "b": {
+      "hi": [
+        "ऊँट",
+        "ऊंट",
+        "ऊँटों",
+        "ऊंटों"
+      ],
+      "hiLatin": [
+        "oont",
+        "unt",
+        "oonth",
+        "oot",
+        "ooth",
+        "ont"
+      ],
+      "pa": [
+        "ਊਠ",
+        "ਊਂਠ"
+      ],
+      "paLatin": [
+        "ooth",
+        "uth",
+        "oonth"
+      ],
+      "ta": [
+        "மந்திரி",
+        "அமைச்சர்",
+        "ஒட்டகம்",
+        "பிஷப்"
+      ],
+      "taLatin": [
+        "manthiri",
+        "mandhiri",
+        "mantiri",
+        "amaichar",
+        "ottagam",
+        "bishap"
+      ],
+      "en": [
+        "bishop",
+        "bishops",
+        "camel"
+      ]
+    },
+    "n": {
+      "hi": [
+        "घोड़ा",
+        "घोड़े",
+        "घोड़ों",
+        "घोडा",
+        "घोडे"
+      ],
+      "hiLatin": [
+        "ghoda",
+        "ghode",
+        "ghodey",
+        "ghodon",
+        "ghodo",
+        "ghora",
+        "ghore",
+        "ghorey",
+        "ghoraa"
+      ],
+      "pa": [
+        "ਘੋੜਾ",
+        "ਘੋੜੇ",
+        "ਘੋੜਿਆਂ"
+      ],
+      "paLatin": [
+        "ghoda",
+        "ghora",
+        "ghode",
+        "ghore"
+      ],
+      "ta": [
+        "குதிரை"
+      ],
+      "taLatin": [
+        "kuthirai",
+        "kudhirai",
+        "kudirai"
+      ],
+      "en": [
+        "knight",
+        "knights",
+        "horse"
+      ]
+    },
+    "p": {
+      "hi": [
+        "प्यादा",
+        "प्यादे",
+        "प्यादों",
+        "पियादा",
+        "सिपाही",
+        "पैदल"
+      ],
+      "hiLatin": [
+        "pyada",
+        "pyaada",
+        "pyade",
+        "pyaade",
+        "pyaadey",
+        "piyada",
+        "piada",
+        "pyaadaa",
+        "sipahi",
+        "sipaahi",
+        "paidal"
+      ],
+      "pa": [
+        "ਪਿਆਦਾ",
+        "ਪਿਆਦੇ",
+        "ਸਿਪਾਹੀ",
+        "ਪਿਆਦਿਆਂ"
+      ],
+      "paLatin": [
+        "piaada",
+        "piada",
+        "piyaada",
+        "sipaahi"
+      ],
+      "ta": [
+        "சிப்பாய்",
+        "காலாள்",
+        "படைவீரர்"
+      ],
+      "taLatin": [
+        "sippai",
+        "sippaai",
+        "kaalaal"
+      ],
+      "en": [
+        "pawn",
+        "pawns",
+        "soldier"
+      ]
+    }
+  },
+  "directions": {
+    "forward": {
+      "hi": [
+        "आगे"
+      ],
+      "hiLatin": [
+        "aage",
+        "age",
+        "aagey",
+        "agey",
+        "aagay"
+      ],
+      "pa": [
+        "ਅੱਗੇ",
+        "ਅਗਾਂਹ"
+      ],
+      "paLatin": [
+        "agge",
+        "aggey",
+        "agaanh"
+      ],
+      "ta": [
+        "முன்னே",
+        "முன்னால்",
+        "முன்னோக்கி"
+      ],
+      "taLatin": [
+        "munne",
+        "munnaal",
+        "munnokki"
+      ],
+      "en": [
+        "forward",
+        "forwards",
+        "ahead"
+      ]
+    },
+    "back": {
+      "hi": [
+        "पीछे"
+      ],
+      "hiLatin": [
+        "peeche",
+        "piche",
+        "pichhe",
+        "peechhe",
+        "peechey"
+      ],
+      "pa": [
+        "ਪਿੱਛੇ",
+        "ਪਿਛਾਂਹ"
+      ],
+      "paLatin": [
+        "pichhe",
+        "pichhaanh"
+      ],
+      "ta": [
+        "பின்னே",
+        "பின்னால்",
+        "பின்னோக்கி"
+      ],
+      "taLatin": [
+        "pinne",
+        "pinnaal"
+      ],
+      "en": [
+        "back",
+        "backward",
+        "backwards"
+      ]
+    },
+    "left": {
+      "hi": [
+        "बाएँ",
+        "बाएं",
+        "बायें",
+        "बाँए",
+        "बायाँ",
+        "बायां",
+        "बाईं",
+        "बाई"
+      ],
+      "hiLatin": [
+        "baayein",
+        "bayein",
+        "baaye",
+        "baayen",
+        "bayen",
+        "baen",
+        "baayan",
+        "bayan",
+        "baain",
+        "bain",
+        "baayi",
+        "bayi",
+        "baye"
+      ],
+      "pa": [
+        "ਖੱਬੇ",
+        "ਖੱਬਾ",
+        "ਖੱਬੀ"
+      ],
+      "paLatin": [
+        "khabbe",
+        "khabba",
+        "khabbi",
+        "khabey"
+      ],
+      "ta": [
+        "இடது",
+        "இடப்பக்க",
+        "இடப்புற"
+      ],
+      "taLatin": [
+        "idathu",
+        "idadhu",
+        "idapakkam"
+      ],
+      "en": [
+        "left"
+      ]
+    },
+    "right": {
+      "hi": [
+        "दाएँ",
+        "दाएं",
+        "दायें",
+        "दाँए",
+        "दायाँ",
+        "दायां",
+        "दाईं",
+        "दाई"
+      ],
+      "hiLatin": [
+        "daayein",
+        "dayein",
+        "daaye",
+        "daayen",
+        "dayen",
+        "daen",
+        "daayan",
+        "dayan",
+        "daain",
+        "dain",
+        "daayi",
+        "dayi",
+        "daye"
+      ],
+      "pa": [
+        "ਸੱਜੇ",
+        "ਸੱਜਾ",
+        "ਸੱਜੀ"
+      ],
+      "paLatin": [
+        "sajje",
+        "sajja",
+        "sajji",
+        "sajey"
+      ],
+      "ta": [
+        "வலது",
+        "வலப்பக்க",
+        "வலப்புற"
+      ],
+      "taLatin": [
+        "valathu",
+        "valadhu",
+        "valapakkam"
+      ],
+      "en": [
+        "right"
+      ]
+    },
+    "diagonal": {
+      "hi": [
+        "तिरछा",
+        "तिरछे",
+        "तिरछी"
+      ],
+      "hiLatin": [
+        "tircha",
+        "tirchha",
+        "tirche",
+        "tirchhe",
+        "tirchi",
+        "tirchhi"
+      ],
+      "pa": [
+        "ਤਿਰਛਾ",
+        "ਤਿਰਛੇ",
+        "ਤਿਰਛੀ"
+      ],
+      "paLatin": [
+        "tirchha",
+        "tirchhe"
+      ],
+      "ta": [
+        "குறுக்காக",
+        "குறுக்கே",
+        "சாய்வாக",
+        "மூலைவிட்டமாக"
+      ],
+      "taLatin": [
+        "kurukkaaga",
+        "kurukke",
+        "saaivaaga"
+      ],
+      "en": [
+        "diagonal",
+        "diagonally"
+      ]
+    },
+    "straight": {
+      "hi": [
+        "सीधा",
+        "सीधे",
+        "सीधी"
+      ],
+      "hiLatin": [
+        "seedha",
+        "sidha",
+        "seedhe",
+        "sidhe",
+        "seedhi",
+        "sidhi",
+        "seedhaa"
+      ],
+      "pa": [
+        "ਸਿੱਧਾ",
+        "ਸਿੱਧੇ",
+        "ਸਿੱਧੀ"
+      ],
+      "paLatin": [
+        "siddha",
+        "siddhe",
+        "sidhaa"
+      ],
+      "ta": [
+        "நேராக",
+        "நேரே"
+      ],
+      "taLatin": [
+        "neraaga",
+        "nere"
+      ],
+      "en": [
+        "straight"
+      ]
+    },
+    "towards-center": {
+      "hi": [
+        "बीच की तरफ़",
+        "बीच की तरफ",
+        "बीच की ओर",
+        "बीच में",
+        "केंद्र की ओर"
+      ],
+      "hiLatin": [
+        "beech ki taraf",
+        "bich ki taraf",
+        "beech ki tarf",
+        "beech ki or",
+        "beech mein",
+        "beech me",
+        "bich mein",
+        "center ki taraf",
+        "centre ki taraf"
+      ],
+      "pa": [
+        "ਵਿਚਕਾਰ ਵੱਲ",
+        "ਵਿਚਾਲੇ ਵੱਲ"
+      ],
+      "paLatin": [
+        "vichkaar vall",
+        "vichkar val",
+        "vichaale val"
+      ],
+      "ta": [
+        "நடுவே",
+        "நடுவில்",
+        "நடுப்பக்கம்",
+        "மையத்தை நோக்கி"
+      ],
+      "taLatin": [
+        "naduve",
+        "naduvil"
+      ],
+      "en": [
+        "towards center",
+        "toward center",
+        "towards the center",
+        "toward the center",
+        "towards centre",
+        "to the center",
+        "to the middle"
+      ]
+    }
+  },
+  "center": {
+    "hi": [
+      "बीच",
+      "बीचवाला",
+      "केंद्र"
+    ],
+    "hiLatin": [
+      "beech",
+      "bich"
+    ],
+    "pa": [
+      "ਵਿਚਕਾਰ",
+      "ਵਿਚਾਲੇ",
+      "ਵਿਚਲਾ"
+    ],
+    "paLatin": [
+      "vichkaar",
+      "vichkar",
+      "vichaale",
+      "vichla"
+    ],
+    "ta": [
+      "நடு",
+      "மைய"
+    ],
+    "taLatin": [
+      "nadu",
+      "maiyam"
+    ],
+    "en": [
+      "center",
+      "centre",
+      "middle",
+      "central"
+    ]
+  },
+  "numbers": {
+    "1": {
+      "hi": [
+        "एक"
+      ],
+      "hiLatin": [
+        "ek",
+        "ekk"
+      ],
+      "pa": [
+        "ਇੱਕ",
+        "ਇਕ"
+      ],
+      "paLatin": [
+        "ikk",
+        "ik"
+      ],
+      "ta": [
+        "ஒரு",
+        "ஒன்று"
+      ],
+      "taLatin": [
+        "oru",
+        "ondru",
+        "onnu"
+      ],
+      "en": [
+        "one",
+        "a single"
+      ]
+    },
+    "2": {
+      "hi": [
+        "दो"
+      ],
+      "hiLatin": [
+        "do",
+        "doh"
+      ],
+      "pa": [
+        "ਦੋ"
+      ],
+      "paLatin": [
+        "do"
+      ],
+      "ta": [
+        "இரண்டு",
+        "ரெண்டு"
+      ],
+      "taLatin": [
+        "irandu",
+        "rendu"
+      ],
+      "en": [
+        "two"
+      ]
+    },
+    "3": {
+      "hi": [
+        "तीन"
+      ],
+      "hiLatin": [
+        "teen",
+        "tin"
+      ],
+      "pa": [
+        "ਤਿੰਨ"
+      ],
+      "paLatin": [
+        "tinn"
+      ],
+      "ta": [
+        "மூன்று"
+      ],
+      "taLatin": [
+        "moondru",
+        "moonu"
+      ],
+      "en": [
+        "three"
+      ]
+    },
+    "4": {
+      "hi": [
+        "चार"
+      ],
+      "hiLatin": [
+        "char",
+        "chaar"
+      ],
+      "pa": [
+        "ਚਾਰ"
+      ],
+      "paLatin": [
+        "chaar"
+      ],
+      "ta": [
+        "நான்கு",
+        "நாலு"
+      ],
+      "taLatin": [
+        "naangu",
+        "naalu"
+      ],
+      "en": [
+        "four"
+      ]
+    },
+    "5": {
+      "hi": [
+        "पाँच",
+        "पांच"
+      ],
+      "hiLatin": [
+        "paanch",
+        "panch"
+      ],
+      "pa": [
+        "ਪੰਜ"
+      ],
+      "paLatin": [
+        "panj"
+      ],
+      "ta": [
+        "ஐந்து"
+      ],
+      "taLatin": [
+        "ainthu",
+        "anju"
+      ],
+      "en": [
+        "five"
+      ]
+    },
+    "6": {
+      "hi": [
+        "छह",
+        "छः",
+        "छे"
+      ],
+      "hiLatin": [
+        "chhah",
+        "chhe",
+        "chah",
+        "che"
+      ],
+      "pa": [
+        "ਛੇ"
+      ],
+      "paLatin": [
+        "chhe"
+      ],
+      "ta": [
+        "ஆறு"
+      ],
+      "taLatin": [
+        "aaru"
+      ],
+      "en": [
+        "six"
+      ]
+    },
+    "7": {
+      "hi": [
+        "सात"
+      ],
+      "hiLatin": [
+        "saat",
+        "sat"
+      ],
+      "pa": [
+        "ਸੱਤ"
+      ],
+      "paLatin": [
+        "satt"
+      ],
+      "ta": [
+        "ஏழு"
+      ],
+      "taLatin": [
+        "ezhu"
+      ],
+      "en": [
+        "seven"
+      ]
+    },
+    "8": {
+      "hi": [
+        "आठ"
+      ],
+      "hiLatin": [
+        "aath",
+        "aat"
+      ],
+      "pa": [
+        "ਅੱਠ"
+      ],
+      "paLatin": [
+        "atth"
+      ],
+      "ta": [
+        "எட்டு"
+      ],
+      "taLatin": [
+        "ettu"
+      ],
+      "en": [
+        "eight"
+      ]
+    }
+  },
+  "units": {
+    "hi": [
+      "घर",
+      "घरों",
+      "खाना",
+      "ख़ाना",
+      "खाने",
+      "ख़ाने",
+      "कदम",
+      "क़दम"
+    ],
+    "hiLatin": [
+      "ghar",
+      "gharon",
+      "khana",
+      "khaana",
+      "khane",
+      "khaane",
+      "kadam"
+    ],
+    "pa": [
+      "ਘਰ",
+      "ਘਰਾਂ",
+      "ਖਾਨਾ",
+      "ਖ਼ਾਨਾ",
+      "ਖਾਨੇ"
+    ],
+    "paLatin": [
+      "gharaan",
+      "khaane"
+    ],
+    "ta": [
+      "கட்டம்",
+      "கட்டங்கள்",
+      "சதுரம்"
+    ],
+    "taLatin": [
+      "kattam",
+      "kattangal"
+    ],
+    "en": [
+      "square",
+      "squares",
+      "step",
+      "steps",
+      "box",
+      "boxes"
+    ]
+  },
+  "capture": {
+    "hi": [
+      "मार दो",
+      "मार दे",
+      "मार डालो",
+      "मारो",
+      "मारना",
+      "मार",
+      "काट दो",
+      "काटो",
+      "काट",
+      "ले लो",
+      "खा लो",
+      "खा जाओ"
+    ],
+    "hiLatin": [
+      "maar do",
+      "mar do",
+      "maar de",
+      "maar daalo",
+      "maar dalo",
+      "maaro",
+      "maro",
+      "maarna",
+      "marna",
+      "maar",
+      "kaat do",
+      "kat do",
+      "kaato",
+      "kaat",
+      "le lo",
+      "kha lo",
+      "kha jao",
+      "maar dena"
+    ],
+    "pa": [
+      "ਮਾਰ ਦਿਓ",
+      "ਮਾਰ ਦੇ",
+      "ਮਾਰੋ",
+      "ਮਾਰ",
+      "ਖਾ ਜਾ",
+      "ਲੈ ਲਓ"
+    ],
+    "paLatin": [
+      "maar deo",
+      "maar dio",
+      "khaa ja",
+      "lai lo"
+    ],
+    "ta": [
+      "வெட்டு",
+      "வெட்டி",
+      "கைப்பற்று"
+    ],
+    "taLatin": [
+      "vettu",
+      "vetti"
+    ],
+    "en": [
+      "capture",
+      "captures",
+      "take",
+      "takes",
+      "kill",
+      "eat",
+      "cut"
+    ]
+  },
+  "castle": {
+    "hi": [
+      "कैसलिंग",
+      "किलाबंदी",
+      "किला बंदी",
+      "क़िलाबंदी",
+      "क़िला बंदी",
+      "किला",
+      "क़िला"
+    ],
+    "hiLatin": [
+      "castling",
+      "kila bandi",
+      "kilabandi",
+      "qila bandi",
+      "qilabandi",
+      "kila",
+      "qila",
+      "killa"
+    ],
+    "pa": [
+      "ਕਿਲ੍ਹਾਬੰਦੀ",
+      "ਕਿਲ੍ਹਾ ਬੰਦੀ",
+      "ਕਿਲਾਬੰਦੀ",
+      "ਕਿਲ੍ਹਾ",
+      "ਕਿਲਾ"
+    ],
+    "paLatin": [
+      "kilha bandi",
+      "kilha"
+    ],
+    "ta": [
+      "கோட்டை கட்டு",
+      "கோட்டை கட்டுதல்",
+      "கேஸ்ட்லிங்"
+    ],
+    "taLatin": [
+      "kottai kattu",
+      "castling"
+    ],
+    "en": [
+      "castling",
+      "castle",
+      "castles"
+    ]
+  },
+  "castleKingside": {
+    "hi": [
+      "छोटी",
+      "छोटा"
+    ],
+    "hiLatin": [
+      "chhoti",
+      "choti",
+      "chhota",
+      "chota"
+    ],
+    "pa": [
+      "ਛੋਟੀ",
+      "ਛੋਟਾ"
+    ],
+    "paLatin": [
+      "chhoti"
+    ],
+    "ta": [
+      "சிறிய"
+    ],
+    "taLatin": [
+      "siriya"
+    ],
+    "en": [
+      "short",
+      "kingside",
+      "king side"
+    ]
+  },
+  "castleQueenside": {
+    "hi": [
+      "बड़ी",
+      "बड़ा"
+    ],
+    "hiLatin": [
+      "badi",
+      "bari",
+      "bada",
+      "bara"
+    ],
+    "pa": [
+      "ਵੱਡੀ",
+      "ਵੱਡਾ"
+    ],
+    "paLatin": [
+      "vaddi",
+      "vadda"
+    ],
+    "ta": [
+      "பெரிய"
+    ],
+    "taLatin": [
+      "periya"
+    ],
+    "en": [
+      "long",
+      "queenside",
+      "queen side"
+    ]
+  },
+  "protectKing": {
+    "hi": [
+      "राजा को बचाओ",
+      "राजा बचाओ",
+      "राजा को बचा लो"
+    ],
+    "hiLatin": [
+      "raja ko bachao",
+      "raja ko bachaao",
+      "raja bachao",
+      "raja ko bacha lo"
+    ],
+    "pa": [
+      "ਰਾਜੇ ਨੂੰ ਬਚਾਓ",
+      "ਰਾਜਾ ਬਚਾਓ"
+    ],
+    "paLatin": [
+      "raje nu bachao"
+    ],
+    "ta": [
+      "ராஜாவை காப்பாற்று"
+    ],
+    "taLatin": [
+      "raajavai kaappaatru"
+    ],
+    "en": [
+      "save the king",
+      "protect the king",
+      "protect king",
+      "save king"
+    ]
+  },
+  "preview": {
+    "hi": [
+      "पहले दिखाओ",
+      "सिर्फ़ दिखाओ",
+      "सिर्फ दिखाओ",
+      "दिखाओ",
+      "दिखा दो",
+      "दिखाइए",
+      "कहाँ जा सकता",
+      "कहां जा सकता",
+      "कहाँ जा सकती",
+      "अभी चलना नहीं",
+      "अभी मत चलो",
+      "मत चलो",
+      "चलना नहीं"
+    ],
+    "hiLatin": [
+      "pehle dikhao",
+      "pahle dikhao",
+      "sirf dikhao",
+      "dikhao",
+      "dikhaao",
+      "dikha do",
+      "dikhaiye",
+      "kahan ja sakta",
+      "kahaan ja sakta",
+      "kaha ja sakta",
+      "kahan ja sakti",
+      "kidhar ja sakta",
+      "abhi chalna nahi",
+      "abhi chalna nahin",
+      "abhi mat chalo",
+      "mat chalo",
+      "chalna nahi",
+      "abhi nahi chalna"
+    ],
+    "pa": [
+      "ਦਿਖਾਓ",
+      "ਵਿਖਾਓ",
+      "ਕਿੱਥੇ ਜਾ ਸਕਦਾ",
+      "ਹਾਲੇ ਨਾ ਚੱਲੋ"
+    ],
+    "paLatin": [
+      "vikhao",
+      "kithe ja sakda",
+      "kitthe ja sakda",
+      "haale na chalo"
+    ],
+    "ta": [
+      "காட்டு",
+      "எங்கே போகலாம்",
+      "எங்கே போக முடியும்"
+    ],
+    "taLatin": [
+      "kaattu",
+      "enge pogalaam"
+    ],
+    "en": [
+      "show me",
+      "show",
+      "preview",
+      "where can",
+      "just show",
+      "dont move",
+      "do not move"
+    ]
+  },
+  "own": {
+    "hi": [
+      "मेरा",
+      "मेरी",
+      "मेरे",
+      "अपना",
+      "अपनी",
+      "अपने"
+    ],
+    "hiLatin": [
+      "mera",
+      "meri",
+      "mere",
+      "apna",
+      "apni",
+      "apne"
+    ],
+    "pa": [
+      "ਮੇਰਾ",
+      "ਮੇਰੀ",
+      "ਮੇਰੇ",
+      "ਆਪਣਾ",
+      "ਆਪਣੀ",
+      "ਆਪਣੇ"
+    ],
+    "paLatin": [
+      "aapna",
+      "apna"
+    ],
+    "ta": [
+      "என்",
+      "என்னுடைய",
+      "என்னோட"
+    ],
+    "taLatin": [
+      "en",
+      "ennudaiya"
+    ],
+    "en": [
+      "my",
+      "mine",
+      "our"
+    ]
+  },
+  "opponent": {
+    "hi": [
+      "उसका",
+      "उसकी",
+      "उसके",
+      "उनका",
+      "उनकी",
+      "उनके",
+      "दुश्मन का",
+      "दुश्मन की",
+      "दुश्मन के",
+      "सामने वाले का",
+      "सामने वाले की",
+      "सामने वाले के"
+    ],
+    "hiLatin": [
+      "uska",
+      "uski",
+      "uske",
+      "unka",
+      "unki",
+      "unke",
+      "dushman ka",
+      "dushman ki",
+      "dushman ke",
+      "saamne wale ka",
+      "saamne wale ki",
+      "saamne wale ke"
+    ],
+    "pa": [
+      "ਉਸਦਾ",
+      "ਉਸਦੀ",
+      "ਉਸਦੇ",
+      "ਉਹਦਾ",
+      "ਉਹਦੀ",
+      "ਉਹਦੇ",
+      "ਉਹਨਾਂ ਦਾ"
+    ],
+    "paLatin": [
+      "usda",
+      "usdi",
+      "ohda",
+      "ohdi",
+      "ohde",
+      "ohna da"
+    ],
+    "ta": [
+      "அவனுடைய",
+      "அவன்",
+      "அவரது",
+      "எதிரியின்"
+    ],
+    "taLatin": [
+      "avanudaiya",
+      "avan",
+      "ethiriyin"
+    ],
+    "en": [
+      "his",
+      "her",
+      "their",
+      "opponent",
+      "opponents",
+      "enemy",
+      "enemys"
+    ]
+  },
+  "wala": {
+    "hi": [
+      "वाला",
+      "वाले",
+      "वाली"
+    ],
+    "hiLatin": [
+      "wala",
+      "waala",
+      "wale",
+      "waale",
+      "wali",
+      "waali",
+      "vala",
+      "vaala",
+      "vaale",
+      "waley"
+    ],
+    "pa": [
+      "ਵਾਲਾ",
+      "ਵਾਲੇ",
+      "ਵਾਲੀ"
+    ],
+    "paLatin": [
+      "wala",
+      "vaala"
+    ],
+    "ta": [
+      "உள்ள",
+      "இருக்கும்"
+    ],
+    "taLatin": [
+      "ulla"
+    ],
+    "en": []
+  },
+  "postposition": {
+    "hi": [
+      "का",
+      "के",
+      "की"
+    ],
+    "hiLatin": [
+      "ka",
+      "ke",
+      "ki"
+    ],
+    "pa": [
+      "ਦਾ",
+      "ਦੇ",
+      "ਦੀ"
+    ],
+    "paLatin": [
+      "da",
+      "de",
+      "di"
+    ],
+    "ta": [],
+    "taLatin": [],
+    "en": [
+      "of"
+    ]
+  },
+  "front": {
+    "hi": [
+      "सामने"
+    ],
+    "hiLatin": [
+      "saamne",
+      "samne",
+      "saamane",
+      "saamney",
+      "samney"
+    ],
+    "pa": [
+      "ਸਾਹਮਣੇ",
+      "ਅੱਗੇ ਵਾਲਾ"
+    ],
+    "paLatin": [
+      "saahmne",
+      "samhne"
+    ],
+    "ta": [],
+    "taLatin": [],
+    "en": [
+      "in front of",
+      "front of",
+      "in front"
+    ]
+  },
+  "taraf": {
+    "hi": [
+      "तरफ़",
+      "तरफ",
+      "ओर"
+    ],
+    "hiLatin": [
+      "taraf",
+      "tarf",
+      "taraph",
+      "side"
+    ],
+    "pa": [
+      "ਵੱਲ",
+      "ਪਾਸੇ"
+    ],
+    "paLatin": [
+      "vall",
+      "paase"
+    ],
+    "ta": [
+      "பக்கம்"
+    ],
+    "taLatin": [
+      "pakkam"
+    ],
+    "en": [
+      "towards",
+      "toward",
+      "side"
+    ]
+  },
+  "instrumental": {
+    "hi": [
+      "से"
+    ],
+    "hiLatin": [
+      "se",
+      "sey"
+    ],
+    "pa": [
+      "ਨਾਲ",
+      "ਤੋਂ"
+    ],
+    "paLatin": [
+      "naal",
+      "nal",
+      "ton",
+      "tho"
+    ],
+    "ta": [
+      "இருந்து",
+      "ஆல்"
+    ],
+    "taLatin": [
+      "irundhu"
+    ],
+    "en": [
+      "from",
+      "with"
+    ]
+  },
+  "toMarker": {
+    "hi": [
+      "पर",
+      "पे",
+      "में",
+      "तक"
+    ],
+    "hiLatin": [
+      "par",
+      "pe",
+      "pai",
+      "mein",
+      "me",
+      "main",
+      "tak"
+    ],
+    "pa": [
+      "ਤੇ",
+      "ਵਿੱਚ",
+      "ਤੱਕ"
+    ],
+    "paLatin": [
+      "te",
+      "vich",
+      "takk"
+    ],
+    "ta": [
+      "க்கு",
+      "வரை"
+    ],
+    "taLatin": [
+      "varai"
+    ],
+    "en": [
+      "to",
+      "on",
+      "into",
+      "onto"
+    ]
+  },
+  "object": {
+    "hi": [
+      "को"
+    ],
+    "hiLatin": [
+      "ko"
+    ],
+    "pa": [
+      "ਨੂੰ"
+    ],
+    "paLatin": [
+      "nu",
+      "noo",
+      "nun"
+    ],
+    "ta": [],
+    "taLatin": [],
+    "en": []
+  },
+  "negation": {
+    "hi": [
+      "नहीं",
+      "नही",
+      "मत",
+      "ना"
+    ],
+    "hiLatin": [
+      "nahi",
+      "nahin",
+      "nai",
+      "mat",
+      "na"
+    ],
+    "pa": [
+      "ਨਹੀਂ",
+      "ਨਾ"
+    ],
+    "paLatin": [
+      "nahin",
+      "nai"
+    ],
+    "ta": [
+      "இல்லை",
+      "வேண்டாம்"
+    ],
+    "taLatin": [
+      "illai",
+      "vendaam"
+    ],
+    "en": [
+      "not",
+      "no",
+      "dont"
+    ]
+  },
+  "moveVerbs": {
+    "hi": [
+      "चलो",
+      "चलाओ",
+      "चल",
+      "चलिए",
+      "निकालो",
+      "बढ़ाओ",
+      "करो",
+      "कर दो",
+      "ले जाओ",
+      "रखो"
+    ],
+    "hiLatin": [
+      "chalo",
+      "chalao",
+      "chal",
+      "chaliye",
+      "nikalo",
+      "nikaalo",
+      "badhao",
+      "badhaao",
+      "karo",
+      "kar do",
+      "le jao",
+      "rakho",
+      "chalna"
+    ],
+    "pa": [
+      "ਚੱਲੋ",
+      "ਚਲਾਓ",
+      "ਕੱਢੋ",
+      "ਕਰੋ",
+      "ਕਰ ਦਿਓ",
+      "ਲੈ ਜਾਓ"
+    ],
+    "paLatin": [
+      "challo",
+      "kaddho",
+      "kar deo",
+      "lai jao"
+    ],
+    "ta": [
+      "நகர்த்து",
+      "நகர்த்துங்கள்",
+      "செய்",
+      "வை"
+    ],
+    "taLatin": [
+      "nagarthu",
+      "sei"
+    ],
+    "en": [
+      "move",
+      "play",
+      "go",
+      "push"
+    ]
+  },
+  "fillers": {
+    "hi": [
+      "ठीक",
+      "ठीक है",
+      "अच्छा",
+      "हाँ",
+      "हां",
+      "अभी",
+      "पहले",
+      "जी",
+      "ज़रा",
+      "भाई",
+      "बेटा"
+    ],
+    "hiLatin": [
+      "theek",
+      "thik",
+      "theek hai",
+      "achha",
+      "acha",
+      "accha",
+      "haan",
+      "han",
+      "abhi",
+      "pehle",
+      "ji",
+      "zara",
+      "bhai",
+      "beta",
+      "ok",
+      "okay"
+    ],
+    "pa": [
+      "ਠੀਕ",
+      "ਚੰਗਾ",
+      "ਹਾਂ",
+      "ਜੀ"
+    ],
+    "paLatin": [
+      "changa",
+      "haanji"
+    ],
+    "ta": [
+      "சரி",
+      "சரி சரி"
+    ],
+    "taLatin": [
+      "sari"
+    ],
+    "en": [
+      "ok",
+      "okay",
+      "fine",
+      "yes",
+      "now",
+      "the",
+      "a",
+      "an",
+      "please"
+    ]
+  }
+}

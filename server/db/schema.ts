@@ -124,6 +124,8 @@ export const chessGames = pgTable("chaupal_chess_games", {
   status: text("status").notNull().default("playing"),
   /** JSON: legal-move preview currently shown (no move made) */
   preview: text("preview"),
+  /** JSON: what the elder was last talking about, for "theek, wahi wala" */
+  resolveContext: text("resolve_context"),
   createdAt: text("created_at").notNull().default(sql`now()`),
   updatedAt: text("updated_at").notNull().default(sql`now()`),
 });

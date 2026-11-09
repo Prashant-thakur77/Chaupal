@@ -5,17 +5,33 @@ import {
 } from "@agent-native/core/server";
 
 import actionsRegistry from "../../.generated/actions-registry.js";
+import { CHAUPAL_SYSTEM_PROMPT } from "../chaupal/prompt.js";
+import { isFamilyGuest } from "../lib/guest.js";
 import {
   searchConversationReferences,
   validateConversationReferences,
 } from "../lib/composer-references.js";
 
 const INITIAL_TOOL_NAMES = [
-  "view-screen",
-  "navigate",
-  "hello",
-  "provider-api-request",
-  "ask-question",
+  "get-session-state",
+  "open-activity",
+  "suggest-phrases",
+  "set-calligraphy-reference",
+  "set-input-mode",
+  "start-air-writing",
+  "clear-my-strokes",
+  "set-rangoli-reference",
+  "set-kolam-reference",
+  "fill-region",
+  "get-chess-state",
+  "preview-moves",
+  "move-chess-piece",
+  "wait-for-person-move",
+  "invite-family",
+  "draft-family-update",
+  "send-family-update",
+  "set-language",
+  "show-history",
 ];
 
 export default createAgentChatPlugin({
@@ -26,16 +42,16 @@ export default createAgentChatPlugin({
       search: searchConversationReferences,
     },
   },
-  prepareRequest: async ({ references }) => {
-    await validateConversationReferences(references);
+  prepareRequest: async (details) => {
+    const owner = (details as { ownerEmail?: string }).ownerEmail;
+    if (isFamilyGuest(owner)) {
+      throw new Error("The family view does not run the elder's agent.");
+    }
+    await validateConversationReferences(details.references);
   },
   actions: loadActionsFromStaticRegistry(actionsRegistry),
   mcp: { connectorCatalog: [], appApprovalPage: true },
   initialToolNames: INITIAL_TOOL_NAMES,
   resolveOrgId: async (event) => (await getOrgContext(event)).orgId,
-  systemPrompt: `You are the Chat app agent.
-
-This is a minimal chat-first Agent-Native app. The chat is the product surface, and actions are the contract shared by chat, UI, HTTP, MCP, A2A, and CLI.
-
-Use actions as the source of truth. Start by inspecting the current screen when context matters. When the user asks to extend this app, keep the change small and agent-native: add or update actions, expose useful UI, and keep application state/navigation visible to the agent.`,
+  systemPrompt: CHAUPAL_SYSTEM_PROMPT,
 });

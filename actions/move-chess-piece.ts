@@ -1,16 +1,17 @@
 import { defineAction, fail } from "@agent-native/core/action";
 import { z } from "zod";
 
-import { playMove } from "../server/chaupal/chess.js";
+import { moveFromPhrase, playMove, resolveWords } from "../server/chaupal/chess.js";
 import { ChaupalResult, ExpectedRevision, respond, sessionChange, sessionOf } from "../server/chaupal/kit.js";
 import { recordConflict } from "../server/chaupal/conflict.js";
 
 export default defineAction({
   description:
-    "Make one chess move on her live board. actor \"elder\" plays HER move exactly as she asked (submit what she said even if it looks illegal; Chaupal rejects illegal moves with a reason and leaves the board unchanged, and you must not substitute another move). actor \"agent\" plays your own reply only when it is your turn and she asked you to play. The board animates on her screen before this returns. Use squares from get-chess-state.",
+    "Make one chess move on her live board. For HER move (actor \"elder\"), pass her own words as `phrase` (Hindi, Hinglish, Punjabi or Tamil, e.g. \"raja ke saamne waala pyada do ghar aage\") and Chaupal resolves them against the live position, or pass from/to squares. Submit what she asked even if it looks illegal: Chaupal rejects an illegal move with a reason (CHESS_ILLEGAL_MOVE), asks back when her words fit two moves (CHESS_AMBIGUOUS with a question to ask her), and leaves the board unchanged; never substitute another move. actor \"agent\" plays your own reply (from/to) only when it is your turn. The move animates on her screen before this returns.",
   schema: z.object({
-    from: z.string().regex(/^[a-h][1-8]$/).describe("From square, e.g. e2"),
-    to: z.string().regex(/^[a-h][1-8]$/).describe("To square, e.g. e4"),
+    phrase: z.string().max(200).optional().describe("Her words for the move; resolved by Chaupal (use instead of from/to for her move)"),
+    from: z.string().regex(/^[a-h][1-8]$/).optional().describe("From square, e.g. e2 (with to)"),
+    to: z.string().regex(/^[a-h][1-8]$/).optional().describe("To square, e.g. e4 (with from)"),
     actor: z.enum(["elder", "agent"]).describe('"elder" for her own move, "agent" for your reply'),
     spokenMove: z.string().max(200).optional().describe("Her words for this move, as she said them"),
     promotion: z.enum(["q", "r", "b", "n"]).optional().describe("Promotion piece if a pawn reaches the last rank; defaults to q"),
@@ -25,16 +26,26 @@ export default defineAction({
       fail("Only move her pieces when she asked for that move.", { errorCode: "PERSON_CONFIRMATION_REQUIRED" });
     }
     const who = await sessionOf(ctx);
+    let from = args.from;
+    let to = args.to;
+    let promotion: string | undefined = args.promotion;
+    if (!from || !to) {
+      if (!args.phrase) fail("Give her words as phrase, or from and to squares.", { errorCode: "CHESS_MOVE_REQUIRED" });
+      const resolved = moveFromPhrase(await resolveWords(who, args.phrase!));
+      from = resolved.from;
+      to = resolved.to;
+      promotion = resolved.promotion ?? promotion;
+    }
     try {
       const out = await playMove({
         ctx,
         who,
-        from: args.from,
-        to: args.to,
-        promotion: args.promotion,
+        from: from!,
+        to: to!,
+        promotion,
         actor: args.actor,
         via: args.actor === "elder" ? "voice" : "agent",
-        spoken: args.spokenMove,
+        spoken: args.spokenMove ?? args.phrase,
         expectedRevision: args.expectedRevision,
       });
       return respond(out.state, {
