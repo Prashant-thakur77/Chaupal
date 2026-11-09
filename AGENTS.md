@@ -1,33 +1,34 @@
-# Chat — Agent Guide
+# Chaupal: agent guide
 
-Chat is the minimal chat-first agent-native app. `/` redirects to shared sign-in, then `/home`, the editable Get started page. Chat lives at `/chat`; new chats start there. Actions carry capabilities; screens exist only for durable workflows.
+Chaupal is a village square on a screen for an Indian elder. She speaks in her own language; the agent opens a live activity she continues herself: Sulekh calligraphy to trace, a rangoli or pulli kolam to trace and colour, or shatranj with Hindi piece names. Family can join the same live board from another city. The elder's screen is `/chaupal`; a family member's phone is `/family`; the MCP App card is `/embed/live`; results are at `/proof`.
 
-## Skills
+## Rules
 
-Search with `rg --hidden --follow`; read the exact linked guide before deeper work. `.agents/skills/build-an-app/SKILL.md` — start here for vague requests to create a domain app. `.agents/skills/adding-a-feature/SKILL.md` — cross-area feature checklist. Data/integrations: `.agents/skills/actions/SKILL.md`, `.agents/skills/storing-data/SKILL.md`, `.agents/skills/security/SKILL.md`, `.agents/skills/secrets/SKILL.md`, `.agents/skills/sharing/SKILL.md`. UI: `.agents/skills/frontend-design/SKILL.md`, `.agents/skills/shadcn-ui/SKILL.md`, `.agents/skills/client-side-routing/SKILL.md`. Agent context/workflows: `.agents/skills/context-awareness/SKILL.md`, `.agents/skills/real-time-sync/SKILL.md`, `.agents/skills/reliable-mutations/SKILL.md`, `.agents/skills/performance/SKILL.md`, `.agents/skills/delegate-to-agent/SKILL.md`. Framework: `.agents/skills/agent-native-docs/SKILL.md`, `.agents/skills/agent-native-toolkit/SKILL.md`, `.agents/skills/customizing-agent-native/SKILL.md`.
+- Actions own the truth. HarfBuzz shapes calligraphy text, the kolam/rangoli generator draws designs, chess.js owns moves. Choose among valid options and set parameters; never invent a render, a design or a position.
+- Every result carries `revision` and `validNextActions`. Pass `expectedRevision` when acting on something you read; a `save_conflict` means someone else acted first: re-read and decide again.
+- Speak to her as an adult in her language and script, with "aap". No tool or technical words, no pity, no false intimacy.
+- Never claim something is on her screen, saved or sent unless the result shows it.
+- Camera only after she asks to write in the air; the browser asks her. Family invites only when she asks. Anything leaving the house needs her own "haan" on her screen.
 
-Use local docs only (no web research): `pnpm action docs-search --query "<topic>"`, `pnpm action docs-search --slug "<slug>"`, `pnpm action docs-search --list`, `pnpm action source-search --query "<pattern>"`, `pnpm action source-search --path <path>`, or `pnpm action source-search --list`. For external-agent integrations, read `pnpm action docs-search --slug "external-agents"`.
+## Key actions
 
-## Core rules
+| Action | Use |
+|---|---|
+| `get-session-state` | What is on her screen now, with `validNextActions`. |
+| `open-activity` | Open `sulekh`, `rangoli`, `kolam` or `shatranj` (her side `w` or `b`). |
+| `suggest-phrases` | Show 1–3 phrase choices and wait for her tap; never choose for her. |
+| `set-calligraphy-reference` | Put her exact phrase on screen (Devanagari, Gurmukhi, Tamil, Bengali, Urdu; kalam, brush, modern). On a `REFERENCE_*` rejection, call again. |
+| `set-input-mode` / `start-air-writing` | Finger drawing (no camera) / air-writing after she asks. |
+| `clear-my-strokes` | Erase only her lines; references and designs stay. |
+| `set-kolam-reference` / `set-rangoli-reference` / `suggest-designs` | Pulli kolam on an N×N grid; radial rangoli or pookalam; festival presets only when she names one. |
+| `fill-region` | Colour by her words ("beech mein peela, bahar laal") or by zone; unresolved parts come back for you to ask about. |
+| `get-chess-state` / `preview-moves` / `move-chess-piece` | Read the board; show where a piece can go; play her move from her `phrase` (or squares) or your own reply. Illegal moves are refused with no substitute; ambiguous ones come back with a question to ask her. |
+| `wait-for-person-move` | When she says she will move by hand on her turn. |
+| `invite-family` / `family-move` | Private link for a family member; they play the other side. |
+| `draft-family-update` / `send-family-update` / `cancel-family-update` | A family update to Telegram, only after her own approval; "mat bhejo" cancels it. |
+| `save-artwork` / `list-album` | Keep what is on screen in her album. |
+| `show-history` / `set-language` / `show-live-board` | History panel; screen language; the live MCP App card. |
 
-- UI feedback: target 100 ms, never exceed 400 ms; acknowledge before network work.
-- Normal app data must flow through actions. Keep actions deterministic and focused; use agent chat/AgentSidebar for AI work and follow-ups in the same thread. Keep structured state in SQL and large files in configured storage; persist references only.
-- For external integrations, inspect the workspace/provider connection catalog first; reuse its scoped resolver. Never hardcode credentials, webhook URLs, or private/customer data.
-- Never fabricate. Report failures and recover; verify writes by reading the row or screen. Navigation is in `<current-screen>`; use `view-screen` for fresh visible-record details.
+## Development
 
-For custom branding, keep `server/plugins/agent-native-email-branding.ts` aligned: `app.name` appears in transactional email and optional `app.logoUrl` must be an absolute HTTPS URL.
-
-## Application state
-
-- `navigation` describes the view and selected ids. Chat is `chat` at `/chat` and `/chat/<threadId>`; the Get started page is `home` at `/home`; `/` opens shared sign-in/signup.
-- Use `navigate` when supported and `view-screen` for a fresh read of visible details; basic navigation is already in `<current-screen>`.
-
-## Building a domain app
-
-Choose the primary workflow and route before editing. Add a domain route under `app/routes/` and set `app.homePath` in `server/plugins/agent-native-email-branding.ts` with `defineAppConfig`. The default Get started page lives at `/home`, and Chat stays at `/chat`; edit `app/routes/home.tsx` when replacing that page with a domain-specific home. Add a static link in `app/components/layout/Sidebar.tsx` before `ChatThreadsSection`; `Header.tsx` uses `APP_TITLE` elsewhere. Shared sidebar and AgentInspector remain.
-
-Use `adding-a-feature` for functional parity and `frontend-design` for a user-facing screen. Keep feature guidance here; do not rewrite `README.md` or `DESIGN.md`. After all edits, run one typecheck, one doctor check, and one browser smoke of the primary workflow, including overlap rejection, cancellation freeing the slot, and authenticated landing. Skip production build and extra test suites.
-
-Before building common workspace or agent UI, read `agent-native-toolkit`; for supported customization, read `customizing-agent-native`.
-
-- Guarded verification: run `pnpm agent-native:doctor`; fix findings before done.
+`pnpm dev` runs the app on :8080 with PGlite. Engines and their tests live in `app/engines/` (`pnpm exec vitest run app/engines`). Server logic for actions is in `server/chaupal/`; schema in `server/db/`. Deploy with `pnpm deploy:netlify` and `pnpm deploy:edge`. The evaluation is in `evals/` (see `evals/README.md`).
