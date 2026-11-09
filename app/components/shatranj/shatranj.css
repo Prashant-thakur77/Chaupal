@@ -1,0 +1,405 @@
+/* Shatranj board. Palette falls back to the Chaupal tokens, then to fixed
+   values, so the board looks the same with or without the token sheet. The
+   WebGPU renderer reads the resolved --sj-* colours from the root. */
+
+.sj-root {
+  --sj-square-dark: var(--ch-clay-500, #8e5232);
+  --sj-square-light: var(--ch-clay-300, #d7a577);
+  --sj-her-face: var(--ch-chalk-100, #f4e8d2);
+  --sj-her-ink: var(--ch-clay-600, #6a2611);
+  --sj-her-rim: var(--ch-clay-600, #6a2611);
+  --sj-her-ring: var(--ch-marigold-500, #f4a93c);
+  --sj-other-face: var(--ch-night-700, #2e2955);
+  --sj-other-ink: var(--ch-marigold-300, #ffd58c);
+  --sj-other-rim: var(--ch-night-950, #0e0c20);
+  --sj-other-ring: var(--ch-indigo-300, #9c9cf0);
+  --sj-last-move: var(--ch-marigold-200, #e9b860);
+  --sj-selected: var(--ch-marigold-400, #ffc866);
+  --sj-check: var(--ch-rang-laal, #e0473b);
+  --sj-shadow: #1a0b05;
+  --sj-frame-hi: #7a3a22;
+  --sj-frame-lo: var(--ch-clay-800, #3a1a0c);
+  --sj-focus: var(--ch-marigold-400, #ffc866);
+  --sj-label-font: "Mukta", "Noto Sans Devanagari", "Kohinoor Devanagari",
+    "Nirmala UI", system-ui, sans-serif;
+
+  /* rim of the frame; the board fills the rest */
+  --sj-rim: clamp(6px, 2.6cqw, 20px);
+  /* one square, resolved against this root (container) in descendants */
+  --sj-sq: calc((100cqw - 2 * var(--sj-rim)) / 8);
+
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  container-type: inline-size;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  font-family: var(--sj-label-font);
+  isolation: isolate;
+}
+
+.sj-frame {
+  position: absolute;
+  inset: 0;
+  border-radius: clamp(10px, 2.4cqw, 20px);
+  background:
+    radial-gradient(120% 90% at 30% 0%, rgb(255 214 170 / 0.16), transparent 60%),
+    linear-gradient(150deg, var(--sj-frame-hi), var(--sj-frame-lo));
+  box-shadow:
+    inset 0 1px 0 rgb(255 226 190 / 0.22),
+    inset 0 -2px 0 rgb(0 0 0 / 0.28),
+    0 2px 6px rgb(8 4 20 / 0.35),
+    0 22px 60px rgb(8 4 20 / 0.5);
+}
+
+.sj-board {
+  position: absolute;
+  inset: var(--sj-rim);
+  touch-action: none;
+}
+
+/* ---- DOM squares (fallback renderer) ---- */
+.sj-squares {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  border-radius: clamp(3px, 0.7cqw, 6px);
+  overflow: hidden;
+  box-shadow: 0 0 0 1px rgb(26 11 5 / 0.45);
+}
+.sj-squares::after {
+  /* clay grain + a soft edge vignette so the squares read as fired clay */
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(130% 130% at 50% 45%, transparent 62%, rgb(40 14 4 / 0.2)),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .32  0 0 0 0 .16  0 0 0 0 .08  0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-size: 100% 100%, 220px 220px;
+  mix-blend-mode: multiply;
+  opacity: 0.55;
+}
+.sj-square {
+  position: relative;
+}
+.sj-square[data-tone="dark"] {
+  background: var(--sj-square-dark);
+}
+.sj-square[data-tone="light"] {
+  background: var(--sj-square-light);
+}
+.sj-square[data-mark]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.sj-square[data-mark="last"]::before {
+  background: color-mix(in srgb, var(--sj-last-move) 52%, transparent);
+}
+.sj-square[data-mark="selected"]::before {
+  background: color-mix(in srgb, var(--sj-selected) 62%, transparent);
+}
+.sj-square[data-check="true"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, var(--sj-check) 85%, transparent) 30%,
+    color-mix(in srgb, var(--sj-check) 35%, transparent) 72%,
+    transparent 100%
+  );
+}
+
+/* ---- WebGPU canvas: overhangs the board so captured discs can fly off ---- */
+.sj-canvas {
+  position: absolute;
+  left: -12.5%;
+  top: -12.5%;
+  width: 125%;
+  height: 125%;
+  pointer-events: none;
+  display: block;
+  opacity: 0;
+  z-index: 1;
+}
+.sj-canvas[data-ready="true"] {
+  opacity: 1;
+}
+
+/* ---- coordinates ---- */
+.sj-coord {
+  position: absolute;
+  pointer-events: none;
+  font: 700 clamp(8px, calc(var(--sj-sq) * 0.2), 15px) / 1 var(--sj-label-font);
+  font-variant-numeric: lining-nums;
+  opacity: 0.92;
+}
+.sj-coord[data-tone="dark"] {
+  color: var(--sj-square-light);
+}
+.sj-coord[data-tone="light"] {
+  color: var(--sj-square-dark);
+}
+.sj-coord--file {
+  right: 5%;
+  bottom: 3%;
+}
+.sj-coord--rank {
+  left: 6%;
+  top: 4%;
+}
+
+/* ---- interactive layer (both renderers) ---- */
+.sj-cell {
+  position: absolute;
+  width: 12.5%;
+  height: 12.5%;
+}
+.sj-btn {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: default;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  border-radius: clamp(3px, 0.6cqw, 6px);
+}
+.sj-btn:focus-visible {
+  box-shadow:
+    inset 0 0 0 3px var(--sj-focus),
+    inset 0 0 0 5px rgb(26 11 5 / 0.45);
+  z-index: 9;
+}
+.sj-piece {
+  z-index: 4;
+}
+.sj-piece[data-movable="true"] {
+  cursor: grab;
+}
+.sj-piece[data-dragging="true"] {
+  cursor: grabbing;
+  z-index: 8;
+}
+.sj-piece[data-animating="true"] {
+  z-index: 7;
+}
+.sj-dest {
+  z-index: 6;
+  cursor: pointer;
+}
+.sj-dest::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 30%;
+  height: 30%;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background: rgb(26 11 5 / 0.34);
+  box-shadow: 0 0 0 calc(var(--sj-sq) * 0.03) rgb(255 236 200 / 0.18);
+  transition: scale 160ms ease, background-color 160ms ease;
+}
+.sj-dest[data-capture="true"]::after {
+  width: 98%;
+  height: 98%;
+  background: transparent;
+  box-shadow: inset 0 0 0 calc(var(--sj-sq) * 0.065) rgb(26 11 5 / 0.38);
+}
+.sj-dest:hover::after,
+.sj-dest:focus-visible::after {
+  scale: 1.18;
+  background-color: rgb(26 11 5 / 0.48);
+}
+.sj-dest[data-capture="true"]:hover::after,
+.sj-dest[data-capture="true"]:focus-visible::after {
+  scale: 1;
+  background-color: transparent;
+  box-shadow: inset 0 0 0 calc(var(--sj-sq) * 0.085) rgb(26 11 5 / 0.5);
+}
+.sj-dest[data-drop-hint="true"]::after {
+  scale: 1.25;
+  background-color: rgb(26 11 5 / 0.5);
+}
+.sj-empty {
+  z-index: 3;
+}
+
+.sj-preview-target {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 46%;
+  height: 46%;
+  translate: -50% -50%;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 5;
+  background: color-mix(in srgb, var(--sj-selected) 34%, transparent);
+  box-shadow:
+    0 0 0 calc(var(--sj-sq) * 0.045) var(--sj-selected),
+    0 0 calc(var(--sj-sq) * 0.3) color-mix(in srgb, var(--sj-selected) 70%, transparent);
+  animation: sj-preview-breathe 1800ms ease-in-out infinite;
+}
+@keyframes sj-preview-breathe {
+  0%,
+  100% {
+    scale: 1;
+    opacity: 0.95;
+  }
+  50% {
+    scale: 1.1;
+    opacity: 0.75;
+  }
+}
+
+/* ---- discs (DOM renderer) ---- */
+.sj-disc-wrap {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: calc(var(--sj-disc-ratio) * 100%);
+  aspect-ratio: 1 / 1;
+  translate: -50% -50%;
+  pointer-events: none;
+  will-change: transform;
+}
+.sj-disc-wrap {
+  transition: transform 180ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.sj-piece[data-lifted="true"] .sj-disc-wrap {
+  transform: scale(1.0286);
+}
+.sj-piece[data-dragging="true"] .sj-disc-wrap,
+.sj-piece[data-dragging="true"] .sj-disc-shadow {
+  transition: none;
+}
+.sj-disc-shadow {
+  transform: translate(calc(var(--sj-sq) * 0.035), calc(var(--sj-sq) * 0.06));
+  transition:
+    transform 180ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    opacity 180ms ease;
+}
+.sj-piece[data-lifted="true"] .sj-disc-shadow {
+  transform: translate(calc(var(--sj-sq) * 0.0576), calc(var(--sj-sq) * 0.0947))
+    scale(1.066);
+  opacity: 0.923;
+}
+.sj-disc-shadow {
+  position: absolute;
+  inset: -14%;
+  border-radius: 50%;
+  background: radial-gradient(
+    closest-side,
+    rgb(26 11 5 / 0.62) 66%,
+    rgb(26 11 5 / 0.22) 84%,
+    rgb(26 11 5 / 0) 100%
+  );
+}
+.sj-disc {
+  --face: var(--sj-her-face);
+  --ink: var(--sj-her-ink);
+  --rim: var(--sj-her-rim);
+  --ring: var(--sj-her-ring);
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 34% 28%,
+    color-mix(in srgb, var(--face) 62%, white) 0%,
+    var(--face) 46%,
+    color-mix(in srgb, var(--face) 80%, black) 100%
+  );
+  box-shadow:
+    inset 0 0 0 calc(var(--sj-sq) * 0.0374) var(--rim),
+    inset 0 calc(var(--sj-sq) * 0.05) calc(var(--sj-sq) * 0.04)
+      calc(var(--sj-sq) * -0.01) rgb(255 255 255 / 0.42),
+    inset 0 calc(var(--sj-sq) * -0.05) calc(var(--sj-sq) * 0.06)
+      calc(var(--sj-sq) * -0.01) rgb(0 0 0 / 0.26);
+}
+.sj-disc[data-side="other"] {
+  --face: var(--sj-other-face);
+  --ink: var(--sj-other-ink);
+  --rim: var(--sj-other-rim);
+  --ring: var(--sj-other-ring);
+  box-shadow:
+    inset 0 0 0 calc(var(--sj-sq) * 0.0374) var(--rim),
+    inset 0 calc(var(--sj-sq) * 0.05) calc(var(--sj-sq) * 0.04)
+      calc(var(--sj-sq) * -0.01) rgb(255 255 255 / 0.22),
+    inset 0 calc(var(--sj-sq) * -0.05) calc(var(--sj-sq) * 0.06)
+      calc(var(--sj-sq) * -0.01) rgb(0 0 0 / 0.34);
+}
+.sj-disc::before {
+  /* incised inner ring */
+  content: "";
+  position: absolute;
+  inset: 7%;
+  border-radius: 50%;
+  border: max(1px, calc(var(--sj-sq) * 0.02)) solid var(--ring);
+  opacity: 0.62;
+}
+.sj-disc-label {
+  position: relative;
+  display: block;
+  color: var(--ink);
+  font-family: var(--sj-label-font);
+  font-weight: 700;
+  font-size: calc(
+    var(--sj-sq) * var(--sj-disc-ratio) * var(--sj-label-ratio) *
+      var(--sj-label-scale, 1)
+  );
+  line-height: 1;
+  white-space: nowrap;
+  letter-spacing: 0;
+  text-shadow: 0 1px 0 rgb(255 255 255 / 0.35);
+  -webkit-font-smoothing: antialiased;
+}
+.sj-disc[data-side="other"] .sj-disc-label {
+  text-shadow: 0 1px 0 rgb(0 0 0 / 0.45);
+}
+
+.sj-ghosts {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 7;
+}
+
+.sj-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sj-preview-target {
+    animation: none;
+  }
+}
+
+.sj-coords {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}

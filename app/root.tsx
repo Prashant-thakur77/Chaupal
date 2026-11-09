@@ -47,6 +47,12 @@ configureTracking({
 });
 
 export const links: LinksFunction = () => [
+  { rel: "preconnect", href: "https://fonts.googleapis.com" },
+  { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+  {
+    rel: "stylesheet",
+    href: "https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700&family=Tiro+Devanagari+Hindi:ital@0;1&family=Yatra+One&display=swap",
+  },
   { rel: "stylesheet", href: stylesheet },
 ];
 
@@ -92,12 +98,39 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
+/** Routes that render Chaupal's own full-screen shell instead of the template chrome. */
+export function isChaupalPath(pathname: string) {
+  return (
+    pathname === "/" ||
+    pathname === "/chaupal" ||
+    pathname === "/family" ||
+    pathname === "/welcome" ||
+    pathname === "/proof" ||
+    pathname === "/album" ||
+    pathname.startsWith("/embed/") ||
+    pathname.startsWith("/lab/")
+  );
+}
+
+function isPublicChaupalPath(pathname: string) {
+  return pathname === "/" || pathname === "/welcome" || pathname === "/proof";
+}
+
 function DbSyncSetup() {
   const qc = useQueryClient();
+  const { pathname } = useLocation();
+  // The elder's stage and the family phone show one live session on two
+  // devices, so they opt in to background sync at a 1 s cadence.
+  const live = pathname === "/chaupal" || pathname === "/family" || pathname.startsWith("/embed/");
   useNavigationState();
   useDbSync({
     queryClient: qc,
     ignoreSource: TAB_ID,
+    realtime: live
+      ? { reason: "the elder and her family share one live activity across devices" }
+      : undefined,
+    interval: live ? 1000 : undefined,
+    fallbackInterval: live ? 1000 : undefined,
   });
   return null;
 }
@@ -117,6 +150,12 @@ function ThemeToggleItem() {
 }
 
 function AppContent() {
+  const { pathname } = useLocation();
+  if (isChaupalPath(pathname)) return <Outlet />;
+  return <TemplateContent />;
+}
+
+function TemplateContent() {
   const [cmdkOpen, setCmdkOpen] = useState(false);
   const navigate = useNavigate();
   const t = useT();
@@ -184,7 +223,11 @@ export default function Root() {
     <AppToolkitProvider>
       <AppProviders
         queryClient={queryClient}
-        skeletonLayout={skeletonLayoutForPath(pathname)}
+        sessionBypass={isPublicChaupalPath(pathname)}
+        clientOnlyFallback={isChaupalPath(pathname) ? <div className="ch-boot" /> : undefined}
+        defaultTheme="dark"
+        disableWebMcp={pathname === "/family" || pathname.startsWith("/embed/")}
+        skeletonLayout={isChaupalPath(pathname) ? undefined : skeletonLayoutForPath(pathname)}
         i18n={{ catalog: i18nCatalog }}
       >
         <DbSyncSetup />

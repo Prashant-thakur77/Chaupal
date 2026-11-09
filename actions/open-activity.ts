@@ -36,6 +36,7 @@ export default defineAction({
           caption: caption ?? null,
           conflict: null,
           historyOpen: 0,
+          ...(isSettled(st.approval) ? { approval: null } : {}),
         };
         let startedGame = false;
         if (activity === "shatranj") {
@@ -66,6 +67,16 @@ export default defineAction({
     return respond(state, { opened: activity, ...result });
   },
 });
+
+/** A finished family update (sent, declined, failed) need not stay on screen. */
+function isSettled(approval: string | null) {
+  if (!approval) return false;
+  try {
+    return JSON.parse(approval).status !== "pending";
+  } catch {
+    return true;
+  }
+}
 
 function eqId(id: string) {
   return eq(schema.chessGames.id, id);

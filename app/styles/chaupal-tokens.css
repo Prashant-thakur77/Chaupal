@@ -1,0 +1,382 @@
+/* ==========================================================================
+   Chaupal design tokens
+   Default look: "saanjh" (dusk). Light look: "dopahar" (lime-washed day).
+   Spec and rationale: /DESIGN.md
+
+   FONTS (Google Fonts, all SIL Open Font License)
+   Add these to the document <head> (root.tsx `links` export) — preferred over
+   a CSS @import so the fonts start downloading with the HTML:
+
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700&family=Tiro+Devanagari+Hindi:ital@0;1&family=Yatra+One&display=swap">
+
+   Tiro Devanagari Hindi  display + headings (Devanagari and its matched Latin)
+   Mukta                  body, UI, numbers (Devanagari + Latin)
+   Yatra One              sulekh brush reference style and rangoli titles only
+
+   USE
+     @import "./styles/chaupal-tokens.css";   (after @import "tailwindcss")
+     <html data-theme="dusk">  default; "day" for the light look
+   ========================================================================== */
+
+/* ---------- Raw palette (theme independent) ---------- */
+:root {
+  /* night & dusk (indigo) */
+  --ch-night-950: #0e0c20;
+  --ch-night-900: #15132b;   /* dusk page */
+  --ch-night-850: #1b1835;
+  --ch-night-800: #221e40;   /* dusk surface */
+  --ch-night-700: #2e2955;   /* dusk raised */
+  --ch-night-600: #3a345f;   /* hairlines on dusk */
+  --ch-indigo-500: #3a3a92;  /* indigo action */
+  --ch-indigo-400: #5a5ab8;
+  --ch-indigo-300: #9c9cf0;  /* awaiting halo */
+  --ch-indigo-700: #2e2c7a;  /* indigo on light */
+
+  /* clay & terracotta */
+  --ch-clay-950: #1a0f08;    /* ink on marigold */
+  --ch-clay-900: #24160e;    /* ink on lime-wash */
+  --ch-clay-800: #3a1a0c;
+  --ch-clay-700: #5a2a17;    /* kolam floor */
+  --ch-clay-600: #6a2611;    /* her disc label + rim */
+  --ch-clay-500: #8e5232;    /* board dark square */
+  --ch-terracotta-600: #9a3b1c; /* terracotta button/text on light */
+  --ch-terracotta-500: #d0643a;
+  --ch-clay-300: #d7a577;    /* board light square */
+
+  /* marigold & flame */
+  --ch-marigold-500: #f4a93c; /* primary action, flame body */
+  --ch-marigold-400: #ffc866; /* focus ring, flame core edge */
+  --ch-marigold-300: #ffd58c; /* other-side disc label, speaking glow */
+  --ch-marigold-200: #e9b860; /* last-move square tint */
+  --ch-flame-core: #fff4d6;
+
+  /* chalk & lime-wash */
+  --ch-chalk-50: #f7f1e6;    /* text on dusk, kolam lines */
+  --ch-chalk-100: #f4e8d2;   /* her disc face */
+  --ch-chalk-200: #e3d6c0;   /* soft text on dusk */
+  --ch-chalk-400: #bcaa8e;   /* muted text on dusk */
+  --ch-limewash-50: #fbf7f0;
+  --ch-limewash-100: #f5eee2; /* day page */
+  --ch-paper-200: #f2e7d3;   /* sulekh paper */
+  --ch-ink-600: #4a3427;
+  --ch-ink-500: #6b5444;
+
+  /* rangoli colours (named for voice: "beech mein peela") */
+  --ch-rang-laal: #e0473b;     /* लाल */
+  --ch-rang-peela: #f6c33b;    /* पीला */
+  --ch-rang-hara: #43a95e;     /* हरा */
+  --ch-rang-neela: #4f7fe0;    /* नीला */
+  --ch-rang-gulabi: #e66ca7;   /* गुलाबी */
+  --ch-rang-kesariya: #f28a2e; /* केसरिया */
+  --ch-rang-safed: #f7f1e6;    /* सफ़ेद */
+  --ch-rang-baingani: #9b6bd3; /* बैंगनी */
+
+  /* feedback */
+  --ch-good: #8fd69e;
+  --ch-good-strong: #2f7a43;
+  --ch-warn: #ffc866;
+  --ch-bad: #ff8a7a;
+  --ch-bad-strong: #a8321f;
+
+  /* ---------- Type ---------- */
+  --ch-font-display: "Tiro Devanagari Hindi", "Noto Serif Devanagari", Georgia, serif;
+  --ch-font-body: "Mukta", "Noto Sans Devanagari", "Segoe UI", system-ui, sans-serif;
+  --ch-font-brush: "Yatra One", "Tiro Devanagari Hindi", serif;
+
+  /* sizes: elder floor is 18px; body is 22px */
+  --ch-text-small: 1.125rem;   /* 18px  meta, captions */
+  --ch-text-body: 1.375rem;    /* 22px  body, buttons */
+  --ch-text-lead: 1.625rem;    /* 26px  agent caption, lead */
+  --ch-text-title: 2rem;       /* 32px  card/section title */
+  --ch-text-h2: clamp(2.25rem, 1.6rem + 2vw, 2.75rem);   /* 36-44 */
+  --ch-text-h1: clamp(2.75rem, 1.8rem + 3.6vw, 4.5rem);  /* 44-72 */
+  --ch-text-display: clamp(3.5rem, 2rem + 6vw, 7.5rem);  /* 56-120 */
+
+  /* line heights: Devanagari needs room for matras above and below */
+  --ch-lh-latin-body: 1.5;
+  --ch-lh-deva-body: 1.7;
+  --ch-lh-latin-head: 1.12;
+  --ch-lh-deva-head: 1.35;
+  --ch-lh-deva-display: 1.3;
+
+  --ch-weight-regular: 400;
+  --ch-weight-medium: 500;
+  --ch-weight-semibold: 600;
+  --ch-weight-bold: 700;
+
+  /* ---------- Space (4px base) ---------- */
+  --ch-space-1: 0.25rem;  /* 4 */
+  --ch-space-2: 0.5rem;   /* 8 */
+  --ch-space-3: 0.75rem;  /* 12 */
+  --ch-space-4: 1rem;     /* 16 */
+  --ch-space-5: 1.5rem;   /* 24 */
+  --ch-space-6: 2rem;     /* 32 */
+  --ch-space-7: 3rem;     /* 48 */
+  --ch-space-8: 4rem;     /* 64 */
+  --ch-space-9: 6rem;     /* 96 */
+  --ch-space-10: 8rem;    /* 128 */
+  --ch-gutter: clamp(1rem, 0.5rem + 2.5vw, 3rem);
+
+  /* ---------- Targets ---------- */
+  --ch-target-min: 56px;   /* every tappable thing */
+  --ch-target-main: 64px;  /* primary buttons, chips */
+  --ch-target-mic: 88px;   /* the voice button */
+
+  /* ---------- Radii (by hierarchy) ---------- */
+  --ch-radius-chip: 999px;   /* chips, pills, buttons */
+  --ch-radius-s: 10px;       /* inputs, small tiles, board squares group */
+  --ch-radius-m: 18px;       /* cards, canvas frames */
+  --ch-radius-l: 28px;       /* sheets, dialogs, dock */
+  --ch-radius-disc: 50%;     /* shatranj pieces, diya halo */
+
+  /* ---------- Motion ---------- */
+  --ch-dur-instant: 120ms;   /* press feedback */
+  --ch-dur-quick: 220ms;     /* hover, chip select */
+  --ch-dur-calm: 420ms;      /* cross-fade, sheet, card enter */
+  --ch-dur-slow: 900ms;      /* piece glide, capture lift */
+  --ch-dur-draw: 1600ms;     /* chalk/kalam line draw */
+  --ch-dur-breath: 3200ms;   /* diya ready breath */
+
+  --ch-ease-settle: cubic-bezier(0.22, 0.61, 0.36, 1);  /* things arriving */
+  --ch-ease-chalk: cubic-bezier(0.65, 0.05, 0.36, 1);   /* line draws, page turns */
+  --ch-ease-ember: cubic-bezier(0.4, 0, 0.2, 1);        /* glow + state */
+  --ch-ease-leave: cubic-bezier(0.55, 0, 1, 0.45);      /* things leaving */
+
+  /* ---------- Z layers ---------- */
+  --ch-z-canvas: 0;
+  --ch-z-ornament: 1;
+  --ch-z-dock: 20;
+  --ch-z-header: 30;
+  --ch-z-toast: 40;
+  --ch-z-dialog: 50;
+
+  /* ---------- Texture ---------- */
+  --ch-grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .5  0 0 0 0 .35  0 0 0 0 .25  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* ---------- Semantic tokens: dusk (default) ---------- */
+:root,
+[data-theme="dusk"] {
+  color-scheme: dark;
+  --ch-bg: var(--ch-night-900);
+  --ch-bg-deep: var(--ch-night-950);
+  --ch-surface: var(--ch-night-800);
+  --ch-surface-raised: var(--ch-night-700);
+  --ch-ground: #2a1712;            /* clay floor at the bottom of the sky */
+  --ch-hairline: var(--ch-night-600);
+  --ch-text: var(--ch-chalk-50);       /* 16.1:1 on bg  */
+  --ch-text-soft: var(--ch-chalk-200); /* 12.6:1 on bg  */
+  --ch-text-muted: var(--ch-chalk-400);/*  8.0:1 on bg  */
+  --ch-accent: var(--ch-marigold-500); /*  9.1:1 on bg  */
+  --ch-on-accent: var(--ch-clay-950);  /*  9.5:1 on marigold */
+  --ch-second: var(--ch-indigo-500);
+  --ch-on-second: var(--ch-chalk-50);  /*  8.5:1 */
+  --ch-focus: var(--ch-marigold-400);  /* 11.8:1 on bg */
+  --ch-glow: 244 169 60;               /* rgb triplet for halos */
+  --ch-sky-top: #121029;
+  --ch-sky-mid: #1d1838;
+  --ch-sky-low: #3a2030;
+  --ch-paper: var(--ch-paper-200);
+  --ch-ink: #2b1a12;                   /* sulekh reference ink, 13.6:1 on paper */
+  --ch-her-stroke: var(--ch-indigo-700);/* her lines on paper, 9.8:1 */
+  --ch-good-text: var(--ch-good);      /* 10.6:1 */
+  --ch-bad-text: var(--ch-bad);        /*  7.9:1 */
+  --ch-shadow-1: 0 1px 0 rgb(255 240 220 / 0.06) inset, 0 8px 24px rgb(5 4 15 / 0.45);
+  --ch-shadow-2: 0 1px 0 rgb(255 240 220 / 0.08) inset, 0 24px 64px rgb(5 4 15 / 0.6);
+  --ch-lit: 0 0 0 1px rgb(var(--ch-glow) / 0.35), 0 0 40px rgb(var(--ch-glow) / 0.28);
+  --ch-grain-opacity: 0.14;
+}
+
+/* ---------- Semantic tokens: day ---------- */
+[data-theme="day"] {
+  color-scheme: light;
+  --ch-bg: var(--ch-limewash-100);
+  --ch-bg-deep: #ece2d1;
+  --ch-surface: var(--ch-limewash-50);
+  --ch-surface-raised: #ffffff;
+  --ch-ground: #e7d3b8;
+  --ch-hairline: #d9cbb4;
+  --ch-text: var(--ch-clay-900);       /* 15.2:1 */
+  --ch-text-soft: var(--ch-ink-600);   /* 10.1:1 */
+  --ch-text-muted: var(--ch-ink-500);  /*  6.1:1 */
+  --ch-accent: var(--ch-indigo-700);   /* 10.4:1 — day leads with indigo, not terracotta */
+  --ch-on-accent: var(--ch-limewash-50);/* 11.2:1 */
+  --ch-second: var(--ch-terracotta-600);/* 6.0:1 */
+  --ch-on-second: var(--ch-chalk-50);  /*  6.2:1 */
+  --ch-focus: var(--ch-indigo-700);
+  --ch-glow: 242 138 46;
+  --ch-sky-top: #f7efe1;
+  --ch-sky-mid: #f5eadb;
+  --ch-sky-low: #f0dcc4;
+  --ch-paper: #fbf5ea;
+  --ch-ink: #2b1a12;
+  --ch-her-stroke: var(--ch-indigo-700);
+  --ch-good-text: var(--ch-good-strong);
+  --ch-bad-text: var(--ch-bad-strong);
+  --ch-shadow-1: 0 1px 2px rgb(60 30 10 / 0.08), 0 8px 24px rgb(60 30 10 / 0.08);
+  --ch-shadow-2: 0 24px 64px rgb(60 30 10 / 0.18);
+  --ch-lit: 0 0 0 1px rgb(var(--ch-glow) / 0.45), 0 0 32px rgb(var(--ch-glow) / 0.25);
+  --ch-grain-opacity: 0.08;
+}
+
+/* ---------- Optional: harmonise the toolkit chrome (HSL triplets) ---------- */
+.theme-chaupal,
+.theme-chaupal [data-theme="dusk"] {
+  --background: 245 39% 12%;
+  --foreground: 39 52% 94%;
+  --card: 247 36% 18%;
+  --card-foreground: 39 52% 94%;
+  --popover: 247 36% 18%;
+  --popover-foreground: 39 52% 94%;
+  --primary: 36 89% 60%;
+  --primary-foreground: 23 53% 7%;
+  --secondary: 247 35% 25%;
+  --secondary-foreground: 39 52% 94%;
+  --muted: 247 35% 25%;
+  --muted-foreground: 37 26% 65%;
+  --accent: 247 35% 25%;
+  --accent-foreground: 39 52% 94%;
+  --destructive: 7 100% 74%;
+  --destructive-foreground: 23 53% 7%;
+  --border: 248 29% 29%;
+  --input: 248 29% 29%;
+  --ring: 36 89% 60%;
+  --radius: 1.125rem;
+}
+
+/* ---------- Tailwind v4 bridge (ignored by plain browsers) ---------- */
+@theme inline {
+  --color-ch-bg: var(--ch-bg);
+  --color-ch-surface: var(--ch-surface);
+  --color-ch-raised: var(--ch-surface-raised);
+  --color-ch-text: var(--ch-text);
+  --color-ch-soft: var(--ch-text-soft);
+  --color-ch-muted: var(--ch-text-muted);
+  --color-ch-accent: var(--ch-accent);
+  --color-ch-on-accent: var(--ch-on-accent);
+  --color-ch-second: var(--ch-second);
+  --color-ch-hairline: var(--ch-hairline);
+  --color-ch-paper: var(--ch-paper);
+  --color-ch-ink: var(--ch-ink);
+  --color-rang-laal: var(--ch-rang-laal);
+  --color-rang-peela: var(--ch-rang-peela);
+  --color-rang-hara: var(--ch-rang-hara);
+  --color-rang-neela: var(--ch-rang-neela);
+  --color-rang-gulabi: var(--ch-rang-gulabi);
+  --color-rang-kesariya: var(--ch-rang-kesariya);
+  --color-rang-safed: var(--ch-rang-safed);
+  --color-rang-baingani: var(--ch-rang-baingani);
+  --font-ch-display: var(--ch-font-display);
+  --font-ch-body: var(--ch-font-body);
+  --font-ch-brush: var(--ch-font-brush);
+  --text-ch-small: var(--ch-text-small);
+  --text-ch-body: var(--ch-text-body);
+  --text-ch-lead: var(--ch-text-lead);
+  --text-ch-title: var(--ch-text-title);
+  --text-ch-h2: var(--ch-text-h2);
+  --text-ch-h1: var(--ch-text-h1);
+  --text-ch-display: var(--ch-text-display);
+  --radius-ch-s: var(--ch-radius-s);
+  --radius-ch-m: var(--ch-radius-m);
+  --radius-ch-l: var(--ch-radius-l);
+  --ease-ch-settle: var(--ch-ease-settle);
+  --ease-ch-chalk: var(--ch-ease-chalk);
+  --ease-ch-ember: var(--ch-ease-ember);
+}
+
+/* ---------- Base ---------- */
+.ch-root {
+  background: var(--ch-bg);
+  color: var(--ch-text);
+  font-family: var(--ch-font-body);
+  font-size: var(--ch-text-body);
+  line-height: var(--ch-lh-latin-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+.ch-root :lang(hi),
+.ch-root:lang(hi) {
+  line-height: var(--ch-lh-deva-body);
+}
+
+/* Clay grain: put on any full-bleed layer (position: relative parent) */
+.ch-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: var(--ch-grain);
+  opacity: var(--ch-grain-opacity);
+  mix-blend-mode: overlay;
+  z-index: var(--ch-z-ornament);
+}
+
+/* ---------- Type scale utilities ---------- */
+.ch-display { font-family: var(--ch-font-display); font-size: var(--ch-text-display); line-height: var(--ch-lh-deva-display); font-weight: 400; letter-spacing: -0.005em; }
+.ch-h1      { font-family: var(--ch-font-display); font-size: var(--ch-text-h1); line-height: var(--ch-lh-deva-head); font-weight: 400; }
+.ch-h2      { font-family: var(--ch-font-display); font-size: var(--ch-text-h2); line-height: var(--ch-lh-deva-head); font-weight: 400; }
+.ch-title   { font-family: var(--ch-font-body); font-size: var(--ch-text-title); line-height: 1.4; font-weight: 600; }
+.ch-lead    { font-family: var(--ch-font-body); font-size: var(--ch-text-lead); line-height: 1.6; font-weight: 500; }
+.ch-body    { font-family: var(--ch-font-body); font-size: var(--ch-text-body); line-height: var(--ch-lh-deva-body); }
+.ch-small   { font-family: var(--ch-font-body); font-size: var(--ch-text-small); line-height: 1.6; }
+.ch-brush   { font-family: var(--ch-font-brush); line-height: 1.4; }
+.ch-num     { font-variant-numeric: tabular-nums lining-nums; }
+:lang(en) .ch-display, .ch-display:lang(en) { line-height: 1.05; }
+:lang(en) .ch-h1, .ch-h1:lang(en), :lang(en) .ch-h2, .ch-h2:lang(en) { line-height: var(--ch-lh-latin-head); }
+
+/* ---------- Focus ring: 3px marigold + 3px gap, always visible on keyboard ---------- */
+.ch-root :focus { outline: none; }
+.ch-root :focus-visible,
+.ch-focus:focus-visible {
+  outline: 3px solid var(--ch-focus);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 9px rgb(var(--ch-glow) / 0.22);
+}
+
+/* ---------- Target floor ---------- */
+.ch-target { min-width: var(--ch-target-min); min-height: var(--ch-target-min); }
+
+/* ---------- Buttons ---------- */
+.ch-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--ch-space-3);
+  min-height: var(--ch-target-main); padding: 0 var(--ch-space-6);
+  border-radius: var(--ch-radius-chip); border: 2px solid transparent;
+  font: 600 var(--ch-text-body)/1 var(--ch-font-body);
+  cursor: pointer;
+  transition: transform var(--ch-dur-instant) var(--ch-ease-settle), box-shadow var(--ch-dur-quick) var(--ch-ease-ember), background-color var(--ch-dur-quick) var(--ch-ease-ember);
+}
+.ch-btn:active { transform: scale(0.98); }
+.ch-btn--lit { background: var(--ch-accent); color: var(--ch-on-accent); box-shadow: var(--ch-lit); }
+.ch-btn--quiet { background: transparent; color: var(--ch-text); border-color: var(--ch-hairline); }
+.ch-btn--quiet:hover { border-color: var(--ch-text-muted); }
+
+/* ---------- Screen-reader only ---------- */
+.ch-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* ---------- Reduced motion ----------
+   Keep state changes (they carry meaning) but drop travel, flicker, scrub and
+   anything that loops. Durations collapse to a short cross-fade. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --ch-dur-quick: 1ms;
+    --ch-dur-calm: 160ms;
+    --ch-dur-slow: 160ms;
+    --ch-dur-draw: 1ms;
+    --ch-dur-breath: 0ms;
+  }
+  .ch-root *,
+  .ch-root *::before,
+  .ch-root *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+/* The in-app "हलचल रोकें / Pause motion" toggle sets this attribute. */
+[data-motion="paused"] *,
+[data-motion="paused"] *::before,
+[data-motion="paused"] *::after {
+  animation-play-state: paused !important;
+}

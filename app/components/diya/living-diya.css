@@ -1,0 +1,149 @@
+.living-diya {
+  --diya-chalk: #f4efe6;
+  --diya-marigold: #f2a93b;
+  --diya-light: 0.9;
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  flex: none;
+  max-width: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.living-diya[data-size="fill"] {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.living-diya__frame {
+  position: relative;
+  display: grid;
+  place-items: center;
+  max-width: 100%;
+}
+
+.living-diya[data-size="fill"] .living-diya__frame {
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 0;
+  container-type: size;
+}
+
+.living-diya__stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+}
+
+.living-diya[data-size="fill"] .living-diya__stage {
+  width: min(100cqw, 100cqh);
+  height: min(100cqw, 100cqh);
+}
+
+.living-diya__lamp,
+.living-diya__flame,
+.living-diya__static {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.living-diya__lamp {
+  overflow: visible;
+}
+
+/* The flame light reaching the clay, oil and floor. */
+.living-diya__lit {
+  opacity: clamp(0.15, calc(var(--diya-light) * 0.78), 1);
+}
+
+/* Screen keeps the glow additive: it warms the clay and the night. */
+.living-diya__flame {
+  mix-blend-mode: screen;
+  pointer-events: none;
+  /* The halo always fades out before the stage edge. */
+  -webkit-mask-image: radial-gradient(closest-side, #000 72%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 72%, transparent 100%);
+}
+
+/* Static flame for the first paint (and if no canvas can run at all). */
+.living-diya__static {
+  pointer-events: none;
+  mix-blend-mode: screen;
+  transition: opacity 600ms ease;
+}
+
+.living-diya[data-live="true"] .living-diya__static {
+  opacity: 0;
+}
+
+.living-diya__static::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--diya-wick-x, 0.5) * 100%);
+  top: calc((var(--diya-wick-y, 0.705) - var(--diya-unit, 0.34) * 0.45) * 100%);
+  width: calc(var(--diya-unit, 0.34) * 240%);
+  height: calc(var(--diya-unit, 0.34) * 220%);
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    closest-side,
+    rgb(242 169 59 / 0.42),
+    rgb(226 112 32 / 0.14) 55%,
+    transparent
+  );
+}
+
+.living-diya__static::after {
+  content: "";
+  position: absolute;
+  left: calc(var(--diya-wick-x, 0.5) * 100%);
+  top: calc(var(--diya-wick-y, 0.705) * 100%);
+  width: calc(var(--diya-unit, 0.34) * 34%);
+  height: calc(var(--diya-unit, 0.34) * 100%);
+  transform: translate(-50%, -94%);
+  border-radius: 50% 50% 50% 50% / 64% 64% 36% 36%;
+  clip-path: polygon(50% 0, 100% 62%, 100% 100%, 0 100%, 0 62%);
+  background:
+    radial-gradient(
+      ellipse 42% 38% at 50% 74%,
+      #fffaf0 0%,
+      #ffe7b0 55%,
+      transparent 100%
+    ),
+    linear-gradient(to top, #f9c15f 0%, #f2a93b 40%, #e8701e 80%, transparent);
+  filter: blur(0.6px);
+}
+
+.living-diya__caption {
+  margin: 0;
+  max-width: 100%;
+  color: var(--diya-chalk);
+  font-size: 0.95rem;
+  line-height: 1.35;
+  text-align: center;
+  letter-spacing: 0.01em;
+  opacity: 0.88;
+  text-wrap: balance;
+}
+
+.living-diya__live {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .living-diya__lit {
+    transition: opacity 2.4s ease;
+  }
+}

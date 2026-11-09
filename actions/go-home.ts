@@ -22,7 +22,7 @@ export default defineAction({
     const { state } = await mutate(
       mutationOptions(ctx, who, "go-home"),
       async () => ({
-        patch: { scene: "home", inputMode: "none", pending: null, presence: "ready", caption: null },
+        patch: { scene: "home", inputMode: "none", pending: null, presence: "ready", caption: null, conflict: null },
         result: null,
       }),
     );
