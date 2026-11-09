@@ -31,13 +31,17 @@ export async function svgToPng(svg: string, width = 1200): Promise<Uint8Array> {
     fitTo: { mode: "width" as const, value: width },
     font: { fontBuffers, loadSystemFonts: false, defaultFontFamily: "Tiro Devanagari Hindi" },
   };
-  const wasmModule = (globalThis as { __CHAUPAL_RESVG_WASM__?: WebAssembly.Module }).__CHAUPAL_RESVG_WASM__;
-  if (wasmModule) {
+  try {
+    const { Resvg } = await import("@resvg/resvg-js");
+    return new Uint8Array(new Resvg(svg, opts).render().asPng());
+  } catch {
+    // No native build in this runtime: use the wasm build from the site's assets.
     const resvg = await import("@resvg/resvg-wasm");
-    if (!wasmReady) wasmReady = resvg.initWasm(wasmModule);
+    if (!wasmReady) {
+      const { fetchPublicBytes } = await import("./sulekh-runtime.js");
+      wasmReady = resvg.initWasm(await fetchPublicBytes("/wasm/resvg.wasm"));
+    }
     await wasmReady;
     return new resvg.Resvg(svg, opts).render().asPng();
   }
-  const { Resvg } = await import("@resvg/resvg-js");
-  return new Uint8Array(new Resvg(svg, opts).render().asPng());
 }

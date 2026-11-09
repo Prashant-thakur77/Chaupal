@@ -6,7 +6,7 @@ import { mutate } from "../server/chaupal/state.js";
 
 export default defineAction({
   description:
-    "Get her canvas ready for drawing with a finger or mouse (mode touch), with no camera at all. Use this whenever she wants to trace on the screen, or says the camera feels uncomfortable; it also turns air-writing off if it was on. Mode none hides the drawing tools.",
+    "Get her canvas ready for drawing with a finger or mouse (mode touch), with no camera at all. Placing a Sulekh reference, rangoli or kolam already does this (inputMode touch, camera never asked), so it is not needed right after those; use it when inputMode is none or air-writing is on and she wants to draw by hand or says the camera feels uncomfortable (it turns air-writing off). Mode none hides the drawing tools.",
   schema: z.object({
     mode: z.enum(["touch", "none"]).describe("touch (direct finger drawing, no camera) | none"),
   }),

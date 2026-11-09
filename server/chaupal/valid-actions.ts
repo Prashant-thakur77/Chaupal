@@ -35,18 +35,19 @@ export function validNextActions(s: ValidActionInput): string[] {
   if (s.scene === "rangoli" || s.scene === "kolam") {
     out.push("suggest-designs", "set-kolam-reference", "set-rangoli-reference");
     if (s.hasKolamRef) {
-      out.push("fill-region", "change-colours", "set-input-mode", "clear-my-strokes");
+      out.push("fill-region", "set-input-mode", "clear-my-strokes");
     }
   }
   if (s.scene === "shatranj") {
     out.push("get-chess-state");
     if (!s.chessFinished) {
-      out.push("preview-moves", "move-chess-piece", "offer-takeback", "resign");
+      out.push("preview-moves", "move-chess-piece");
       if (s.chessTurnOwner === "elder") out.push("wait-for-person-move");
       if (s.familyLinked) out.push("family-move");
     }
   }
-  if (s.scene !== "home" || s.familyLinked) out.push("send-family-update");
-  if (s.approvalPending) out.push("answer-family-update");
+  if (s.scene !== "home") out.push("draft-family-update", "list-album");
+  if (s.approvalPending) out.push("send-family-update");
+  if (s.approvalPending) out.push("cancel-family-update");
   return Array.from(new Set(out));
 }

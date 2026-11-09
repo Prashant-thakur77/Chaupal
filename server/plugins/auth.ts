@@ -2,7 +2,7 @@ import { createToolkitAuthPlugin } from "@agent-native/toolkit/app/auth/server";
 
 import { clearGuestCookie, guestSession } from "../lib/guest.js";
 
-const publicPaths = ["/api/household/start", "/api/family/join", "/welcome", "/proof", "/fonts"];
+const publicPaths = ["/api/ops/migrate", "/api/household/start", "/api/family/join", "/welcome", "/proof", "/fonts"];
 
 /**
  * Chaupal needs no accounts: a household starts with one tap and a family

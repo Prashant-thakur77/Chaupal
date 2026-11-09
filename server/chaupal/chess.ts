@@ -1,4 +1,5 @@
 import { fail, type ActionRunContext } from "@agent-native/core/action";
+import { recordChange } from "@agent-native/core/server";
 import { Chess, type Move } from "chess.js";
 import { and, desc, eq, gt } from "drizzle-orm";
 
@@ -186,7 +187,21 @@ export async function playMove(opts: {
       };
     },
   );
-  const visible = await waitForBoardAck(who.session.id, result.gameId, result.ply);
+  // Tell every open screen now (not only when this call returns), so her
+  // board can draw the move and confirm it while this call waits.
+  try {
+    recordChange({
+      source: "action",
+      type: "change",
+      key: opts.actor === "family" ? "family-move" : "move-chess-piece",
+      owner: who.session.ownerEmail,
+      resourceType: "chaupal-session",
+      resourceId: who.session.id,
+    });
+  } catch {
+    // Live sync still delivers the change when the call returns.
+  }
+  const visible = await waitForBoardAck(who.session.id, result.gameId, result.ply, 3000);
   return { state, ...result, visibleOnHerScreen: visible };
 }
 
