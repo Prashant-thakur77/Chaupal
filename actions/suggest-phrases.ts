@@ -1,7 +1,7 @@
 import { defineAction } from "@agent-native/core/action";
 import { z } from "zod";
 
-import { ChaupalResult, sessionChange, mutationOptions, respond, sessionOf, sleep } from "../server/chaupal/kit.js";
+import { ChaupalResult, sessionChange, mutationOptions, maxWaitMs, respond, sessionOf, sleep } from "../server/chaupal/kit.js";
 import { mutate, parseJson, readActivity } from "../server/chaupal/state.js";
 import { getDb } from "../server/db/index.js";
 
@@ -34,7 +34,7 @@ export default defineAction({
       result: null,
       payload: { options: suggestions.map((s) => s.text) },
     }));
-    const deadline = Date.now() + 10_000;
+    const deadline = Date.now() + maxWaitMs(10_000);
     while (Date.now() < deadline) {
       await sleep(400);
       const st = await readActivity(getDb(), session.id);

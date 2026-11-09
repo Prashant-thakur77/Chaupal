@@ -2,7 +2,7 @@ import { defineAction } from "@agent-native/core/action";
 import { z } from "zod";
 
 import { currentApproval, saveCurrentArtwork, type Approval } from "../server/chaupal/family-update.js";
-import { ChaupalResult, mutationOptions, respond, sessionChange, sessionOf, sleep } from "../server/chaupal/kit.js";
+import { ChaupalResult, mutationOptions, respond, maxWaitMs, sessionChange, sessionOf, sleep } from "../server/chaupal/kit.js";
 import { mutate, newId, readActivity } from "../server/chaupal/state.js";
 import { getDb } from "../server/db/index.js";
 
@@ -36,7 +36,7 @@ export default defineAction({
       result: null,
       payload: { id, kind: art.kind },
     }));
-    const deadline = Date.now() + 20_000;
+    const deadline = Date.now() + maxWaitMs(20_000);
     let a = await currentApproval(who.session.id);
     while (Date.now() < deadline && a?.id === id && (a.status === "pending" || a.status === "approved")) {
       await sleep(500);

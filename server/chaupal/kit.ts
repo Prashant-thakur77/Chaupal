@@ -104,6 +104,16 @@ export async function respond<T extends Record<string, unknown>>(
   };
 }
 
+/**
+ * Longest a single call may hold while waiting for her (a tap, a move, an
+ * answer). Hosts with short request limits set CHAUPAL_MAX_WAIT_MS; the
+ * caller then simply asks again.
+ */
+export function maxWaitMs(wanted: number) {
+  const cap = Number(process.env.CHAUPAL_MAX_WAIT_MS || 0);
+  return cap > 0 ? Math.min(wanted, cap) : wanted;
+}
+
 export function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }

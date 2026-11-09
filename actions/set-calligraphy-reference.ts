@@ -12,7 +12,7 @@ export default defineAction({
     "Put a Sulekh calligraphy reference on her screen for her to trace. Give the exact phrase in its own script as she wants it (e.g. शुभ दीपावली, शांति, ਸਤ ਸ੍ਰੀ ਅਕਾਲ, வணக்கம், শুভ বিজয়া, محبت, or a grandchild's name); keep her wording and script exactly. Chaupal shapes the text itself with HarfBuzz and an OFL font (exact conjuncts and matras), renders black ink on a transparent 3:2 canvas with safe margins, and validates it. If validation rejects a render (REFERENCE_* errorCode), simply call again with the same text: Chaupal re-renders, and you should not mention technical details to her. Opens Sulekh if needed. A new reference never erases her strokes; her finger drawing is ready by default (no camera).",
   schema: z.object({
     text: z.string().min(1).max(60).describe("Exact phrase in its own script"),
-    script: z
+    writingScript: z
       .enum(["devanagari", "gurmukhi", "tamil", "bengali", "urdu"])
       .optional()
       .describe("devanagari (Hindi, Marathi, Sanskrit) | gurmukhi (Punjabi) | tamil | bengali | urdu; detected from the text if omitted"),
@@ -29,7 +29,7 @@ export default defineAction({
     const before = await readActivity(getDb(), who.session.id);
     const fixture = parseJson<{ sulekh?: "broken-shaping" | "opaque" | "wrong-ratio"; remaining?: number }>(before?.fixture);
     const useFixture = fixture?.sulekh && (fixture.remaining ?? 0) > 0 ? fixture.sulekh : null;
-    const rendered = await renderSulekh({ text: args.text, script: args.script, style: args.style, size: args.size, fixture: useFixture });
+    const rendered = await renderSulekh({ text: args.text, script: args.writingScript, style: args.style, size: args.size, fixture: useFixture });
     const { ref, validation } = rendered;
     const opts = mutationOptions(ctx, who, "set-calligraphy-reference", { expectedRevision: args.expectedRevision });
 

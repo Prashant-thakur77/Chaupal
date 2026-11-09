@@ -1,0 +1,6 @@
+{
+  "name": "chaupal",
+  "main": "worker.js",
+  "compatibility_date": "2026-11-09",
+  "routes": [{ "pattern": "chaupal.prashantthakur.dev", "custom_domain": true }]
+}

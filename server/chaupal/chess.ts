@@ -6,7 +6,7 @@ import { PIECES } from "../../app/engines/shatranj/pieces.js";
 import { resolvePhrase, type PhraseResult, type ResolveContext } from "../../app/engines/shatranj/resolve.js";
 import { getChessState } from "../../app/engines/shatranj/state.js";
 import { getDb, schema } from "../db/index.js";
-import { mutationOptions, respond, sleep, type Who } from "./kit.js";
+import { maxWaitMs, mutationOptions, respond, sleep, type Who } from "./kit.js";
 import { loadGame, turnOwner } from "./snapshot.js";
 import { mutate, newId, nowIso, readActivity } from "./state.js";
 
@@ -196,7 +196,7 @@ export async function playMove(opts: {
  * that, and report honestly if no board confirmed it (no screen open).
  */
 export async function waitForBoardAck(sessionId: string, gameId: string, ply: number, timeoutMs = 4500) {
-  const deadline = Date.now() + timeoutMs;
+  const deadline = Date.now() + maxWaitMs(timeoutMs);
   while (Date.now() < deadline) {
     const rows = await getDb()
       .select({ payload: schema.events.payload })
@@ -229,7 +229,7 @@ export async function waitForPersonMove(who: Who, timeoutMs = 45_000) {
   }
   const startPly =
     (await getDb().select({ ply: schema.chessMoves.ply }).from(schema.chessMoves).where(eq(schema.chessMoves.gameId, game.id)).orderBy(desc(schema.chessMoves.ply)).limit(1))[0]?.ply ?? 0;
-  const deadline = Date.now() + timeoutMs;
+  const deadline = Date.now() + maxWaitMs(timeoutMs);
   while (Date.now() < deadline) {
     const next = (
       await getDb()
@@ -263,7 +263,7 @@ export async function waitForPersonMove(who: Who, timeoutMs = 45_000) {
   return {
     personMoved: false,
     timedOut: true,
-    note: "She has not moved yet. Do not move for her; wait for her to speak or move.",
+    note: "She has not moved yet. Do not move for her. Call wait-for-person-move again to keep waiting, or wait for her to speak.",
   };
 }
 
