@@ -1,0 +1,29 @@
+import { defineAction, fail } from "@agent-native/core/action";
+import { z } from "zod";
+
+import { ChaupalResult, mutationOptions, respond, sessionOf } from "../server/chaupal/kit.js";
+import { mutate } from "../server/chaupal/state.js";
+
+export default defineAction({
+  description:
+    "Get her canvas ready for drawing with a finger or mouse (mode touch), with no camera at all. Use this whenever she wants to trace on the screen, or says the camera feels uncomfortable; it also turns air-writing off if it was on. Mode none hides the drawing tools.",
+  schema: z.object({
+    mode: z.enum(["touch", "none"]).describe("touch (direct finger drawing, no camera) | none"),
+  }),
+  outputSchema: ChaupalResult,
+  mcpTool: true,
+  run: async ({ mode }, ctx) => {
+    const { session } = await sessionOf(ctx);
+    const { state } = await mutate(mutationOptions(ctx, session.id, "set-input-mode"), async (_tx, st) => {
+      if (!["sulekh", "rangoli", "kolam"].includes(st.scene)) {
+        fail("Open Sulekh, rangoli or kolam first.", { errorCode: "CANVAS_NOT_OPEN" });
+      }
+      return { patch: { inputMode: mode }, result: null, payload: { mode } };
+    });
+    return respond(state, {
+      inputMode: mode,
+      cameraUsed: false,
+      drawingInputReady: mode === "touch",
+    });
+  },
+});
