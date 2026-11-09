@@ -13,7 +13,9 @@
     "action": "agent-native action",
     "script": "agent-native script",
     "test": "vitest --run --passWithNoTests",
-    "agent-native:doctor": "agent-native doctor"
+    "agent-native:doctor": "agent-native doctor",
+    "build:cloudflare": "NITRO_PRESET=cloudflare_module NODE_OPTIONS=--max-old-space-size=3072 agent-native build && node scripts/cloudflare-postbuild.mjs",
+    "deploy:cloudflare": "pnpm build:cloudflare && wrangler deploy --config .output/server/wrangler.json"
   },
   "dependencies": {
     "@agent-native/agentkit": "0.226.0",
