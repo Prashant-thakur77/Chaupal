@@ -218,6 +218,7 @@ export async function buildSnapshot(state: ActivityRow) {
       relation: f.relation,
       role: f.role,
       lastSeenAt: f.lastSeenAt,
+      joinPath: `/api/family/join?t=${f.token}`,
     })),
     events: events.map((e) => ({
       id: e.id,
