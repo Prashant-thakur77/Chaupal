@@ -2,9 +2,13 @@ import { Chess } from "chess.js";
 
 import type { Snapshot } from "./snapshot.js";
 
-const BG = "#15132b";
-const CHALK = "#f7f1e6";
-const MARIGOLD = "#f4a93c";
+/* The "subah" look, matching the screens: paper ground, warm ink, teal for her lines. */
+const BG = "#faf6ef";
+const INK = "#2b1a12";
+const LINE = "#8a4b2e";
+const HER = "#2b6b6c";
+/** Engine outlines are chalk-white (made for a dark floor); here they draw in warm brown. */
+const recolourChalk = (svg: string) => svg.replace(/(fill|stroke)="#(?:f4efe6|fbf8f1|f7f1e6)"/gi, `$1="${LINE}"`);
 const HEX: Record<string, string> = {
   laal: "#e0473b",
   peela: "#f6c33b",
@@ -42,16 +46,16 @@ function inner(svg: string) {
  */
 export function composeArtwork(s: Snapshot): { svg: string; kind: string; title: string } | null {
   if (s.scene === "sulekh" && s.calligraphy && s.calligraphy.status === "valid") {
-    const ref = inner(s.calligraphy.svg).replace(/fill="#000"/g, `fill="${CHALK}"`);
+    const ref = inner(s.calligraphy.svg).replace(/fill="#000"/g, `fill="${INK}"`);
     return {
       kind: "sulekh",
       title: s.calligraphy.text,
-      svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 1000" width="1500" height="1000"><rect width="1500" height="1000" fill="${BG}"/><g opacity="0.42">${ref}</g>${strokePaths(s.strokes.sulekh, 1500, 1000, MARIGOLD, 14)}</svg>`,
+      svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 1000" width="1500" height="1000"><rect width="1500" height="1000" fill="${BG}"/><g opacity="0.42">${ref}</g>${strokePaths(s.strokes.sulekh, 1500, 1000, HER, 14)}</svg>`,
     };
   }
   if ((s.scene === "rangoli" || s.scene === "kolam") && s.kolam) {
     const fills = s.kolam.fills;
-    let body = inner(s.kolam.svg);
+    let body = recolourChalk(inner(s.kolam.svg));
     body = body.replace(/<path([^>]*?)data-region-id="([^"]+)"([^>]*?)\/?>/g, (whole, a, id, b) => {
       const f = fills[id];
       if (!f) return whole;
@@ -61,7 +65,7 @@ export function composeArtwork(s: Snapshot): { svg: string; kind: string; title:
     return {
       kind: s.kolam.kind === "pulli" ? "kolam" : "rangoli",
       title: s.kolam.altEn,
-      svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000"><rect width="1000" height="1000" fill="${BG}"/>${body}${strokePaths(s.strokes.rangoli, 1000, 1000, MARIGOLD, 8)}</svg>`,
+      svg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000"><rect width="1000" height="1000" fill="${BG}"/>${body}${strokePaths(s.strokes.rangoli, 1000, 1000, HER, 8)}</svg>`,
     };
   }
   if (s.scene === "shatranj" && s.chess) {
@@ -79,13 +83,13 @@ export function composeArtwork(s: Snapshot): { svg: string; kind: string; title:
         const sq = `${"abcdefgh"[file]}${rank + 1}`;
         const dark = (file + rank) % 2 === 0;
         const hl = last && (last.from === sq || last.to === sq);
-        squares += `<rect x="${off + f * cell}" y="${off + r * cell}" width="${cell}" height="${cell}" fill="${hl ? "#e9b860" : dark ? "#8e5232" : "#d7a577"}"/>`;
+        squares += `<rect x="${off + f * cell}" y="${off + r * cell}" width="${cell}" height="${cell}" fill="${hl ? "#f0cf8c" : dark ? "#c4936b" : "#f1dfc4"}"/>`;
         const p = chess.get(sq as never);
         if (p) {
           const cx = off + f * cell + cell / 2;
           const cy = off + r * cell + cell / 2;
-          const face = p.color === s.chess.elderColor ? "#f4e8d2" : "#2e2955";
-          const ink = p.color === s.chess.elderColor ? "#6a2611" : "#ffd58c";
+          const face = p.color === s.chess.elderColor ? "#fdf6ea" : "#2b6b6c";
+          const ink = p.color === s.chess.elderColor ? "#6a2611" : "#fdf3e1";
           pieces += `<circle cx="${cx}" cy="${cy}" r="44" fill="${face}" stroke="${ink}" stroke-width="4"/><text x="${cx}" y="${cy + 10}" text-anchor="middle" font-family="Tiro Devanagari Hindi, Mukta, sans-serif" font-size="${p.type === "p" ? 22 : 26}" fill="${ink}">${esc(PIECE_HI[p.type]!)}</text>`;
         }
       }

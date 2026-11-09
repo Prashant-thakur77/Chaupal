@@ -1,6 +1,6 @@
 # Chaupal — Visual Design Contract
 
-Chaupal is a village square at dusk, on a screen. An elder speaks Hindi. Her agent writes for her, draws a rangoli for her, and plays shatranj with her. Her grandson in another city sits down at the same board from his phone. A clay diya shows what the agent is doing.
+Chaupal is a village square in morning light, on a screen. An elder speaks Hindi. Her agent writes for her, draws a rangoli for her, and plays shatranj with her. Her grandson in another city sits down at the same board from his phone. A clay diya shows what the agent is doing.
 
 Tokens live in `app/styles/chaupal-tokens.css`. The static prototype and its screenshots live outside the repo, in `../.chaupal-work/design-proto/` (`index.html`, `proto.css`, `proto.js`, `shots/`). Build every screen from those tokens, never from the scaffold's neutral greys.
 
@@ -50,7 +50,7 @@ Tokens live in `app/styles/chaupal-tokens.css`. The static prototype and its scr
 
 ## 3. Colour
 
-Default theme: **dusk** (`<html data-theme="dusk">`, also `:root`). Light theme: **day** (`data-theme="day"`). It leads with indigo, not terracotta, so it never collapses into the generic cream-and-terracotta look.
+Default theme: **day**, called "subah" (`data-theme="day"` on every Chaupal page): a lime-washed courtyard in morning light. Ivory ground (`#FAF6EF`), warm ink (`#2D2620`), one calm peacock teal (`#2B6B6C`) for actions, terracotta (`#B0502A`) second, marigold only for the diya's warmth. Canvases are paper and sandstone; kolam outlines draw in warm brown (`#8A4B2E`); her own lines are teal. The earlier dark look, **dusk** (`data-theme="dusk"`), is still defined in the token sheet; the tables below describe its raw palette.
 
 ### 3.1 Raw palette
 

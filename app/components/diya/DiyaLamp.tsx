@@ -87,7 +87,7 @@ export function DiyaLamp({
 }) {
   const id = useSvgId("diya");
   const ref = (name: string) => `url(#${id}-${name})`;
-  const chalk = "var(--ch-chalk-50, #F7F1E6)";
+  const chalk = "var(--ch-diya-line, var(--ch-chalk-50, #F7F1E6))";
   const unitsPerPx = pixelSize ? (compact ? 152 : 200) / pixelSize : 0.7;
   const stroke = compact ? Math.min(2.6, 1.15 * unitsPerPx) : 1.05;
   const layout = compact ? DIYA_LAYOUT_COMPACT : DIYA_LAYOUT_FULL;

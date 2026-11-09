@@ -86,6 +86,8 @@ const HEX: Record<string, string> = {
 
 /** Paint the elder's chosen colours onto the design's regions. */
 function applyFills(svg: string, fills: Record<string, { colour: string }>) {
+  // Engine outlines are chalk-white (made for a dark floor); on the light page they draw in warm brown.
+  svg = svg.replace(/(fill|stroke)="#(?:f4efe6|fbf8f1|f7f1e6)"/gi, '$1="#8a4b2e"');
   return svg.replace(/<path([^>]*?)data-region-id="([^"]+)"([^>]*?)\/?>/g, (whole, a, id, b) => {
     const f = fills[id];
     if (!f) return whole;

@@ -17,7 +17,7 @@ export default function EmbedLive() {
   useEffect(() => setMounted(true), []);
   if (!mounted) return <div className="ch-boot" />;
   return (
-    <div className="theme-chaupal ch-shell ch-embed" data-theme="dusk">
+    <div className="theme-chaupal ch-shell ch-embed" data-theme="day">
       <FamilyView />
     </div>
   );

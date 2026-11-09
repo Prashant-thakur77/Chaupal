@@ -283,8 +283,8 @@
   background: hsl(var(--muted-foreground) / 0.34);
 }
 
-/* Before hydration, Chaupal routes show the dusk sky, not a grey skeleton. */
+/* Before hydration, Chaupal routes show the morning sky, not a grey skeleton. */
 .ch-boot {
   min-height: 100dvh;
-  background: linear-gradient(180deg, #121029 0%, #1d1838 55%, #3a2030 88%, #2a1712 100%);
+  background: linear-gradient(180deg, #fdfbf7 0%, #faf5ed 55%, #f6ecde 88%, #f0e4d2 100%);
 }

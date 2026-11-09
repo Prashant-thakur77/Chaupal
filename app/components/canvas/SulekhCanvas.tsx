@@ -36,7 +36,7 @@ export interface SulekhCanvasProps {
 }
 
 /** Warm chalk the reference is recoloured to, shown faint beneath her ink. */
-const REFERENCE_TINT = "#F6DDB4";
+const REFERENCE_TINT = "#A8937A";
 
 export function drawingAllowed(inputMode: InputMode) {
   return inputMode === "touch" || inputMode === "air-denied" || inputMode === "air";
@@ -54,7 +54,7 @@ export function SulekhCanvas({
   onInputModeReport,
   language,
   className,
-  inkColor = STAGE.marigold,
+  inkColor = STAGE.ink,
 }: SulekhCanvasProps) {
   const air = useAirWriting({ inputMode, onInputModeReport });
   const enabled = drawingAllowed(inputMode);
@@ -84,10 +84,9 @@ export function SulekhCanvas({
       <div
         className="relative isolate aspect-[3/2] w-full overflow-hidden rounded-[clamp(18px,3vw,32px)] border"
         style={{
-          borderColor: "rgba(182,95,73,0.55)",
-          background: `radial-gradient(120% 95% at 50% 38%, ${STAGE.indigo} 0%, #191635 55%, ${STAGE.night} 100%)`,
-          boxShadow:
-            "inset 0 0 0 1px rgba(244,239,230,0.04), inset 0 -40px 80px rgba(0,0,0,0.35), 0 24px 60px rgba(0,0,0,0.35)",
+          borderColor: "rgba(138,75,46,0.22)",
+          background: "radial-gradient(120% 95% at 50% 38%, #FFFEFB 0%, #FCF7EE 58%, #F5ECDD 100%)",
+          boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.7), 0 2px 6px rgba(70,50,30,0.05), 0 18px 44px rgba(70,50,30,0.10)",
         }}
       >
         {/* Safe-margin guide: faint chalk corners at the reference's 8% margin. */}
@@ -97,7 +96,7 @@ export function SulekhCanvas({
           viewBox="0 0 1500 1000"
           preserveAspectRatio="none"
         >
-          <g stroke={STAGE.chalk} strokeOpacity="0.16" strokeWidth="3" fill="none" strokeLinecap="round">
+          <g stroke={STAGE.line} strokeOpacity="0.22" strokeWidth="3" fill="none" strokeLinecap="round">
             <path d="M120 170V80h90M1380 170V80h-90M120 830v90h90M1380 830v90h-90" />
           </g>
         </svg>
@@ -116,7 +115,7 @@ export function SulekhCanvas({
               className="absolute inset-0"
               style={{
                 backgroundColor: REFERENCE_TINT,
-                opacity: 0.38,
+                opacity: 0.5,
                 maskImage: maskUrl,
                 WebkitMaskImage: maskUrl,
                 maskSize: "100% 100%",
@@ -130,7 +129,7 @@ export function SulekhCanvas({
           </div>
         ) : (
           <div className="pointer-events-none absolute inset-0 grid place-items-center p-8 text-center">
-            <p className="max-w-md text-lg leading-relaxed sm:text-2xl" style={{ color: "rgba(244,239,230,0.55)" }}>
+            <p className="max-w-md text-lg leading-relaxed sm:text-2xl" style={{ color: STAGE.textSoft }}>
               {hi ? "अभी कोई अक्षर नहीं चुना गया" : "No reference chosen yet"}
             </p>
           </div>
@@ -155,9 +154,9 @@ export function SulekhCanvas({
         {enabled && strokes.length === 0 && !cameraLive && reference ? (
           <p
             className="pointer-events-none absolute inset-x-0 bottom-[5%] mx-auto flex w-fit max-w-[90%] items-center gap-2 rounded-full px-4 py-2 text-sm font-medium sm:text-base"
-            style={{ backgroundColor: "rgba(20,18,43,0.72)", color: STAGE.chalk }}
+            style={{ backgroundColor: "rgba(255,253,249,0.94)", color: STAGE.text, boxShadow: "0 4px 14px rgba(70,50,30,0.12)" }}
           >
-            <PenLine aria-hidden="true" className="size-5 shrink-0" style={{ color: STAGE.marigold }} />
+            <PenLine aria-hidden="true" className="size-5 shrink-0" style={{ color: STAGE.teal }} />
             {hi ? "अक्षरों के ऊपर उंगली से लिखिए" : "Trace over the letters with your finger"}
           </p>
         ) : null}
@@ -166,9 +165,9 @@ export function SulekhCanvas({
           <p
             role="status"
             className="pointer-events-none absolute top-[4%] left-[4%] flex max-w-[80%] items-center gap-2 rounded-full px-4 py-2 text-sm font-medium sm:text-base"
-            style={{ backgroundColor: "rgba(20,18,43,0.82)", color: STAGE.chalk }}
+            style={{ backgroundColor: "rgba(255,253,249,0.94)", color: STAGE.text, boxShadow: "0 4px 14px rgba(70,50,30,0.12)" }}
           >
-            <Hand aria-hidden="true" className="size-5 shrink-0" style={{ color: STAGE.marigold }} />
+            <Hand aria-hidden="true" className="size-5 shrink-0" style={{ color: STAGE.teal }} />
             {air.status === "failed" ? airCopy("failed", language) : airCopy("denied", language)}
           </p>
         ) : null}
@@ -176,14 +175,14 @@ export function SulekhCanvas({
         {showStartOverlay ? (
           <div
             className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 p-4 text-center"
-            style={{ backgroundColor: "rgba(20,18,43,0.55)" }}
+            style={{ backgroundColor: "rgba(250,246,239,0.82)" }}
           >
             <StartAirButton
               language={language}
               onStart={air.start}
               busy={air.status === "starting"}
             />
-            <p className="max-w-sm text-sm font-medium sm:text-base" style={{ color: STAGE.chalk }}>
+            <p className="max-w-sm text-sm font-medium sm:text-base" style={{ color: STAGE.text }}>
               {airCopy("privacy", language)}
             </p>
           </div>

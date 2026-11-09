@@ -12,7 +12,7 @@ export default function FamilyRoute() {
   useEffect(() => setMounted(true), []);
   if (!mounted) return <div className="ch-root ch-stage" />;
   return (
-    <div className="theme-chaupal ch-shell" data-theme="dusk">
+    <div className="theme-chaupal ch-shell" data-theme="day">
       <FamilyView />
     </div>
   );

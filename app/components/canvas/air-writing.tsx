@@ -164,8 +164,8 @@ export function StartAirButton({
       onClick={onStart}
       disabled={busy}
       aria-busy={busy}
-      className={`${FOCUS_RING} inline-flex min-h-16 max-w-full items-center justify-center gap-3 rounded-full px-7 py-3 text-lg font-semibold shadow-[0_18px_40px_rgba(0,0,0,0.45)] transition-[transform,background-color] hover:brightness-105 active:scale-[0.98] disabled:cursor-wait disabled:opacity-80 motion-reduce:transition-none sm:text-xl`}
-      style={{ backgroundColor: "#F2A93B", color: "#14122B" }}
+      className={`${FOCUS_RING} inline-flex min-h-16 max-w-full items-center justify-center gap-3 rounded-full px-7 py-3 text-lg font-semibold shadow-[0_12px_30px_rgba(43,107,108,0.25)] transition-[transform,background-color] hover:brightness-105 active:scale-[0.98] disabled:cursor-wait disabled:opacity-80 motion-reduce:transition-none sm:text-xl`}
+      style={{ backgroundColor: "#2B6B6C", color: "#FFFDF8" }}
     >
       <Camera aria-hidden="true" className="size-7 shrink-0" strokeWidth={2.2} />
       <span className="text-balance text-left leading-snug">
@@ -188,7 +188,7 @@ export function StopAirButton({
       data-testid="stop-air-camera"
       onClick={onStop}
       className={`${FOCUS_RING} inline-flex min-h-14 items-center justify-center gap-2.5 rounded-full border-2 px-5 py-2 text-base font-semibold transition-colors hover:bg-white/10 motion-reduce:transition-none sm:text-lg`}
-      style={{ borderColor: "#F4EFE6", color: "#F4EFE6", backgroundColor: "rgba(20,18,43,0.72)" }}
+      style={{ borderColor: "rgba(45,38,32,0.2)", color: "#2D2620", backgroundColor: "rgba(255,253,249,0.94)" }}
     >
       <CameraOff aria-hidden="true" className="size-6 shrink-0" />
       {airCopy("stop", language)}
@@ -214,18 +214,18 @@ export function AirPreview({
     >
       <div
         className="relative aspect-[4/3] w-24 shrink-0 overflow-hidden rounded-2xl border-2 bg-black/60 sm:w-32"
-        style={{ borderColor: "#F2A93B" }}
+        style={{ borderColor: "#2B6B6C" }}
       >
         <div ref={previewRef} className="absolute inset-0" />
         <Hand
           aria-hidden="true"
           className="absolute right-1.5 bottom-1.5 size-5"
-          style={{ color: "#F2A93B" }}
+          style={{ color: "#2B6B6C" }}
         />
       </div>
       <p
         className="max-w-[16rem] rounded-2xl px-3 py-2 text-sm leading-snug font-medium sm:text-base"
-        style={{ backgroundColor: "rgba(20,18,43,0.82)", color: "#F4EFE6" }}
+        style={{ backgroundColor: "rgba(255,253,249,0.94)", color: "#2D2620" }}
       >
         {status === "starting" ? airCopy("starting", language) : airCopy("running", language)}
         <span className="mt-1 block text-xs opacity-75 sm:text-sm">

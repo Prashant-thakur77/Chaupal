@@ -1,6 +1,6 @@
 /* ==========================================================================
    Chaupal design tokens
-   Default look: "saanjh" (dusk). Light look: "dopahar" (lime-washed day).
+   Default look: "subah" (data-theme="day", light). Dark look: "saanjh" (dusk).
    Spec and rationale: /DESIGN.md
 
    FONTS (Google Fonts, all SIL Open Font License)
@@ -187,38 +187,103 @@
   --ch-shadow-2: 0 1px 0 rgb(255 240 220 / 0.08) inset, 0 24px 64px rgb(5 4 15 / 0.6);
   --ch-lit: 0 0 0 1px rgb(var(--ch-glow) / 0.35), 0 0 40px rgb(var(--ch-glow) / 0.28);
   --ch-grain-opacity: 0.14;
+  --ch-glass: rgb(14 12 32 / 0.5);
+  --ch-companion-bg: linear-gradient(180deg, rgb(34 30 64 / 0.85), rgb(21 19 43 / 0.92));
+  --ch-tile-bg: radial-gradient(circle at 50% 40%, rgb(46 41 85 / 0.7), rgb(21 19 43 / 0.4));
+  --ch-tile-border: rgb(247 241 230 / 0.45);
+  --ch-dock-fade: rgb(14 12 32 / 0.9);
+  --ch-pressed-bg: var(--ch-chalk-50);
+  --ch-pressed-fg: var(--ch-clay-950);
+  --ch-mic-live-bg: var(--ch-chalk-50);
+  --ch-mic-live-fg: var(--ch-clay-950);
+  --ch-awaiting: var(--ch-indigo-300);
+  --ch-speaking: var(--ch-marigold-300);
+  --ch-family: var(--ch-indigo-300);
+  --ch-card-glyph-bg: var(--ch-indigo-500);
+  --ch-card-glyph-fg: var(--ch-marigold-300);
+  --ch-dash: rgb(247 241 230 / 0.25);
+  --ch-bar-control: var(--ch-indigo-400);
+  --ch-bar-candidate: var(--ch-accent);
+  --ch-bar-candidate-2: var(--ch-marigold-400);
+  --ch-stars-opacity: 0.55;
+  --ch-diya-line: var(--ch-chalk-50);
 }
 
-/* ---------- Semantic tokens: day ---------- */
+/* ---------- Semantic tokens: day (default on every Chaupal page) ----------
+   "Subah": a lime-washed courtyard in morning light. Ivory ground, warm ink,
+   one calm peacock-teal for actions, marigold kept for the lamp and warmth. */
 [data-theme="day"] {
   color-scheme: light;
-  --ch-bg: var(--ch-limewash-100);
-  --ch-bg-deep: #ece2d1;
-  --ch-surface: var(--ch-limewash-50);
+  --ch-bg: #faf6ef;
+  --ch-bg-deep: #f1e9dc;
+  --ch-surface: #fffdf9;
   --ch-surface-raised: #ffffff;
-  --ch-ground: #e7d3b8;
-  --ch-hairline: #d9cbb4;
-  --ch-text: var(--ch-clay-900);       /* 15.2:1 */
-  --ch-text-soft: var(--ch-ink-600);   /* 10.1:1 */
-  --ch-text-muted: var(--ch-ink-500);  /*  6.1:1 */
-  --ch-accent: var(--ch-indigo-700);   /* 10.4:1 — day leads with indigo, not terracotta */
-  --ch-on-accent: var(--ch-limewash-50);/* 11.2:1 */
-  --ch-second: var(--ch-terracotta-600);/* 6.0:1 */
-  --ch-on-second: var(--ch-chalk-50);  /*  6.2:1 */
-  --ch-focus: var(--ch-indigo-700);
-  --ch-glow: 242 138 46;
-  --ch-sky-top: #f7efe1;
-  --ch-sky-mid: #f5eadb;
-  --ch-sky-low: #f0dcc4;
-  --ch-paper: #fbf5ea;
+  --ch-ground: #f0e4d2;
+  --ch-hairline: #e4d8c5;
+  --ch-text: #2d2620;                  /* 14.6:1 on bg */
+  --ch-text-soft: #5a4d42;             /*  8.4:1 */
+  --ch-text-muted: #75675b;            /*  5.3:1 */
+  --ch-accent: #2b6b6c;                /* peacock teal, 6.0:1 on bg */
+  --ch-on-accent: #fffdf8;             /*  6.3:1 on accent */
+  --ch-second: #b0502a;                /* terracotta, 4.9:1 */
+  --ch-on-second: #fffdf8;
+  --ch-focus: #2b6b6c;
+  --ch-glow: 233 163 64;               /* marigold, for the lamp's warmth */
+  --ch-sky-top: #fdfbf7;
+  --ch-sky-mid: #faf5ed;
+  --ch-sky-low: #f6ecde;
+  --ch-paper: #fffbf3;
   --ch-ink: #2b1a12;
-  --ch-her-stroke: var(--ch-indigo-700);
+  --ch-her-stroke: #2b6b6c;
+  --ch-good: #3f8f57;
   --ch-good-text: var(--ch-good-strong);
   --ch-bad-text: var(--ch-bad-strong);
-  --ch-shadow-1: 0 1px 2px rgb(60 30 10 / 0.08), 0 8px 24px rgb(60 30 10 / 0.08);
-  --ch-shadow-2: 0 24px 64px rgb(60 30 10 / 0.18);
-  --ch-lit: 0 0 0 1px rgb(var(--ch-glow) / 0.45), 0 0 32px rgb(var(--ch-glow) / 0.25);
-  --ch-grain-opacity: 0.08;
+  --ch-shadow-1: 0 1px 2px rgb(70 50 30 / 0.05), 0 6px 18px rgb(70 50 30 / 0.06);
+  --ch-shadow-2: 0 2px 6px rgb(70 50 30 / 0.05), 0 18px 48px rgb(70 50 30 / 0.11);
+  --ch-lit: 0 0 0 1px rgb(43 107 108 / 0.18), 0 8px 24px rgb(43 107 108 / 0.18);
+  --ch-grain-opacity: 0.05;
+
+  /* surfaces over the sky */
+  --ch-glass: rgb(255 253 249 / 0.86);
+  --ch-companion-bg: linear-gradient(180deg, rgb(255 253 249 / 0.95), rgb(250 245 237 / 0.97));
+  --ch-tile-bg: radial-gradient(circle at 50% 36%, #ffffff 0%, #fbf6ee 60%, #f4ebde 100%);
+  --ch-tile-border: rgb(43 107 108 / 0.30);
+  --ch-dock-fade: rgb(250 246 239 / 0.96);
+  --ch-pressed-bg: #2b6b6c;
+  --ch-pressed-fg: #fffdf8;
+  --ch-mic-live-bg: #fdf1dc;
+  --ch-mic-live-fg: #2d2620;
+  --ch-awaiting: #4a59a3;
+  --ch-speaking: #b06a14;
+  --ch-family: #4a59a3;
+  --ch-card-glyph-bg: #e4f0ef;
+  --ch-card-glyph-fg: #2b6b6c;
+  --ch-dash: rgb(45 38 32 / 0.16);
+  --ch-bar-control: #cbbfae;
+  --ch-bar-candidate: #2b6b6c;
+  --ch-bar-candidate-2: #3a8384;
+  --ch-stars-opacity: 0;
+  --ch-diya-line: #9a7350;
+}
+
+/* The board, warmed and lightened for the day look. */
+[data-theme="day"] .sj-root {
+  --sj-square-dark: #c4936b;
+  --sj-square-light: #f1dfc4;
+  --sj-her-face: #fdf6ea;
+  --sj-her-ink: #6a2611;
+  --sj-her-rim: #8a4a2a;
+  --sj-her-ring: #e9a340;
+  --sj-other-face: #2b6b6c;
+  --sj-other-ink: #fdf3e1;
+  --sj-other-rim: #1c4a4b;
+  --sj-other-ring: #7fb8b8;
+  --sj-last-move: #f0cf8c;
+  --sj-selected: #f3c467;
+  --sj-shadow: #5a3a22;
+  --sj-frame-hi: #b57a52;
+  --sj-frame-lo: #8a5636;
+  --sj-focus: #2b6b6c;
 }
 
 /* ---------- Optional: harmonise the toolkit chrome (HSL triplets) ---------- */
@@ -243,6 +308,30 @@
   --border: 248 29% 29%;
   --input: 248 29% 29%;
   --ring: 36 89% 60%;
+  --radius: 1.125rem;
+}
+
+.theme-chaupal[data-theme="day"],
+.theme-chaupal [data-theme="day"] {
+  --background: 38 60% 96%;
+  --foreground: 27 17% 15%;
+  --card: 40 100% 99%;
+  --card-foreground: 27 17% 15%;
+  --popover: 40 100% 99%;
+  --popover-foreground: 27 17% 15%;
+  --primary: 181 43% 30%;
+  --primary-foreground: 45 100% 99%;
+  --secondary: 37 40% 92%;
+  --secondary-foreground: 27 17% 15%;
+  --muted: 37 40% 92%;
+  --muted-foreground: 28 12% 41%;
+  --accent: 37 40% 92%;
+  --accent-foreground: 27 17% 15%;
+  --destructive: 9 69% 39%;
+  --destructive-foreground: 45 100% 99%;
+  --border: 36 33% 83%;
+  --input: 36 33% 83%;
+  --ring: 181 43% 30%;
   --radius: 1.125rem;
 }
 

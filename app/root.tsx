@@ -226,7 +226,7 @@ export default function Root() {
         queryClient={queryClient}
         sessionBypass={isPublicChaupalPath(pathname)}
         clientOnlyFallback={isChaupalPath(pathname) ? <div className="ch-boot" /> : undefined}
-        defaultTheme="dark"
+        defaultTheme="light"
         disableWebMcp={pathname === "/family" || pathname.startsWith("/embed/")}
         webMcpExcludeActionNames={WEBMCP_EXCLUDE}
         skeletonLayout={isChaupalPath(pathname) ? undefined : skeletonLayoutForPath(pathname)}

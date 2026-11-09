@@ -64,13 +64,13 @@ function shapeMarkup(
   if (shape.dot) {
     const { cx, cy, r } = shape.dot;
     return (
-      (halo ? `<circle cx="${cx}" cy="${cy}" r="${r + baseWidth * 0.22}" fill="${STAGE.night}" fill-opacity="0.55"/>` : "") +
+      (halo ? `<circle cx="${cx}" cy="${cy}" r="${r + baseWidth * 0.22}" fill="${STAGE.halo}" fill-opacity="0.75"/>` : "") +
       `<circle cx="${cx}" cy="${cy}" r="${r}" fill="${color}"/>`
     );
   }
   let out = "";
   if (halo) {
-    out += `<path d="${shape.spine}" fill="none" stroke="${STAGE.night}" stroke-opacity="0.55" stroke-width="${(shape.maxWidth + baseWidth * 0.45).toFixed(1)}" stroke-linecap="round" stroke-linejoin="round"/>`;
+    out += `<path d="${shape.spine}" fill="none" stroke="${STAGE.halo}" stroke-opacity="0.75" stroke-width="${(shape.maxWidth + baseWidth * 0.45).toFixed(1)}" stroke-linecap="round" stroke-linejoin="round"/>`;
   }
   for (const run of shape.runs) {
     out += `<path d="${run.d}" fill="none" stroke="${color}" stroke-width="${run.width.toFixed(2)}" stroke-linecap="round" stroke-linejoin="round"/>`;
@@ -101,7 +101,7 @@ const StrokeInk = memo(function StrokeInk({
     return (
       <>
         {halo ? (
-          <circle cx={cx} cy={cy} r={r + baseWidth * 0.22} fill={STAGE.night} fillOpacity={0.55} />
+          <circle cx={cx} cy={cy} r={r + baseWidth * 0.22} fill={STAGE.halo} fillOpacity={0.75} />
         ) : null}
         <circle cx={cx} cy={cy} r={r} fill={color} />
       </>
@@ -113,8 +113,8 @@ const StrokeInk = memo(function StrokeInk({
         <path
           d={shape.spine}
           fill="none"
-          stroke={STAGE.night}
-          strokeOpacity={0.55}
+          stroke={STAGE.halo}
+          strokeOpacity={0.75}
           strokeWidth={shape.maxWidth + baseWidth * 0.45}
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -143,7 +143,7 @@ export function StrokeLayer({
   strokes,
   enabled,
   onStroke,
-  inkColor = STAGE.marigold,
+  inkColor = STAGE.ink,
   authorColors,
   inkWidth = 0.012,
   aspect: aspectHint = 1.5,
@@ -482,7 +482,7 @@ export function StrokeLayer({
         style={{
           borderColor: inkColor,
           backgroundColor: "transparent",
-          boxShadow: `0 0 0 3px ${STAGE.night}99`,
+          boxShadow: `0 0 0 3px ${STAGE.halo}cc`,
         }}
       >
         <span

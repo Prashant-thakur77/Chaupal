@@ -65,7 +65,7 @@ export interface RangoliDesignView {
   altEn: string;
 }
 
-/** Evening stage palette. */
+/** Morning stage palette ("subah"): paper and sandstone, warm ink, peacock teal. */
 export const STAGE = {
   night: "#14122B",
   indigo: "#1E1A3A",
@@ -73,4 +73,14 @@ export const STAGE = {
   terracotta: "#B65F49",
   marigold: "#F2A93B",
   chalk: "#F4EFE6",
+  paper: "#FFFDF8",
+  text: "#2D2620",
+  textSoft: "#5A4D42",
+  teal: "#2B6B6C",
+  /** kolam and rangoli outlines on the light floor */
+  line: "#8A4B2E",
+  /** a soft paper halo that keeps her lines readable over colour */
+  halo: "#FFFDF8",
+  /** her own ink */
+  ink: "#2B6B6C",
 } as const;

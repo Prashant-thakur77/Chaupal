@@ -24,7 +24,7 @@ export default function Welcome() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
   return (
-    <div className="theme-chaupal ch-shell" data-theme="dusk">
+    <div className="theme-chaupal ch-shell" data-theme="day">
       <main className="ch-root ch-stage ch-grain ch-welcome" data-testid="welcome">
         <header className="ch-topbar">
           <div className="ch-brand">

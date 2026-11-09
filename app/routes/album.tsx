@@ -67,7 +67,7 @@ export default function AlbumRoute() {
   useEffect(() => setMounted(true), []);
   if (!mounted) return <div className="ch-boot" />;
   return (
-    <div className="theme-chaupal ch-shell" data-theme="dusk">
+    <div className="theme-chaupal ch-shell" data-theme="day">
       <Album />
     </div>
   );

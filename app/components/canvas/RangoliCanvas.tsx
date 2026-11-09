@@ -25,6 +25,13 @@ import {
   type StrokeInput,
 } from "./types";
 
+/** Engine outlines are chalk-white (made for a dark floor); on the light floor they draw in warm brown. */
+const CHALKS = new Set(["#f4efe6", "#fbf8f1", "#f7f1e6", "#ffffff", "white"]);
+function lineOn(orig: string | null | undefined) {
+  return !orig || CHALKS.has(orig.toLowerCase()) ? STAGE.line : orig;
+}
+
+
 export type RangoliMode = "fill" | "trace";
 
 export interface RangoliCanvasProps {
@@ -84,7 +91,7 @@ export function RangoliCanvas({
   language,
   className,
   initialMode = "fill",
-  inkColor = STAGE.marigold,
+  inkColor = STAGE.ink,
 }: RangoliCanvasProps) {
   const air = useAirWriting({ inputMode, onInputModeReport });
   const hi = language === "hi";
@@ -149,12 +156,12 @@ export function RangoliCanvas({
       el.setAttribute("data-fill", hex && colourId ? colourId : "none");
       el.setAttribute("data-role", isGroup ? "dots" : isLine ? "line" : "area");
       if (isGroup) {
-        el.setAttribute("fill", hex ?? (origFill || STAGE.chalk));
+        el.setAttribute("fill", hex ?? lineOn(origFill));
       } else if (isLine) {
-        el.setAttribute("stroke", hex ?? (origStroke || STAGE.chalk));
+        el.setAttribute("stroke", hex ?? lineOn(origStroke));
       } else {
         el.setAttribute("fill", hex ?? "none");
-        if (!origStroke) el.setAttribute("stroke", STAGE.chalk);
+        el.setAttribute("stroke", lineOn(origStroke));
       }
       const label = `${zoneLabel(el.getAttribute("data-zone") ?? "", language)}: ${nameFor(hex ? colourId : undefined)}`;
       el.setAttribute("aria-label", label);
@@ -205,7 +212,7 @@ export function RangoliCanvas({
         [data-rangoli-host][data-mode="fill"] [data-region-id][data-role="dots"] { pointer-events: painted; cursor: pointer; }
         [data-rangoli-host][data-mode="fill"] [data-region-id]:hover { filter: brightness(1.18); }
         [data-rangoli-host] [data-region-id]:focus { outline: none; }
-        [data-rangoli-host] [data-region-id]:focus-visible { stroke: ${STAGE.marigold}; stroke-width: 7px; paint-order: stroke; }
+        [data-rangoli-host] [data-region-id]:focus-visible { stroke: ${STAGE.teal}; stroke-width: 7px; paint-order: stroke; }
         [data-rangoli-host] [data-region-id][data-flash="true"] { filter: brightness(1.45) drop-shadow(0 0 10px rgba(242,169,59,.8)); }
         @media (prefers-reduced-motion: reduce) {
           [data-rangoli-host] [data-region-id] { transition: none; }
@@ -216,9 +223,9 @@ export function RangoliCanvas({
       <div
         className="relative isolate aspect-square w-full max-w-[min(100%,calc(100dvh-16rem))] min-w-0 overflow-hidden rounded-[clamp(18px,3vw,32px)] border lg:max-w-[min(100%,calc(100dvh-7rem))]"
         style={{
-          borderColor: "rgba(182,95,73,0.55)",
-          background: `radial-gradient(85% 85% at 50% 50%, #241F45 0%, ${STAGE.indigo} 45%, ${STAGE.night} 100%)`,
-          boxShadow: "inset 0 -40px 80px rgba(0,0,0,0.35), 0 24px 60px rgba(0,0,0,0.35)",
+          borderColor: "rgba(138,75,46,0.22)",
+          background: "radial-gradient(85% 85% at 50% 50%, #FFFCF6 0%, #F8EFE2 55%, #EFE2CF 100%)",
+          boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.7), 0 2px 6px rgba(70,50,30,0.05), 0 18px 44px rgba(70,50,30,0.10)",
         }}
       >
         <div className="absolute inset-[4%]">
@@ -243,7 +250,7 @@ export function RangoliCanvas({
             />
           ) : (
             <div className="absolute inset-0 grid place-items-center text-center">
-              <p className="max-w-xs text-lg sm:text-2xl" style={{ color: "rgba(244,239,230,0.55)" }}>
+              <p className="max-w-xs text-lg sm:text-2xl" style={{ color: STAGE.textSoft }}>
                 {hi ? "अभी कोई रंगोली नहीं बनी" : "No design yet"}
               </p>
             </div>
@@ -265,7 +272,7 @@ export function RangoliCanvas({
           <p
             role="status"
             className="pointer-events-none absolute top-[3%] left-1/2 z-10 w-max max-w-[90%] -translate-x-1/2 rounded-full px-4 py-2 text-center text-sm font-medium sm:text-base"
-            style={{ backgroundColor: "rgba(20,18,43,0.85)", color: STAGE.chalk }}
+            style={{ backgroundColor: "rgba(255,253,249,0.94)", color: STAGE.text, boxShadow: "0 4px 14px rgba(70,50,30,0.12)" }}
           >
             {air.status === "failed" ? airCopy("failed", language) : airCopy("denied", language)}
           </p>
@@ -274,10 +281,10 @@ export function RangoliCanvas({
         {showStartOverlay ? (
           <div
             className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 p-4 text-center"
-            style={{ backgroundColor: "rgba(20,18,43,0.55)" }}
+            style={{ backgroundColor: "rgba(250,246,239,0.82)" }}
           >
             <StartAirButton language={language} onStart={air.start} busy={air.status === "starting"} />
-            <p className="max-w-sm text-sm font-medium sm:text-base" style={{ color: STAGE.chalk }}>
+            <p className="max-w-sm text-sm font-medium sm:text-base" style={{ color: STAGE.text }}>
               {airCopy("privacy", language)}
             </p>
           </div>
@@ -320,8 +327,8 @@ export function RangoliCanvas({
                 className={`${FOCUS_RING} flex min-h-16 items-center justify-center gap-2.5 rounded-2xl border-2 px-3 text-lg font-semibold transition-colors motion-reduce:transition-none sm:text-xl`}
                 style={
                   active
-                    ? { backgroundColor: STAGE.marigold, borderColor: STAGE.marigold, color: STAGE.night }
-                    : { backgroundColor: "rgba(30,26,58,0.9)", borderColor: "rgba(244,239,230,0.35)", color: STAGE.chalk }
+                    ? { backgroundColor: STAGE.teal, borderColor: STAGE.teal, color: STAGE.paper }
+                    : { backgroundColor: "#FFFDF9", borderColor: "rgba(45,38,32,0.16)", color: STAGE.text }
                 }
               >
                 <Icon aria-hidden="true" className="size-6 shrink-0" />
@@ -335,7 +342,7 @@ export function RangoliCanvas({
         </div>
 
         <div role="group" aria-label={hi ? "रंग चुनें" : "Choose a colour"}>
-          <p className="mb-2 text-base font-semibold sm:text-lg" style={{ color: STAGE.chalk }}>
+          <p className="mb-2 text-base font-semibold sm:text-lg" style={{ color: STAGE.text }}>
             {hi ? "रंग चुनें" : "Choose a colour"}
           </p>
           <div className="flex flex-wrap justify-center gap-x-2 gap-y-3 sm:justify-start lg:grid lg:grid-cols-4">
@@ -353,7 +360,7 @@ export function RangoliCanvas({
                     setMode("fill");
                   }}
                   className={`${FOCUS_RING} flex w-[4.75rem] flex-col items-center gap-1.5 rounded-2xl px-1 py-1.5 transition-colors motion-reduce:transition-none`}
-                  style={{ backgroundColor: active ? "rgba(244,239,230,0.12)" : "transparent" }}
+                  style={{ backgroundColor: active ? "rgba(43,107,108,0.09)" : "transparent" }}
                 >
                   <span
                     aria-hidden="true"
@@ -361,22 +368,22 @@ export function RangoliCanvas({
                     style={{
                       backgroundColor: p.hex,
                       boxShadow: active
-                        ? `0 0 0 3px ${STAGE.night}, 0 0 0 6px ${STAGE.chalk}`
-                        : "inset 0 0 0 2px rgba(0,0,0,0.25), 0 0 0 1px rgba(244,239,230,0.25)",
+                        ? `0 0 0 3px ${STAGE.paper}, 0 0 0 6px ${STAGE.teal}`
+                        : "inset 0 0 0 2px rgba(0,0,0,0.10), 0 0 0 1px rgba(45,38,32,0.16)",
                     }}
                   >
                     {active ? (
                       <Check
                         className="size-7"
                         strokeWidth={3}
-                        style={{ color: p.id === "safed" || p.id === "peela" ? STAGE.night : "#FFFFFF" }}
+                        style={{ color: p.id === "safed" || p.id === "peela" ? STAGE.text : "#FFFFFF" }}
                       />
                     ) : null}
                   </span>
-                  <span className="text-base leading-none font-semibold" style={{ color: STAGE.chalk }}>
+                  <span className="text-base leading-none font-semibold" style={{ color: STAGE.text }}>
                     {hi ? p.hi : p.en}
                   </span>
-                  <span className="text-xs leading-none opacity-70" style={{ color: STAGE.chalk }}>
+                  <span className="text-xs leading-none opacity-70" style={{ color: STAGE.text }}>
                     {hi ? p.en : p.hi}
                   </span>
                 </button>
@@ -384,7 +391,7 @@ export function RangoliCanvas({
             })}
           </div>
         </div>
-        <p className="text-sm leading-snug sm:text-base" style={{ color: "rgba(244,239,230,0.72)" }}>
+        <p className="text-sm leading-snug sm:text-base" style={{ color: STAGE.textSoft }}>
           {mode === "fill"
             ? hi
               ? `रंग चुनिए, फिर डिज़ाइन के किसी हिस्से को छुइए। अभी: ${nameFor(colour)}`
